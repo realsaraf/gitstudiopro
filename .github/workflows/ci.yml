@@ -81,9 +81,9 @@ jobs:
         env:
           GITSTUDIO_BINARY: src-tauri/target/release/gitstudiopro.exe
         run: |
-          & "$env:ChocolateyInstall\bin\gsudo.exe" --integrity Medium node scripts/native-workflows.mjs
+          & "C:\tools\gsudo\Current\gsudo.exe" --integrity Medium node scripts/native-workflows.mjs
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          & "$env:ChocolateyInstall\bin\gsudo.exe" --integrity Medium node scripts/native-tools.mjs
+          & "C:\tools\gsudo\Current\gsudo.exe" --integrity Medium node scripts/native-tools.mjs
           exit $LASTEXITCODE
       - uses: actions/upload-artifact@v4
         if: always() && runner.os == 'Windows'

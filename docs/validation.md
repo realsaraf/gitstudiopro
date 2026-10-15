@@ -46,6 +46,16 @@ where local Git 2.41 used `+00:00`. The author/date test now asserts the exact
 stored Unix timestamp and author instead of that display spelling. Production
 behavior and the release executable are unchanged by this test correction.
 
+The Windows hosted UI check then exposed a runner-specific startup problem:
+the native process remained alive, but its debugging endpoint never opened.
+The runtime was present (WebView2 153). Microsoft documents that
+[WebView2 150+ ignores debugging environment variables in elevated processes](https://github.com/MicrosoftEdge/WebView2Feedback/issues/5645).
+CI now runs the native harness at normal user integrity, following
+[Tauri's own Windows test workflow](https://github.com/tauri-apps/tauri/blob/dev/.github/workflows/test-api-e2e.yml).
+This configuration is limited to the disposable hosted runner. The harness also
+records bounded startup logs and process-exit errors. All 41 local native UI
+scenarios passed again after the harness update.
+
 ## Git workflow and source-parity follow-up
 
 The [source-based parity audit](parity/README.md) records the inspected upstream
