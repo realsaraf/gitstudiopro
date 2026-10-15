@@ -53,6 +53,7 @@ export const demoCommits: Commit[] = messages.map((subject, i) => ({
             : [],
 }));
 export const demoSnapshot: Snapshot = {
+  operation: null,
   branch: 'feature/workspace',
   files: [
     { path: 'src/components/Workspace.tsx', index: ' ', worktree: 'M' },
@@ -74,7 +75,11 @@ export const demoSnapshot: Snapshot = {
     { name: 'origin', url: 'https://github.com/realsaraf/gitstudiopro.git' },
   ],
   stashes: [
-    { index: 0, message: 'On feature/workspace: explore compact history rows' },
+    {
+      index: 0,
+      id: 'demo-stash',
+      message: 'On feature/workspace: explore compact history rows',
+    },
   ],
 };
 export const demoFiles = [

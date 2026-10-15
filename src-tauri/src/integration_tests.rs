@@ -1,5 +1,9 @@
 //! Real Git integration: no network and no access to the user's repositories.
-use crate::{git::GitService, models::Request, process::git};
+use crate::{
+    git::GitService,
+    models::{Operation, OperationAction, Request},
+    process::git,
+};
 use std::path::Path;
 use tempfile::TempDir;
 
@@ -8,12 +12,329 @@ fn init(path: &Path) {
     git(path, &["config", "user.name", "Fixture Author"]).unwrap();
     git(path, &["config", "user.email", "fixture@example.invalid"]).unwrap();
     git(path, &["config", "commit.gpgsign", "false"]).unwrap();
+    git(path, &["config", "core.autocrlf", "false"]).unwrap();
     git(path, &["config", "core.hooksPath", ".git/no-hooks"]).unwrap();
 }
 fn commit(path: &Path, name: &str, contents: &str) {
     std::fs::write(path.join(name), contents).unwrap();
     git(path, &["add", "--", name]).unwrap();
     git(path, &["commit", "-m", contents]).unwrap();
+}
+
+fn history_request(operation: Operation, target: &str) -> Request {
+    match operation {
+        Operation::Merge => Request::Merge {
+            revision: target.into(),
+        },
+        Operation::Rebase => Request::Rebase {
+            revision: target.into(),
+        },
+        Operation::CherryPick => Request::CherryPick {
+            revision: target.into(),
+        },
+        Operation::Revert => Request::Revert {
+            revision: target.into(),
+        },
+    }
+}
+
+#[test]
+fn history_workflows_preserve_changes_and_recover_from_conflicts() {
+    for operation in [
+        Operation::Merge,
+        Operation::Rebase,
+        Operation::CherryPick,
+        Operation::Revert,
+    ] {
+        let dir = TempDir::new().unwrap();
+        init(dir.path());
+        commit(dir.path(), "conflict.txt", "base\n");
+        git(dir.path(), &["switch", "-c", "target"]).unwrap();
+        commit(dir.path(), "conflict.txt", "target\n");
+        let target = git(dir.path(), &["rev-parse", "HEAD"])
+            .unwrap()
+            .trim()
+            .to_owned();
+        if operation == Operation::Revert {
+            commit(dir.path(), "conflict.txt", "later\n");
+        } else {
+            git(dir.path(), &["switch", "main"]).unwrap();
+            commit(dir.path(), "conflict.txt", "local\n");
+        }
+        let before = git(dir.path(), &["rev-parse", "HEAD"]).unwrap();
+        let original = std::fs::read_to_string(dir.path().join("conflict.txt")).unwrap();
+        let service = GitService::default();
+        let path = service.open(dir.path().to_str().unwrap()).unwrap().path;
+        assert!(service
+            .execute(&path, history_request(operation, &target))
+            .is_err());
+        let state = service.execute(&path, Request::Snapshot).unwrap();
+        assert_eq!(state["operation"], operation.command());
+        assert!(service
+            .execute(
+                &path,
+                Request::Checkout {
+                    name: "target".into()
+                }
+            )
+            .is_err());
+        assert!(service
+            .execute(
+                &path,
+                Request::Operation {
+                    operation,
+                    action: OperationAction::Continue
+                }
+            )
+            .is_err());
+        service
+            .execute(
+                &path,
+                Request::Operation {
+                    operation,
+                    action: OperationAction::Abort,
+                },
+            )
+            .unwrap();
+        assert_eq!(before, git(dir.path(), &["rev-parse", "HEAD"]).unwrap());
+        assert_eq!(
+            original,
+            std::fs::read_to_string(dir.path().join("conflict.txt")).unwrap()
+        );
+        assert!(service
+            .execute(&path, history_request(operation, &target))
+            .is_err());
+        std::fs::write(dir.path().join("conflict.txt"), "resolved\n").unwrap();
+        service
+            .execute(
+                &path,
+                Request::Stage {
+                    file: "conflict.txt".into(),
+                },
+            )
+            .unwrap();
+        service
+            .execute(
+                &path,
+                Request::Operation {
+                    operation,
+                    action: OperationAction::Continue,
+                },
+            )
+            .unwrap();
+        assert!(service.execute(&path, Request::Snapshot).unwrap()["operation"].is_null());
+        assert_eq!(
+            "resolved\n",
+            std::fs::read_to_string(dir.path().join("conflict.txt")).unwrap()
+        );
+        assert!(git(dir.path(), &["status", "--porcelain"])
+            .unwrap()
+            .is_empty());
+    }
+}
+
+#[test]
+fn cherry_pick_and_rebase_skip_conflicting_commit() {
+    for operation in [Operation::CherryPick, Operation::Rebase] {
+        let dir = TempDir::new().unwrap();
+        init(dir.path());
+        commit(dir.path(), "file", "base");
+        git(dir.path(), &["switch", "-c", "target"]).unwrap();
+        commit(dir.path(), "file", "target");
+        git(dir.path(), &["switch", "main"]).unwrap();
+        commit(dir.path(), "file", "local");
+        let service = GitService::default();
+        let path = service.open(dir.path().to_str().unwrap()).unwrap().path;
+        assert!(service
+            .execute(&path, history_request(operation, "target"))
+            .is_err());
+        service
+            .execute(
+                &path,
+                Request::Operation {
+                    operation,
+                    action: OperationAction::Skip,
+                },
+            )
+            .unwrap();
+        assert!(service.execute(&path, Request::Snapshot).unwrap()["operation"].is_null());
+        assert_eq!(
+            std::fs::read_to_string(dir.path().join("file")).unwrap(),
+            if operation == Operation::Rebase {
+                "target"
+            } else {
+                "local"
+            }
+        );
+    }
+}
+
+#[test]
+fn dirty_history_operations_and_stale_stashes_are_refused() {
+    let dir = TempDir::new().unwrap();
+    init(dir.path());
+    commit(dir.path(), "file", "base");
+    let service = GitService::default();
+    let path = service.open(dir.path().to_str().unwrap()).unwrap().path;
+    std::fs::write(dir.path().join("file"), "dirty").unwrap();
+    for operation in [
+        Operation::Merge,
+        Operation::Rebase,
+        Operation::CherryPick,
+        Operation::Revert,
+    ] {
+        assert!(service
+            .execute(&path, history_request(operation, "HEAD"))
+            .unwrap_err()
+            .contains("Commit or stash"));
+    }
+    service
+        .execute(
+            &path,
+            Request::StashSave {
+                message: "first".into(),
+            },
+        )
+        .unwrap();
+    let first = service.execute(&path, Request::Snapshot).unwrap()["stashes"][0]["id"]
+        .as_str()
+        .unwrap()
+        .to_owned();
+    std::fs::write(dir.path().join("file"), "second").unwrap();
+    service
+        .execute(
+            &path,
+            Request::StashSave {
+                message: "second".into(),
+            },
+        )
+        .unwrap();
+    assert!(service
+        .execute(
+            &path,
+            Request::StashDrop {
+                index: 0,
+                expected: first.clone()
+            }
+        )
+        .is_err());
+    service
+        .execute(
+            &path,
+            Request::StashDrop {
+                index: 1,
+                expected: first,
+            },
+        )
+        .unwrap();
+    let second = service.execute(&path, Request::Snapshot).unwrap()["stashes"][0]["id"]
+        .as_str()
+        .unwrap()
+        .to_owned();
+    service
+        .execute(
+            &path,
+            Request::StashPop {
+                index: 0,
+                expected: second,
+            },
+        )
+        .unwrap();
+    assert_eq!(
+        std::fs::read_to_string(dir.path().join("file")).unwrap(),
+        "second"
+    );
+    assert!(
+        service.execute(&path, Request::Snapshot).unwrap()["stashes"]
+            .as_array()
+            .unwrap()
+            .is_empty()
+    );
+}
+
+#[test]
+fn branch_publish_tracking_rename_delete_and_tag() {
+    let remote = TempDir::new().unwrap();
+    git(remote.path(), &["init", "--bare", "-b", "main"]).unwrap();
+    let dir = TempDir::new().unwrap();
+    init(dir.path());
+    commit(dir.path(), "file", "base");
+    git(
+        dir.path(),
+        &["remote", "add", "origin", remote.path().to_str().unwrap()],
+    )
+    .unwrap();
+    let service = GitService::default();
+    let path = service.open(dir.path().to_str().unwrap()).unwrap().path;
+    service
+        .execute(
+            &path,
+            Request::Publish {
+                remote: "origin".into(),
+            },
+        )
+        .unwrap();
+    assert_eq!(
+        git(dir.path(), &["rev-parse", "--abbrev-ref", "@{upstream}"])
+            .unwrap()
+            .trim(),
+        "origin/main"
+    );
+    service
+        .execute(
+            &path,
+            Request::TrackBranch {
+                name: "tracked".into(),
+                reference: "origin/main".into(),
+            },
+        )
+        .unwrap();
+    service
+        .execute(
+            &path,
+            Request::RenameBranch {
+                name: "tracked".into(),
+                new_name: "renamed".into(),
+            },
+        )
+        .unwrap();
+    assert!(service
+        .execute(
+            &path,
+            Request::DeleteBranch {
+                name: "renamed".into()
+            }
+        )
+        .is_err());
+    service
+        .execute(
+            &path,
+            Request::Checkout {
+                name: "main".into(),
+            },
+        )
+        .unwrap();
+    service
+        .execute(
+            &path,
+            Request::DeleteBranch {
+                name: "renamed".into(),
+            },
+        )
+        .unwrap();
+    service
+        .execute(
+            &path,
+            Request::CreateTag {
+                name: "v-test".into(),
+                revision: "HEAD".into(),
+            },
+        )
+        .unwrap();
+    assert_eq!(
+        git(dir.path(), &["rev-parse", "v-test"]).unwrap(),
+        git(dir.path(), &["rev-parse", "HEAD"]).unwrap()
+    );
 }
 #[test]
 fn push_only_updates_current_upstream_and_pull_refuses_divergence() {

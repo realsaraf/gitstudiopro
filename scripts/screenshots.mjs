@@ -22,6 +22,10 @@ try {
     .getByText('pageSize: 150,', { exact: false })
     .waitFor();
   await capture('workspace');
+  await page.locator('.commit-row').first().click({ button: 'right' });
+  await page.getByRole('menu').waitFor();
+  await capture('commit-menu');
+  await page.keyboard.press('Escape');
   await page.getByRole('button', { name: 'Preferences', exact: true }).click();
   await capture('themes');
   await page.getByRole('button', { name: /Dracula/ }).click();

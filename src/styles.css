@@ -1294,6 +1294,48 @@ kbd {
   max-height: calc(100dvh - 70px);
   overflow: auto;
 }
+.action-menu {
+  position: fixed;
+  z-index: 50;
+  width: 280px;
+  max-height: min(400px, calc(100vh - 16px));
+  overflow: auto;
+  padding: 6px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--bg);
+  box-shadow: 0 12px 40px #0005;
+}
+.action-menu button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: 0;
+  padding: 11px;
+}
+.action-menu button:focus {
+  background: var(--raised);
+}
+.operation-banner {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 14px 20px;
+  border: 1px solid var(--accent);
+  background: var(--raised);
+  border-radius: 8px;
+  margin: 0 24px 12px;
+}
+.operation-banner > div {
+  flex: 1;
+  min-width: 240px;
+}
+.operation-banner p {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin-top: 5px;
+}
 .modal::backdrop {
   background: #15172288;
   backdrop-filter: blur(3px);

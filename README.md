@@ -19,6 +19,8 @@ one focused workspace.
 **0.1 is an early alpha.** Core local workflows are implemented; full Git Extensions
 parity, direct pull-request integrations, and AI assistance are not. See the
 [roadmap and known limits](docs/roadmap.md) and [validation evidence](docs/validation.md).
+The [source-based Git Extensions parity matrix](docs/parity/README.md) records
+what is implemented, native-tested, partial, and missing against a pinned upstream revision.
 
 ## Inside the workspace
 
@@ -27,7 +29,10 @@ parity, direct pull-request integrations, and AI assistance are not. See the
 - **Inspect every change.** File lists, commit metadata, unified or side-by-side
   diffs, line numbers, and keyboard selection.
 - **Make the next commit.** Stage and unstage individual files, write a commit,
-  create or switch branches, and save/apply stashes.
+  create/switch/rename branches, track remote branches, and save/apply/pop/drop stashes.
+- **Work with history.** Commit context menus expose cherry-pick, revert,
+  branch-at-commit, and tags. Branch menus expose merge/rebase. Conflicted
+  operations show Continue/Abort/Skip controls after external-editor resolution.
 - **Keep repositories close.** Independent tabs, recent folders, native directory
   selection, and a searchable command palette.
 - **Sync deliberately.** Fetch configured remotes, fast-forward pull, and push
@@ -52,6 +57,13 @@ why. AI and direct host integrations remain explicitly labeled as planned.
 ![Select themes directly from the command palette](docs/screenshots/command-themes.png)
 
 See the [command palette guide](docs/command-palette.md) for shortcuts and examples.
+
+Right-click a commit (or press **Shift+F10** in history) to open its actions.
+Repository, branch, and stash menus expose the corresponding operations.
+See the [native workflow test guide](docs/native-workflows.md) for reproducible
+UI-driven tests and the limits of that evidence.
+
+![Commit context menu in the read-only preview](docs/screenshots/commit-menu.png)
 
 ## Run locally
 
@@ -94,6 +106,7 @@ npm run build
 npm test
 npx playwright install chromium
 npm run test:e2e
+npm run test:native:workflows # Windows; requires a built native app
 cargo test --locked --manifest-path src-tauri/Cargo.toml
 cargo clippy --locked --manifest-path src-tauri/Cargo.toml --all-targets -- -D warnings
 npm run tauri -- build

@@ -25,6 +25,8 @@ Installed Git → local repository / configured remotes
   fail; it cannot silently substitute for a failed native request.
 - `src-tauri/src/models.rs` defines the serialized Rust contracts.
 - `src-tauri/src/git.rs` owns repository registration and supported operations.
+- `src-tauri/src/workflow.rs` handles history operations, Git operation-state
+  detection, recovery, branch management, publishing, and stash identity checks.
 - `src-tauri/src/process.rs` runs Git directly without a shell, drains both pipes,
   enforces payload/time limits, and returns errors to the UI.
 - `src/components/Workspace.tsx` orchestrates repository views and stale-request
@@ -75,5 +77,16 @@ No credentials or source files are stored in those preferences.
 - Stash includes untracked files and apply keeps the saved stash.
 - Pull requires an upstream and refuses divergent history. Push explicitly sends
   HEAD to the current branch's upstream ref, overriding mirror/follow-tags settings.
+- Merge, rebase, cherry-pick, and revert require a clean working tree and resolve
+  the selected target to a commit before execution. Pick/revert refuse merge
+  commits until a mainline selection UI exists.
+- Snapshots expose Git's active operation markers, including those in linked
+  worktrees. Failed operations also refresh the snapshot so conflicts and recovery
+  controls appear immediately. Continue requires no unresolved index entries.
+- Mutating commands unrelated to recovery are blocked during an active operation.
+  Abort/skip are explicit UI actions; normal commits cannot bypass recovery.
+- Stash apply/pop/drop include the selected object ID as well as its index and
+  refuse a stale selection. Apply/pop require clean files; pop retains Git's
+  normal conflict behavior. Branch deletion uses Git's merged-only check.
 
 See [SECURITY.md](../SECURITY.md) for the local trust model and execution limits.

@@ -14,7 +14,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "screenshots": "node scripts/screenshots.mjs",
-    "test:native": "node scripts/native-smoke.mjs"
+    "test:native": "node scripts/native-smoke.mjs",
+    "test:native:workflows": "node scripts/native-workflows.mjs"
   },
   "dependencies": {
     "@fontsource/inter": "^5.3.0",

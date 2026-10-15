@@ -3,6 +3,7 @@ mod git;
 mod integration_tests;
 mod models;
 mod process;
+mod workflow;
 
 use git::GitService;
 use models::{Repository, Request};

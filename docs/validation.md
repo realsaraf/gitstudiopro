@@ -1,7 +1,37 @@
 # Validation evidence
 
-Recorded on October 14, 2026, during the initial Windows development run.
+Initial evidence recorded October 14, 2026; workflow follow-up October 15, 2026.
 This describes observed checks, not a stable-release certification.
+
+## Git workflow and source-parity follow-up
+
+The [source-based parity audit](parity/README.md) records the inspected upstream
+revision, a reproducible menu/dialog inventory, and explicit remaining gaps.
+Full Git Extensions parity has not been achieved.
+
+- **12 Rust tests passed**, including real repositories/remotes, conflict recovery
+  for merge/rebase/cherry-pick/revert, stale stash selection, tracking/publishing,
+  and safe branch deletion. Clippy passed with warnings denied.
+- **9 frontend unit tests and 16 browser tests passed.** Browser coverage includes
+  right-click and Shift+F10 commit menus, keyboard navigation, focus restoration,
+  contextual actions, palette settings, and automated accessibility checks.
+- **23 Windows native UI scenarios passed** against the release executable,
+  using real IPC and Git in disposable repositories. Branches, commits,
+  publish/push rejection, fetch/pull, stash save/apply/pop/drop, history operations,
+  and conflict abort/continue/skip are covered. Git independently checks the refs,
+  files, index, and remote results. See the [workflow guide](native-workflows.md).
+
+The native suite uses local bare remotes, not authenticated GitHub/GitLab traffic.
+Conflict file text is resolved through a simulated external-editor step; staging
+and recovery use UI controls. This does not validate a built-in conflict editor,
+all upstream options, physical macOS interaction, installer execution, or signing.
+Screenshots and a trace are retained in ignored `artifacts/native-workflows/`.
+
+The workflow follow-up Windows executable and NSIS installer rebuilt successfully.
+Installer SHA-256:
+`3BE7AD35B282666AB5DC32C973C878CF311A6C9E3A6B11F8336058250FFC02A2`.
+The installer was built but not executed. This follow-up needs its own macOS CI
+result; the successful earlier CI runs below do not validate the new code.
 
 ## Command palette follow-up
 
@@ -19,8 +49,9 @@ passed direct Dracula selection, text-size changes, palette focus/reopening, and
 the existing real Git stage/commit/branch workflow in a disposable repository and
 profile. The installer SHA-256 for this follow-up is
 `8D298A03D50BD8DB42614E78EB2661C2C687590EF74F0A6226521C9DD45AD631`.
-The installer itself was not executed. The macOS evidence below applies to the
-initial revision; this follow-up still requires its own macOS CI/build result.
+The installer itself was not executed. The [palette follow-up CI run](https://github.com/realsaraf/gitstudiopro/actions/runs/38678889942)
+subsequently passed at `e0c9dd7712cff74e4dc7ceb9c2a82cf1cfbc3372`.
+That evidence applies to the palette revision, not the later workflow changes.
 
 ## Initial alpha checks
 

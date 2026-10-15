@@ -41,6 +41,7 @@ pub struct Remote {
 #[derive(Serialize)]
 pub struct Stash {
     pub index: usize,
+    pub id: String,
     pub message: String,
 }
 #[derive(Serialize)]
@@ -50,10 +51,41 @@ pub struct Snapshot {
     pub branches: Vec<Branch>,
     pub remotes: Vec<Remote>,
     pub stashes: Vec<Stash>,
+    pub operation: Option<Operation>,
+}
+
+#[derive(Serialize, Deserialize, Debug, PartialEq, Eq, Clone, Copy)]
+#[serde(rename_all = "kebab-case")]
+pub enum Operation {
+    Merge,
+    Rebase,
+    CherryPick,
+    Revert,
+}
+impl Operation {
+    pub fn command(self) -> &'static str {
+        match self {
+            Self::Merge => "merge",
+            Self::Rebase => "rebase",
+            Self::CherryPick => "cherry-pick",
+            Self::Revert => "revert",
+        }
+    }
+}
+#[derive(Deserialize, Clone, Copy)]
+#[serde(rename_all = "camelCase")]
+pub enum OperationAction {
+    Continue,
+    Abort,
+    Skip,
 }
 
 #[derive(Deserialize)]
-#[serde(tag = "kind", rename_all = "camelCase")]
+#[serde(
+    tag = "kind",
+    rename_all = "camelCase",
+    rename_all_fields = "camelCase"
+)]
 pub enum Request {
     Snapshot,
     History {
@@ -92,6 +124,55 @@ pub enum Request {
     },
     StashApply {
         index: usize,
+        expected: String,
+    },
+    StashPop {
+        index: usize,
+        expected: String,
+    },
+    StashDrop {
+        index: usize,
+        expected: String,
+    },
+    RenameBranch {
+        name: String,
+        new_name: String,
+    },
+    DeleteBranch {
+        name: String,
+    },
+    TrackBranch {
+        name: String,
+        reference: String,
+    },
+    CreateBranchAt {
+        name: String,
+        revision: String,
+    },
+    Publish {
+        remote: String,
+    },
+    Merge {
+        revision: String,
+    },
+    Rebase {
+        revision: String,
+    },
+    CherryPick {
+        revision: String,
+    },
+    Revert {
+        revision: String,
+    },
+    CreateTag {
+        name: String,
+        revision: String,
+    },
+    StageAll,
+    UnstageAll,
+    Operation {
+        operation: Operation,
+        action: OperationAction,
     },
     Fetch {
         remote: String,

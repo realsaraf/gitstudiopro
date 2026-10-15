@@ -1,0 +1,3060 @@
+{
+  "upstream": "https://github.com/gitextensions/gitextensions",
+  "revision": "813f48be0d91699124f61a1fa6c0fd5e376d3b81",
+  "scope": "Literal menu labels, top-level Form classes, public GitUICommands methods, and controls from selected operation dialogs. Dynamic menus, plugins and translated resources need manual follow-up. Counts are source surfaces, not independent features or parity percentages.",
+  "counts": {
+    "menuItems": 237,
+    "dialogs": 91,
+    "commandEntrypoints": 98,
+    "dialogControls": 173
+  },
+  "menuItems": [
+    {
+      "source": "src/app/GitUI/CommandsDialogs/BrowseDialog/FormRecentReposSettings.Designer.cs",
+      "line": 358,
+      "control": "anchorToTopReposToolStripMenuItem",
+      "label": "Anchor to top repositories"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/BrowseDialog/FormRecentReposSettings.Designer.cs",
+      "line": 365,
+      "control": "anchorToRecentReposToolStripMenuItem",
+      "label": "Anchor to recent repositories"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/BrowseDialog/FormRecentReposSettings.Designer.cs",
+      "line": 372,
+      "control": "removeAnchorToolStripMenuItem",
+      "label": "Remove anchor"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/BrowseDialog/FormRecentReposSettings.Designer.cs",
+      "line": 379,
+      "control": "removeRecentToolStripMenuItem",
+      "label": "Remove from recent repositories"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 283,
+      "control": "commitInfoBelowMenuItem",
+      "label": "Commit info below graph"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 291,
+      "control": "commitInfoLeftwardMenuItem",
+      "label": "Commit info left of graph"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 299,
+      "control": "commitInfoRightwardMenuItem",
+      "label": "Commit info right of graph"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 367,
+      "control": "stashChangesToolStripMenuItem",
+      "label": "Stash"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 375,
+      "control": "stashStagedToolStripMenuItem",
+      "label": "Stash staged"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 383,
+      "control": "stashPopToolStripMenuItem",
+      "label": "Stash pop"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 396,
+      "control": "manageStashesToolStripMenuItem",
+      "label": "Manage stashes..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 404,
+      "control": "createAStashToolStripMenuItem",
+      "label": "Create a stash..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 446,
+      "control": "mergeToolStripMenuItem",
+      "label": "Pull - merge"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 454,
+      "control": "rebaseToolStripMenuItem1",
+      "label": "Pull - rebase"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 462,
+      "control": "fetchToolStripMenuItem",
+      "label": "Fetch"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 471,
+      "control": "pullToolStripMenuItem1",
+      "label": "Open pull dialog..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 479,
+      "control": "fetchAllToolStripMenuItem",
+      "label": "Fetch all"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 488,
+      "control": "fetchPruneAllToolStripMenuItem",
+      "label": "Fetch and prune all"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 496,
+      "control": "setDefaultPullButtonActionToolStripMenuItem",
+      "label": "Set default Pull button action"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 792,
+      "control": "closeToolStripMenuItem",
+      "label": "Close (go to Dashboard)"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 800,
+      "control": "refreshToolStripMenuItem",
+      "label": "Refresh"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 808,
+      "control": "refreshDashboardToolStripMenuItem",
+      "label": "Refresh"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 818,
+      "control": "fileExplorerToolStripMenuItem",
+      "label": "File Explorer"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 847,
+      "control": "repositoryToolStripMenuItem",
+      "label": "Repository"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 859,
+      "control": "manageRemoteRepositoriesToolStripMenuItem1",
+      "label": "Remote repositories..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 872,
+      "control": "manageSubmodulesToolStripMenuItem",
+      "label": "Manage submodules..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 880,
+      "control": "updateAllSubmodulesToolStripMenuItem",
+      "label": "Update all submodules"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 888,
+      "control": "synchronizeAllSubmodulesToolStripMenuItem",
+      "label": "Synchronize all submodules"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 901,
+      "control": "manageWorktreeToolStripMenuItem",
+      "label": "Manage worktrees..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 914,
+      "control": "editgitignoreToolStripMenuItem1",
+      "label": "Edit .gitignore"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 921,
+      "control": "editgitinfoexcludeToolStripMenuItem",
+      "label": "Edit .git/info/exclude"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 928,
+      "control": "editGitAttributesToolStripMenuItem",
+      "label": "Edit .gitattributes"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 935,
+      "control": "editmailmapToolStripMenuItem",
+      "label": "Edit .mailmap"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 942,
+      "control": "menuitemSparse",
+      "label": "Sparse Working Copy"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 960,
+      "control": "gitMaintenanceToolStripMenuItem",
+      "label": "Git maintenance"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 967,
+      "control": "compressGitDatabaseToolStripMenuItem",
+      "label": "Compress git database"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 975,
+      "control": "recoverLostObjectsToolStripMenuItem",
+      "label": "Recover lost objects..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 983,
+      "control": "deleteIndexLockToolStripMenuItem",
+      "label": "Delete index.lock"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 991,
+      "control": "editLocalGitConfigToolStripMenuItem",
+      "label": "Edit .git/config"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 999,
+      "control": "repoSettingsToolStripMenuItem",
+      "label": "Repository settings..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 1040,
+      "control": "commandsToolStripMenuItem",
+      "label": "Commands"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 1047,
+      "control": "commitToolStripMenuItem",
+      "label": "Commit..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 1055,
+      "control": "undoLastCommitToolStripMenuItem",
+      "label": "Undo last commit..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 1063,
+      "control": "pullToolStripMenuItem",
+      "label": "Pull/Fetch..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 1071,
+      "control": "pushToolStripMenuItem",
+      "label": "Push..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 1084,
+      "control": "stashToolStripMenuItem",
+      "label": "Manage stashes..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 1092,
+      "control": "resetToolStripMenuItem",
+      "label": "Reset changes..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 1100,
+      "control": "cleanupToolStripMenuItem",
+      "label": "Clean working directory..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 1113,
+      "control": "branchToolStripMenuItem",
+      "label": "Create branch..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 1121,
+      "control": "deleteBranchToolStripMenuItem",
+      "label": "Delete branch..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 1129,
+      "control": "checkoutBranchToolStripMenuItem",
+      "label": "Checkout branch..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 1137,
+      "control": "mergeBranchToolStripMenuItem",
+      "label": "Merge branches..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 1145,
+      "control": "rebaseToolStripMenuItem",
+      "label": "Rebase..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 1153,
+      "control": "runMergetoolToolStripMenuItem",
+      "label": "Solve merge conflicts..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 1166,
+      "control": "tagToolStripMenuItem",
+      "label": "Create tag..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 1174,
+      "control": "deleteTagToolStripMenuItem",
+      "label": "Delete tag..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 1187,
+      "control": "cherryPickToolStripMenuItem",
+      "label": "Cherry pick..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 1195,
+      "control": "archiveToolStripMenuItem",
+      "label": "Archive revision..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 1203,
+      "control": "checkoutToolStripMenuItem",
+      "label": "Checkout revision..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 1211,
+      "control": "bisectToolStripMenuItem",
+      "label": "Bisect..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 1219,
+      "control": "toolStripMenuItemReflog",
+      "label": "Show reflog..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 1232,
+      "control": "formatPatchToolStripMenuItem",
+      "label": "Format patch..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 1240,
+      "control": "applyPatchToolStripMenuItem",
+      "label": "Apply patch..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 1248,
+      "control": "patchToolStripMenuItem",
+      "label": "View patch file..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 1270,
+      "control": "_repositoryHostsToolStripMenuItem",
+      "label": "(Repository hosts)"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 1276,
+      "control": "_forkCloneRepositoryToolStripMenuItem",
+      "label": "Fork/Clone repository..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 1283,
+      "control": "_viewPullRequestsToolStripMenuItem",
+      "label": "View pull requests..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 1290,
+      "control": "_createPullRequestsToolStripMenuItem",
+      "label": "Create pull requests..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 1300,
+      "control": "dashboardToolStripMenuItem",
+      "label": "Dashboard"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 1307,
+      "control": "pluginsToolStripMenuItem",
+      "label": "Plugins"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 1319,
+      "control": "pluginSettingsToolStripMenuItem",
+      "label": "Plugins settings..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 1331,
+      "control": "toolsToolStripMenuItem",
+      "label": "Tools"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 1389,
+      "control": "_addUpstreamRemoteToolStripMenuItem",
+      "label": "Add upstream remote"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormBrowse.Designer.cs",
+      "line": 1413,
+      "control": "pluginsLoadingToolStripMenuItem",
+      "label": "Loading..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 650,
+      "control": "commitMessageToolStripMenuItem",
+      "label": "Commit message"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 661,
+      "control": "ShowOnlyMyMessagesToolStripMenuItem",
+      "label": "Show only my messages"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 673,
+      "control": "generateListOfChangesInSubmodulesChangesToolStripMenuItem",
+      "label": "Generate a list of changes in submodules"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 703,
+      "control": "closeDialogAfterEachCommitToolStripMenuItem",
+      "label": "Close dialog after each commit"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 710,
+      "control": "closeDialogAfterAllFilesCommittedToolStripMenuItem",
+      "label": "Close dialog when all changes are committed"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 717,
+      "control": "refreshDialogOnFormFocusToolStripMenuItem",
+      "label": "Refresh dialog on form focus"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 736,
+      "control": "signOffToolStripMenuItem",
+      "label": "Sign-off commit"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 760,
+      "control": "noVerifyToolStripMenuItem",
+      "label": "No verify"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 794,
+      "control": "commitTemplatesToolStripMenuItem",
+      "label": "Commit templates"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormDiff.Designer.cs",
+      "line": 317,
+      "control": "diffShowInFileTreeToolStripMenuItem",
+      "label": "Show in File tree"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormFileHistory.Designer.cs",
+      "line": 127,
+      "control": "copyToClipboardToolStripMenuItem",
+      "label": "Copy to clipboard"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormFileHistory.Designer.cs",
+      "line": 140,
+      "control": "openWithDifftoolToolStripMenuItem",
+      "label": "Open with difftool"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormFileHistory.Designer.cs",
+      "line": 147,
+      "control": "diffToolRemoteLocalStripMenuItem",
+      "label": "Difftool selected < - > local"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormFileHistory.Designer.cs",
+      "line": 155,
+      "control": "saveAsToolStripMenuItem",
+      "label": "Save as"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormFileHistory.Designer.cs",
+      "line": 170,
+      "control": "manipulateCommitToolStripMenuItem",
+      "label": "Manipulate commit"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormFileHistory.Designer.cs",
+      "line": 177,
+      "control": "revertCommitToolStripMenuItem",
+      "label": "Revert commit"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormFileHistory.Designer.cs",
+      "line": 185,
+      "control": "cherryPickThisCommitToolStripMenuItem",
+      "label": "Cherry pick commit"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormFileHistory.Designer.cs",
+      "line": 197,
+      "control": "followFileHistoryToolStripMenuItem",
+      "label": "Detect and follow renames"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormFileHistory.Designer.cs",
+      "line": 204,
+      "control": "followFileHistoryRenamesToolStripMenuItem",
+      "label": "Detect and follow - exact renames and copies only"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormFileHistory.Designer.cs",
+      "line": 343,
+      "control": "loadHistoryOnShowToolStripMenuItem",
+      "label": "Load history on show"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormFileHistory.Designer.cs",
+      "line": 352,
+      "control": "loadBlameOnShowToolStripMenuItem",
+      "label": "Load blame on show"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormFileHistory.Designer.cs",
+      "line": 370,
+      "control": "showFullHistoryToolStripMenuItem",
+      "label": "Show full history"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormFileHistory.Designer.cs",
+      "line": 377,
+      "control": "simplifyMergesToolStripMenuItem",
+      "label": "Simplify merges"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormFileHistory.Designer.cs",
+      "line": 408,
+      "control": "blameSettingsToolStripMenuItem",
+      "label": "Blame settings:"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormFileHistory.Designer.cs",
+      "line": 414,
+      "control": "ignoreWhitespaceToolStripMenuItem",
+      "label": "Ignore whitespace"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormFileHistory.Designer.cs",
+      "line": 421,
+      "control": "detectMoveAndCopyInThisFileToolStripMenuItem",
+      "label": "Detect move and copy in this file"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormFileHistory.Designer.cs",
+      "line": 428,
+      "control": "detectMoveAndCopyInAllFilesToolStripMenuItem",
+      "label": "Detect move and copy in all files"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormFileHistory.Designer.cs",
+      "line": 441,
+      "control": "displaySettingsToolStripMenuItem",
+      "label": "Display result settings:"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormFileHistory.Designer.cs",
+      "line": 447,
+      "control": "displayAuthorFirstToolStripMenuItem",
+      "label": "Display author first"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormFileHistory.Designer.cs",
+      "line": 454,
+      "control": "showAuthorToolStripMenuItem",
+      "label": "Show author"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormFileHistory.Designer.cs",
+      "line": 461,
+      "control": "showAuthorDateToolStripMenuItem",
+      "label": "Show author date"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormFileHistory.Designer.cs",
+      "line": 468,
+      "control": "showAuthorTimeToolStripMenuItem",
+      "label": "Show author time"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormFileHistory.Designer.cs",
+      "line": 475,
+      "control": "showLineNumbersToolStripMenuItem",
+      "label": "Show line numbers"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormFileHistory.Designer.cs",
+      "line": 482,
+      "control": "showOriginalFilePathToolStripMenuItem",
+      "label": "Show original file path"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormFileHistory.Designer.cs",
+      "line": 489,
+      "control": "showAuthorAvatarToolStripMenuItem",
+      "label": "Show author avatar"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPush.Designer.cs",
+      "line": 553,
+      "control": "unselectAllToolStripMenuItem",
+      "label": "Unselect all"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPush.Designer.cs",
+      "line": 560,
+      "control": "selectTrackedToolStripMenuItem",
+      "label": "Select tracked"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPush.Designer.cs",
+      "line": 567,
+      "control": "selectAllToolStripMenuItem",
+      "label": "Select all"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormReflog.Designer.cs",
+      "line": 219,
+      "control": "copySha1ToolStripMenuItem",
+      "label": "Copy SHA-1"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormReflog.Designer.cs",
+      "line": 227,
+      "control": "createABranchOnThisCommitToolStripMenuItem",
+      "label": "Create a branch on this commit..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormReflog.Designer.cs",
+      "line": 235,
+      "control": "resetCurrentBranchOnThisCommitToolStripMenuItem",
+      "label": "Reset current branch to this commit..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormResolveConflicts.Designer.cs",
+      "line": 269,
+      "control": "openToolStripMenuItem",
+      "label": "Open"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormResolveConflicts.Designer.cs",
+      "line": 276,
+      "control": "openWithToolStripMenuItem",
+      "label": "Open With"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormResolveConflicts.Designer.cs",
+      "line": 284,
+      "control": "openFolderToolStripMenuItem",
+      "label": "Show in folder"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormResolveConflicts.Designer.cs",
+      "line": 296,
+      "control": "fileHistoryToolStripMenuItem",
+      "label": "File history"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormVerify.Designer.cs",
+      "line": 375,
+      "control": "copyHashToolStripMenuItem",
+      "label": "Copy object hash"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormVerify.Designer.cs",
+      "line": 383,
+      "control": "copyParentHashToolStripMenuItem",
+      "label": "Copy parent hash"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormVerify.Designer.cs",
+      "line": 392,
+      "control": "saveAsToolStripMenuItem",
+      "label": "Save as..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/Menus/CopyPathsToolStripMenuItem.Designer.cs",
+      "line": 56,
+      "control": "copyRelativePathsPosixToolStripMenuItem",
+      "label": "Copy relative path(s) - POSIX"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/Menus/CopyPathsToolStripMenuItem.Designer.cs",
+      "line": 63,
+      "control": "copyRelativePathsNativeToolStripMenuItem",
+      "label": "Copy relative path(s) - native"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/Menus/CopyPathsToolStripMenuItem.Designer.cs",
+      "line": 71,
+      "control": "copyFullPathsNativeToolStripMenuItem",
+      "label": "Copy full path(s) - native"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/Menus/CopyPathsToolStripMenuItem.Designer.cs",
+      "line": 78,
+      "control": "copyFullPathsWslToolStripMenuItem",
+      "label": "Copy full path(s) - WSL"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/Menus/CopyPathsToolStripMenuItem.Designer.cs",
+      "line": 85,
+      "control": "copyFullPathsCygwinToolStripMenuItem",
+      "label": "Copy full path(s) - Cygwin"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/Menus/HelpToolStripMenuItem.Designer.cs",
+      "line": 48,
+      "control": "userManualToolStripMenuItem",
+      "label": "User manual"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/Menus/HelpToolStripMenuItem.Designer.cs",
+      "line": 56,
+      "control": "changelogToolStripMenuItem",
+      "label": "Changelog"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/Menus/HelpToolStripMenuItem.Designer.cs",
+      "line": 69,
+      "control": "translateToolStripMenuItem",
+      "label": "Translate"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/Menus/HelpToolStripMenuItem.Designer.cs",
+      "line": 82,
+      "control": "donateToolStripMenuItem",
+      "label": "Donate"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/Menus/HelpToolStripMenuItem.Designer.cs",
+      "line": 99,
+      "control": "reportAnIssueToolStripMenuItem",
+      "label": "Report an issue"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/Menus/HelpToolStripMenuItem.Designer.cs",
+      "line": 107,
+      "control": "checkForUpdatesToolStripMenuItem",
+      "label": "Check for updates"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/Menus/HelpToolStripMenuItem.Designer.cs",
+      "line": 115,
+      "control": "aboutToolStripMenuItem",
+      "label": "About"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/Menus/StartToolStripMenuItem.Designer.cs",
+      "line": 40,
+      "control": "toolStripMenuItem2",
+      "label": "..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/Menus/StartToolStripMenuItem.Designer.cs",
+      "line": 46,
+      "control": "toolStripMenuItem4",
+      "label": "..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/Menus/StartToolStripMenuItem.Designer.cs",
+      "line": 53,
+      "control": "initNewRepositoryToolStripMenuItem",
+      "label": "Create new repository..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/Menus/StartToolStripMenuItem.Designer.cs",
+      "line": 61,
+      "control": "openToolStripMenuItem",
+      "label": "Open..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/Menus/StartToolStripMenuItem.Designer.cs",
+      "line": 108,
+      "control": "cloneToolStripMenuItem",
+      "label": "Clone repository..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/Menus/StartToolStripMenuItem.Designer.cs",
+      "line": 121,
+      "control": "exitToolStripMenuItem",
+      "label": "Exit"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/Menus/ToolsToolStripMenuItem.Designer.cs",
+      "line": 49,
+      "control": "gitBashToolStripMenuItem",
+      "label": "Git bash"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/Menus/ToolsToolStripMenuItem.Designer.cs",
+      "line": 57,
+      "control": "gitGUIToolStripMenuItem",
+      "label": "Git GUI"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/Menus/ToolsToolStripMenuItem.Designer.cs",
+      "line": 65,
+      "control": "kGitToolStripMenuItem",
+      "label": "GitK"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/Menus/ToolsToolStripMenuItem.Designer.cs",
+      "line": 81,
+      "control": "PuTTYToolStripMenuItem",
+      "label": "PuTTY"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/Menus/ToolsToolStripMenuItem.Designer.cs",
+      "line": 88,
+      "control": "startAuthenticationAgentToolStripMenuItem",
+      "label": "Start authentication agent"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/Menus/ToolsToolStripMenuItem.Designer.cs",
+      "line": 96,
+      "control": "generateOrImportKeyToolStripMenuItem",
+      "label": "Generate or import key"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/Menus/ToolsToolStripMenuItem.Designer.cs",
+      "line": 110,
+      "control": "gitcommandLogToolStripMenuItem",
+      "label": "Git command log"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/Menus/ToolsToolStripMenuItem.Designer.cs",
+      "line": 123,
+      "control": "settingsToolStripMenuItem",
+      "label": "Settings..."
+    },
+    {
+      "source": "src/app/GitUI/CommitInfo/CommitInfo.Designer.cs",
+      "line": 116,
+      "control": "copyLinkToolStripMenuItem",
+      "label": "Copy link"
+    },
+    {
+      "source": "src/app/GitUI/CommitInfo/CommitInfo.Designer.cs",
+      "line": 123,
+      "control": "copyCommitInfoToolStripMenuItem",
+      "label": "Copy commit info"
+    },
+    {
+      "source": "src/app/GitUI/CommitInfo/CommitInfo.Designer.cs",
+      "line": 135,
+      "control": "showContainedInBranchesToolStripMenuItem",
+      "label": "Show local branches containing this commit"
+    },
+    {
+      "source": "src/app/GitUI/CommitInfo/CommitInfo.Designer.cs",
+      "line": 142,
+      "control": "showContainedInBranchesRemoteToolStripMenuItem",
+      "label": "Show remote branches containing this commit"
+    },
+    {
+      "source": "src/app/GitUI/CommitInfo/CommitInfo.Designer.cs",
+      "line": 149,
+      "control": "showContainedInBranchesRemoteIfNoLocalToolStripMenuItem",
+      "label": "Show remote branches only when no local branch contains this commit"
+    },
+    {
+      "source": "src/app/GitUI/CommitInfo/CommitInfo.Designer.cs",
+      "line": 156,
+      "control": "showContainedInTagsToolStripMenuItem",
+      "label": "Show tags containing this commit"
+    },
+    {
+      "source": "src/app/GitUI/CommitInfo/CommitInfo.Designer.cs",
+      "line": 163,
+      "control": "showMessagesOfAnnotatedTagsToolStripMenuItem",
+      "label": "Show messages of annotated tags"
+    },
+    {
+      "source": "src/app/GitUI/CommitInfo/CommitInfo.Designer.cs",
+      "line": 170,
+      "control": "showTagThisCommitDerivesFromMenuItem",
+      "label": "Show the most recent tag this commit derives from"
+    },
+    {
+      "source": "src/app/GitUI/CommitInfo/CommitInfo.Designer.cs",
+      "line": 182,
+      "control": "addNoteToolStripMenuItem",
+      "label": "Add notes"
+    },
+    {
+      "source": "src/app/GitUI/Editor/FileViewer.Designer.cs",
+      "line": 130,
+      "control": "copyToolStripMenuItem",
+      "label": "Copy"
+    },
+    {
+      "source": "src/app/GitUI/Editor/FileViewer.Designer.cs",
+      "line": 137,
+      "control": "copyPatchToolStripMenuItem",
+      "label": "Copy patch"
+    },
+    {
+      "source": "src/app/GitUI/Editor/FileViewer.Designer.cs",
+      "line": 144,
+      "control": "copyNewVersionToolStripMenuItem",
+      "label": "Copy new version"
+    },
+    {
+      "source": "src/app/GitUI/Editor/FileViewer.Designer.cs",
+      "line": 151,
+      "control": "copyOldVersionToolStripMenuItem",
+      "label": "Copy old version"
+    },
+    {
+      "source": "src/app/GitUI/Editor/FileViewer.Designer.cs",
+      "line": 159,
+      "control": "findToolStripMenuItem",
+      "label": "Find..."
+    },
+    {
+      "source": "src/app/GitUI/Editor/FileViewer.Designer.cs",
+      "line": 166,
+      "control": "replaceToolStripMenuItem",
+      "label": "Replace..."
+    },
+    {
+      "source": "src/app/GitUI/Editor/FileViewer.Designer.cs",
+      "line": 178,
+      "control": "ignoreWhitespaceAtEolToolStripMenuItem",
+      "label": "Ignore whitespace changes at end of line"
+    },
+    {
+      "source": "src/app/GitUI/Editor/FileViewer.Designer.cs",
+      "line": 185,
+      "control": "ignoreWhitespaceChangesToolStripMenuItem",
+      "label": "Ignore changes in amount of whitespace"
+    },
+    {
+      "source": "src/app/GitUI/Editor/FileViewer.Designer.cs",
+      "line": 192,
+      "control": "ignoreAllWhitespaceChangesToolStripMenuItem",
+      "label": "Ignore all whitespace changes"
+    },
+    {
+      "source": "src/app/GitUI/Editor/FileViewer.Designer.cs",
+      "line": 200,
+      "control": "increaseNumberOfLinesToolStripMenuItem",
+      "label": "Increase the number of lines of context"
+    },
+    {
+      "source": "src/app/GitUI/Editor/FileViewer.Designer.cs",
+      "line": 208,
+      "control": "decreaseNumberOfLinesToolStripMenuItem",
+      "label": "Decrease the number of lines of context"
+    },
+    {
+      "source": "src/app/GitUI/Editor/FileViewer.Designer.cs",
+      "line": 216,
+      "control": "showEntireFileToolStripMenuItem",
+      "label": "Show entire file"
+    },
+    {
+      "source": "src/app/GitUI/Editor/FileViewer.Designer.cs",
+      "line": 224,
+      "control": "showSyntaxHighlightingToolStripMenuItem",
+      "label": "Show syntax highlighting"
+    },
+    {
+      "source": "src/app/GitUI/Editor/FileViewer.Designer.cs",
+      "line": 238,
+      "control": "diffAppearanceToolStripMenuItem",
+      "label": "Diff appearance"
+    },
+    {
+      "source": "src/app/GitUI/Editor/FileViewer.Designer.cs",
+      "line": 246,
+      "control": "showPatchToolStripMenuItem",
+      "label": "Patch"
+    },
+    {
+      "source": "src/app/GitUI/Editor/FileViewer.Designer.cs",
+      "line": 254,
+      "control": "showGitWordColoringToolStripMenuItem",
+      "label": "Git word diff"
+    },
+    {
+      "source": "src/app/GitUI/Editor/FileViewer.Designer.cs",
+      "line": 262,
+      "control": "showDifftasticToolStripMenuItem",
+      "label": "Difftastic"
+    },
+    {
+      "source": "src/app/GitUI/Editor/FileViewer.Designer.cs",
+      "line": 275,
+      "control": "treatAllFilesAsTextToolStripMenuItem",
+      "label": "Treat all files as text"
+    },
+    {
+      "source": "src/app/GitUI/Editor/FileViewer.Designer.cs",
+      "line": 290,
+      "control": "showNonprintableCharactersToolStripMenuItem",
+      "label": "Show nonprinting characters"
+    },
+    {
+      "source": "src/app/GitUI/Editor/FileViewer.Designer.cs",
+      "line": 297,
+      "control": "goToLineToolStripMenuItem",
+      "label": "Go to line"
+    },
+    {
+      "source": "src/app/GitUI/LeftPanel/RepoObjectsTree.Designer.cs",
+      "line": 226,
+      "control": "copyContextMenuItem",
+      "label": "Copy to clipboard"
+    },
+    {
+      "source": "src/app/GitUI/LeftPanel/RepoObjectsTree.Designer.cs",
+      "line": 233,
+      "control": "filterForSelectedRefsMenuItem",
+      "label": "Filter for selected"
+    },
+    {
+      "source": "src/app/GitUI/LeftPanel/RepoObjectsTree.Designer.cs",
+      "line": 626,
+      "control": "runScriptToolStripMenuItem",
+      "label": "Run script"
+    },
+    {
+      "source": "src/app/GitUI/UserControls/AvatarControl.Designer.cs",
+      "line": 58,
+      "control": "clearImagecacheToolStripMenuItem",
+      "label": "Clear image cache"
+    },
+    {
+      "source": "src/app/GitUI/UserControls/AvatarControl.Designer.cs",
+      "line": 65,
+      "control": "avatarProviderToolStripMenuItem",
+      "label": "Avatar provider"
+    },
+    {
+      "source": "src/app/GitUI/UserControls/AvatarControl.Designer.cs",
+      "line": 72,
+      "control": "fallbackAvatarStyleToolStripMenuItem",
+      "label": "Fallback generated avatar style"
+    },
+    {
+      "source": "src/app/GitUI/UserControls/AvatarControl.Designer.cs",
+      "line": 84,
+      "control": "registerGravatarToolStripMenuItem",
+      "label": "Register at gravatar.com"
+    },
+    {
+      "source": "src/app/GitUI/UserControls/BlameControl.Designer.cs",
+      "line": 124,
+      "control": "blameRevisionToolStripMenuItem",
+      "label": "Blame this revision"
+    },
+    {
+      "source": "src/app/GitUI/UserControls/BlameControl.Designer.cs",
+      "line": 132,
+      "control": "blamePreviousRevisionToolStripMenuItem",
+      "label": "Blame previous revision"
+    },
+    {
+      "source": "src/app/GitUI/UserControls/BlameControl.Designer.cs",
+      "line": 140,
+      "control": "showChangesToolStripMenuItem",
+      "label": "Show changes"
+    },
+    {
+      "source": "src/app/GitUI/UserControls/BlameControl.Designer.cs",
+      "line": 152,
+      "control": "copyToClipboardToolStripMenuItem",
+      "label": "Copy to clipboard"
+    },
+    {
+      "source": "src/app/GitUI/UserControls/BlameControl.Designer.cs",
+      "line": 159,
+      "control": "commitHashToolStripMenuItem",
+      "label": "Commit hash"
+    },
+    {
+      "source": "src/app/GitUI/UserControls/BlameControl.Designer.cs",
+      "line": 167,
+      "control": "commitMessageToolStripMenuItem",
+      "label": "Commit message"
+    },
+    {
+      "source": "src/app/GitUI/UserControls/BlameControl.Designer.cs",
+      "line": 175,
+      "control": "allCommitInfoToolStripMenuItem",
+      "label": "All commit info"
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 178,
+      "control": "markRevisionAsBadToolStripMenuItem",
+      "label": "Mark revision as bad"
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 186,
+      "control": "markRevisionAsGoodToolStripMenuItem",
+      "label": "Mark revision as good"
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 194,
+      "control": "bisectSkipRevisionToolStripMenuItem",
+      "label": "Skip revision"
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 202,
+      "control": "stopBisectToolStripMenuItem",
+      "label": "Stop bisect"
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 220,
+      "control": "applyStashToolStripMenuItem",
+      "label": "Apply stash"
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 228,
+      "control": "popStashToolStripMenuItem",
+      "label": "Pop stash"
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 236,
+      "control": "dropStashToolStripMenuItem",
+      "label": "Drop stash..."
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 249,
+      "control": "checkoutBranchToolStripMenuItem",
+      "label": "Checkout branch..."
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 257,
+      "control": "mergeBranchToolStripMenuItem",
+      "label": "Merge into current branch..."
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 270,
+      "control": "rebaseOnToolStripMenuItem",
+      "label": "Rebase current branch on"
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 278,
+      "control": "resetCurrentBranchToHereToolStripMenuItem",
+      "label": "Reset current branch to here..."
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 286,
+      "control": "resetChangesToolStripMenuItem",
+      "label": "Reset changes"
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 294,
+      "control": "commitToolStripMenuItem",
+      "label": "Commit"
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 302,
+      "control": "resetAnotherBranchToHereToolStripMenuItem",
+      "label": "Reset another branch to here..."
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 316,
+      "control": "createNewBranchToolStripMenuItem",
+      "label": "Create new branch here (x)..."
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 332,
+      "control": "renameBranchToolStripMenuItem",
+      "label": "Rename branch..."
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 340,
+      "control": "deleteBranchToolStripMenuItem",
+      "label": "Delete branch..."
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 352,
+      "control": "openCommitsWithDiffToolMenuItem",
+      "label": "Open selected commits with difftool"
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 364,
+      "control": "compareToBranchToolStripMenuItem",
+      "label": "Compare to branch..."
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 371,
+      "control": "compareWithCurrentBranchToolStripMenuItem",
+      "label": "Compare with current branch"
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 378,
+      "control": "selectAsBaseToolStripMenuItem",
+      "label": "Select as BASE to compare"
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 385,
+      "control": "compareToBaseToolStripMenuItem",
+      "label": "Compare to BASE"
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 393,
+      "control": "compareToWorkingDirectoryMenuItem",
+      "label": "Compare to working directory"
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 400,
+      "control": "compareSelectedCommitsMenuItem",
+      "label": "Compare selected commits"
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 408,
+      "control": "compareToolStripMenuItem",
+      "label": "Compare"
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 432,
+      "control": "createTagToolStripMenuItem",
+      "label": "Create new tag here..."
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 440,
+      "control": "deleteTagToolStripMenuItem",
+      "label": "Delete tag..."
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 453,
+      "control": "checkoutRevisionToolStripMenuItem",
+      "label": "Checkout this commit..."
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 461,
+      "control": "revertCommitToolStripMenuItem",
+      "label": "Revert this commit..."
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 469,
+      "control": "cherryPickCommitToolStripMenuItem",
+      "label": "Cherry pick this commit..."
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 477,
+      "control": "archiveRevisionToolStripMenuItem",
+      "label": "Archive this commit..."
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 492,
+      "control": "manipulateCommitToolStripMenuItem",
+      "label": "Advanced"
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 498,
+      "control": "fixupCommitToolStripMenuItem",
+      "label": "Create a fixup commit..."
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 505,
+      "control": "squashCommitToolStripMenuItem",
+      "label": "Create a squash commit..."
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 512,
+      "control": "amendCommitToolStripMenuItem",
+      "label": "Create an amend commit..."
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 525,
+      "control": "navigateToolStripMenuItem",
+      "label": "Navigate"
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 540,
+      "control": "viewToolStripMenuItem",
+      "label": "View"
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 547,
+      "control": "runScriptToolStripMenuItem",
+      "label": "Run script"
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 554,
+      "control": "openBuildReportToolStripMenuItem",
+      "label": "View build report in a browser"
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 562,
+      "control": "openPullRequestPageStripMenuItem",
+      "label": "View pull request in a browser"
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 575,
+      "control": "getHelpOnHowToUseTheseFeaturesToolStripMenuItem",
+      "label": "Get help on how to use these features"
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 582,
+      "control": "editCommitToolStripMenuItem",
+      "label": "Edit commit"
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 589,
+      "control": "rewordCommitToolStripMenuItem",
+      "label": "Reword commit"
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 595,
+      "control": "rebaseToolStripMenuItem",
+      "label": "Selected commit"
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 602,
+      "control": "rebaseInteractivelyToolStripMenuItem",
+      "label": "Selected commit interactively..."
+    },
+    {
+      "source": "src/app/GitUI/UserControls/RevisionGrid/RevisionGridControl.Designer.cs",
+      "line": 614,
+      "control": "rebaseWithAdvOptionsToolStripMenuItem",
+      "label": "Selected commit with advanced options..."
+    }
+  ],
+  "dialogs": [
+    "src/app/GitUI/CommandsDialogs/AboutBoxDialog/FormContributors.cs",
+    "src/app/GitUI/CommandsDialogs/BrowseDialog/DashboardControl/FormDashboardCategoryTitle.cs",
+    "src/app/GitUI/CommandsDialogs/BrowseDialog/FormBisect.cs",
+    "src/app/GitUI/CommandsDialogs/BrowseDialog/FormBrowseMenus.cs",
+    "src/app/GitUI/CommandsDialogs/BrowseDialog/FormBrowseUtil.cs",
+    "src/app/GitUI/CommandsDialogs/BrowseDialog/FormChangeLog.cs",
+    "src/app/GitUI/CommandsDialogs/BrowseDialog/FormDonate.cs",
+    "src/app/GitUI/CommandsDialogs/BrowseDialog/FormGitCommandLog.cs",
+    "src/app/GitUI/CommandsDialogs/BrowseDialog/FormGoToCommit.cs",
+    "src/app/GitUI/CommandsDialogs/BrowseDialog/FormOpenDirectory.cs",
+    "src/app/GitUI/CommandsDialogs/BrowseDialog/FormRecentReposSettings.cs",
+    "src/app/GitUI/CommandsDialogs/BrowseDialog/FormUpdates.cs",
+    "src/app/GitUI/CommandsDialogs/CommitDialog/FormCommitTemplateSettings.cs",
+    "src/app/GitUI/CommandsDialogs/FormAbout.cs",
+    "src/app/GitUI/CommandsDialogs/FormAddFiles.cs",
+    "src/app/GitUI/CommandsDialogs/FormAddToGitIgnore.cs",
+    "src/app/GitUI/CommandsDialogs/FormApplyPatch.cs",
+    "src/app/GitUI/CommandsDialogs/FormArchive.cs",
+    "src/app/GitUI/CommandsDialogs/FormBlame.cs",
+    "src/app/GitUI/CommandsDialogs/FormBrowse.cs",
+    "src/app/GitUI/CommandsDialogs/FormCheckoutBranch.cs",
+    "src/app/GitUI/CommandsDialogs/FormCheckoutRevision.cs",
+    "src/app/GitUI/CommandsDialogs/FormCherryPick.cs",
+    "src/app/GitUI/CommandsDialogs/FormCleanupRepository.cs",
+    "src/app/GitUI/CommandsDialogs/FormClone.cs",
+    "src/app/GitUI/CommandsDialogs/FormCommandlineHelp.cs",
+    "src/app/GitUI/CommandsDialogs/FormCommit.cs",
+    "src/app/GitUI/CommandsDialogs/FormCompareToBranch.cs",
+    "src/app/GitUI/CommandsDialogs/FormCreateBranch.cs",
+    "src/app/GitUI/CommandsDialogs/FormCreateTag.cs",
+    "src/app/GitUI/CommandsDialogs/FormDeleteBranch.cs",
+    "src/app/GitUI/CommandsDialogs/FormDeleteRemoteBranch.cs",
+    "src/app/GitUI/CommandsDialogs/FormDeleteTag.cs",
+    "src/app/GitUI/CommandsDialogs/FormDiff.cs",
+    "src/app/GitUI/CommandsDialogs/FormEditor.cs",
+    "src/app/GitUI/CommandsDialogs/FormFileHistory.cs",
+    "src/app/GitUI/CommandsDialogs/FormFileHistoryController.cs",
+    "src/app/GitUI/CommandsDialogs/FormFormatPatch.cs",
+    "src/app/GitUI/CommandsDialogs/FormGitAttributes.cs",
+    "src/app/GitUI/CommandsDialogs/FormGitIgnore.cs",
+    "src/app/GitUI/CommandsDialogs/FormInit.cs",
+    "src/app/GitUI/CommandsDialogs/FormLog.cs",
+    "src/app/GitUI/CommandsDialogs/FormMailMap.cs",
+    "src/app/GitUI/CommandsDialogs/FormMergeBranch.cs",
+    "src/app/GitUI/CommandsDialogs/FormMergeSubmodule.cs",
+    "src/app/GitUI/CommandsDialogs/FormPull.cs",
+    "src/app/GitUI/CommandsDialogs/FormPush.cs",
+    "src/app/GitUI/CommandsDialogs/FormRebase.cs",
+    "src/app/GitUI/CommandsDialogs/FormReflog.cs",
+    "src/app/GitUI/CommandsDialogs/FormRemotes.cs",
+    "src/app/GitUI/CommandsDialogs/FormRemotesController.cs",
+    "src/app/GitUI/CommandsDialogs/FormRenameBranch.cs",
+    "src/app/GitUI/CommandsDialogs/FormResetChanges.cs",
+    "src/app/GitUI/CommandsDialogs/FormResolveConflicts.cs",
+    "src/app/GitUI/CommandsDialogs/FormRevertCommit.cs",
+    "src/app/GitUI/CommandsDialogs/FormSettings.cs",
+    "src/app/GitUI/CommandsDialogs/FormSparseWorkingCopy.cs",
+    "src/app/GitUI/CommandsDialogs/FormSparseWorkingCopyViewModel.cs",
+    "src/app/GitUI/CommandsDialogs/FormStash.cs",
+    "src/app/GitUI/CommandsDialogs/FormSubmodules.cs",
+    "src/app/GitUI/CommandsDialogs/FormVerify.cs",
+    "src/app/GitUI/CommandsDialogs/FormViewPatch.cs",
+    "src/app/GitUI/CommandsDialogs/SettingsDialog/FormAvailableEncodings.cs",
+    "src/app/GitUI/CommandsDialogs/SettingsDialog/Pages/FormBrowseRepoSettingsPage.cs",
+    "src/app/GitUI/CommandsDialogs/SettingsDialog/Pages/FormChooseTranslation.cs",
+    "src/app/GitUI/CommandsDialogs/SettingsDialog/Pages/FormFixHome.cs",
+    "src/app/GitUI/CommandsDialogs/SubmodulesDialog/FormAddSubmodule.cs",
+    "src/app/GitUI/CommandsDialogs/WorktreeDialog/FormCreateWorktree.cs",
+    "src/app/GitUI/CommandsDialogs/WorktreeDialog/FormManageWorktree.cs",
+    "src/app/GitUI/Editor/FormFindInCommitFilesGitGrep.cs",
+    "src/app/GitUI/Editor/FormGoToLine.cs",
+    "src/app/GitUI/FormBusyScope.cs",
+    "src/app/GitUI/FormExtensions.cs",
+    "src/app/GitUI/FormPuttyError.cs",
+    "src/app/GitUI/FormStatusOutputLog.cs",
+    "src/app/GitUI/HelperDialogs/FormBuildServerCredentials.cs",
+    "src/app/GitUI/HelperDialogs/FormChooseCommit.cs",
+    "src/app/GitUI/HelperDialogs/FormCommitDiff.cs",
+    "src/app/GitUI/HelperDialogs/FormEdit.cs",
+    "src/app/GitUI/HelperDialogs/FormProcess.cs",
+    "src/app/GitUI/HelperDialogs/FormRemoteProcess.cs",
+    "src/app/GitUI/HelperDialogs/FormResetAnotherBranch.cs",
+    "src/app/GitUI/HelperDialogs/FormResetCurrentBranch.cs",
+    "src/app/GitUI/HelperDialogs/FormSelectMultipleBranches.cs",
+    "src/app/GitUI/HelperDialogs/FormStatus.cs",
+    "src/app/GitUI/Infrastructure/Telemetry/FormBrowseDiagnosticsReporter.cs",
+    "src/app/GitUI/ScriptsEngine/FormFilePrompt.cs",
+    "src/app/GitUI/UserControls/RevisionGrid/FormQuickGitRefSelector.cs",
+    "src/app/GitUI/UserControls/RevisionGrid/FormQuickItemSelector.cs",
+    "src/app/GitUI/UserControls/RevisionGrid/FormQuickStringSelector.cs",
+    "src/app/GitUI/UserControls/RevisionGrid/FormRevisionFilter.cs"
+  ],
+  "commandEntrypoints": [
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 87,
+      "method": "GetService"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 100,
+      "method": "StartBatchFileProcessDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 120,
+      "method": "StartCommandLineProcessDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 134,
+      "method": "StartCommandLineProcessDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 139,
+      "method": "StartGitCommandProcessDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 144,
+      "method": "StartDeleteBranchDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 149,
+      "method": "StartDeleteBranchDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 159,
+      "method": "StartDeleteRemoteBranchDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 169,
+      "method": "StartCheckoutRevisionDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 179,
+      "method": "StartResetCurrentBranchDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 192,
+      "method": "StashSave"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 206,
+      "method": "StashStaged"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 219,
+      "method": "StashPop"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 233,
+      "method": "StashDrop"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 246,
+      "method": "StashApply"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 260,
+      "method": "WorktreeDelete"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 316,
+      "method": "WorktreeSwitch"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 336,
+      "method": "WorktreeCreate"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 372,
+      "method": "ShowModelessForm"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 455,
+      "method": "DoActionOnRepo"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 462,
+      "method": "StartCheckoutBranch"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 471,
+      "method": "StartCheckoutBranch"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 476,
+      "method": "StartCheckoutRemoteBranch"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 526,
+      "method": "StartCompareRevisionsDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 537,
+      "method": "StartAddFilesDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 547,
+      "method": "StartCreateBranchDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 559,
+      "method": "StartCreateBranchDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 575,
+      "method": "StartCloneDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 587,
+      "method": "StartCloneDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 592,
+      "method": "StartCleanupRepositoryDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 601,
+      "method": "StartSquashCommitDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 613,
+      "method": "StartFixupCommitDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 625,
+      "method": "StartAmendCommitDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 637,
+      "method": "StartCommitDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 704,
+      "method": "StartInitializeDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 718,
+      "method": "StartPullDialogAndPullImmediately"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 725,
+      "method": "StartPullDialogAndPullImmediately"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 730,
+      "method": "StartPullDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 761,
+      "method": "StartViewPatchDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 779,
+      "method": "StartFormCommitDiff"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 791,
+      "method": "StartViewPatchDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 796,
+      "method": "StartSparseWorkingCopyDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 808,
+      "method": "AddCommitTemplate"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 813,
+      "method": "RemoveCommitTemplate"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 818,
+      "method": "StartFormatPatchDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 830,
+      "method": "StartStashDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 849,
+      "method": "StartResetChangesDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 911,
+      "method": "StartRevertCommitDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 922,
+      "method": "StartResolveConflictsDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 934,
+      "method": "StartCherryPickDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 945,
+      "method": "StartCherryPickDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 992,
+      "method": "StartMergeBranchDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 1004,
+      "method": "StartCreateTagDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 1020,
+      "method": "StartDeleteTagDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 1031,
+      "method": "StartEditGitIgnoreDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 1043,
+      "method": "StartAddToGitIgnoreDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 1055,
+      "method": "StartSettingsDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 1066,
+      "method": "StartSettingsDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 1072,
+      "method": "StartSettingsDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 1083,
+      "method": "StartArchiveDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 1099,
+      "method": "StartMailMapDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 1111,
+      "method": "StartVerifyDatabaseDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 1125,
+      "method": "StartRemotesDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 1141,
+      "method": "StartRebase"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 1147,
+      "method": "StartTheContinueRebaseDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 1152,
+      "method": "StartInteractiveRebase"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 1158,
+      "method": "StartRebaseDialogWithAdvOptions"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 1163,
+      "method": "StartRebaseDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 1168,
+      "method": "StartRebaseDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 1180,
+      "method": "StartRenameDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 1191,
+      "method": "StartSubmodulesDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 1203,
+      "method": "StartUpdateSubmodulesDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 1213,
+      "method": "StartUpdateSubmoduleDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 1224,
+      "method": "StartSyncSubmodulesDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 1234,
+      "method": "UpdateSubmodules"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 1249,
+      "method": "StartGeneralSettingsDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 1254,
+      "method": "StartPluginSettingsDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 1259,
+      "method": "StartRepoSettingsDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 1269,
+      "method": "StartBrowseDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 1285,
+      "method": "StartFileHistoryDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 1317,
+      "method": "OpenWithDifftool"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 1331,
+      "method": "StartPushDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 1362,
+      "method": "StartPushDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 1367,
+      "method": "StartApplyPatchDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 1387,
+      "method": "StartEditGitAttributesDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 1450,
+      "method": "StartCloneForkFromHoster"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 1459,
+      "method": "StartPullRequestsDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 1469,
+      "method": "AddUpstreamRemote"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 1485,
+      "method": "StartCreatePullRequest"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 1504,
+      "method": "StartCreatePullRequest"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 1520,
+      "method": "RunCommand"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 1847,
+      "method": "StartFileEditorDialog"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 2037,
+      "method": "RaisePostBrowseInitialize"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 2042,
+      "method": "RaisePostRegisterPlugin"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 2047,
+      "method": "CreateRemoteCommand"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 2057,
+      "method": "WithGitModule"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 2064,
+      "method": "WithWorkingDirectory"
+    },
+    {
+      "source": "src/app/GitUI/GitUICommands.cs",
+      "line": 2086,
+      "method": "Execute"
+    }
+  ],
+  "dialogControls": [
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCheckoutBranch.Designer.cs",
+      "line": 101,
+      "control": "Ok",
+      "label": "Checkout"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCheckoutBranch.Designer.cs",
+      "line": 135,
+      "control": "localChangesGB",
+      "label": "Local changes"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCheckoutBranch.Designer.cs",
+      "line": 163,
+      "control": "rbDontChange",
+      "label": "Don\\'t change"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCheckoutBranch.Designer.cs",
+      "line": 175,
+      "control": "rbMerge",
+      "label": "Merge"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCheckoutBranch.Designer.cs",
+      "line": 187,
+      "control": "rbStash",
+      "label": "Stash"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCheckoutBranch.Designer.cs",
+      "line": 199,
+      "control": "rbReset",
+      "label": "Reset"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCheckoutBranch.Designer.cs",
+      "line": 211,
+      "control": "chkSetLocalChangesActionAsDefault",
+      "label": "Set as default"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCheckoutBranch.Designer.cs",
+      "line": 246,
+      "control": "LocalBranch",
+      "label": "Local branch"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCheckoutBranch.Designer.cs",
+      "line": 261,
+      "control": "Remotebranch",
+      "label": "Remote branch"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCheckoutBranch.Designer.cs",
+      "line": 273,
+      "control": "label1",
+      "label": "Select branch"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCheckoutBranch.Designer.cs",
+      "line": 300,
+      "control": "lbChanges",
+      "label": "-"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCheckoutBranch.Designer.cs",
+      "line": 345,
+      "control": "rbDontCreate",
+      "label": "Checkout the commit (in detached head)"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCheckoutBranch.Designer.cs",
+      "line": 369,
+      "control": "rbResetBranch",
+      "label": "Reset local branch with the name:"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCheckoutBranch.Designer.cs",
+      "line": 381,
+      "control": "rbCreateBranchWithCustomName",
+      "label": "Create local branch with custom name:"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCherryPick.Designer.cs",
+      "line": 76,
+      "control": "btnPick",
+      "label": "Cherry pick"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCherryPick.Designer.cs",
+      "line": 87,
+      "control": "btnAbort",
+      "label": "Abort"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCherryPick.Designer.cs",
+      "line": 110,
+      "control": "lblParents",
+      "label": "This commit is a merge, select parent:"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCherryPick.Designer.cs",
+      "line": 129,
+      "control": "columnHeader1",
+      "label": "No."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCherryPick.Designer.cs",
+      "line": 134,
+      "control": "columnHeader2",
+      "label": "Message"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCherryPick.Designer.cs",
+      "line": 139,
+      "control": "columnHeader3",
+      "label": "Author"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCherryPick.Designer.cs",
+      "line": 144,
+      "control": "columnHeader4",
+      "label": "Date"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCherryPick.Designer.cs",
+      "line": 155,
+      "control": "cbxAddReference",
+      "label": "Add commit reference to commit message"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCherryPick.Designer.cs",
+      "line": 166,
+      "control": "cbxAutoCommit",
+      "label": "Automatically create a commit"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCherryPick.Designer.cs",
+      "line": 177,
+      "control": "lblBranchInfo",
+      "label": "Cherry pick this commit:"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCherryPick.Designer.cs",
+      "line": 241,
+      "control": "lblAnotherRev",
+      "label": "Choose another revision:"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormClone.Designer.cs",
+      "line": 74,
+      "control": "Ok",
+      "label": "Clone"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormClone.Designer.cs",
+      "line": 115,
+      "control": "repositoryLabel",
+      "label": "Repository to clone:"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormClone.Designer.cs",
+      "line": 139,
+      "control": "FromBrowse",
+      "label": "Browse"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormClone.Designer.cs",
+      "line": 152,
+      "control": "destinationLabel",
+      "label": "Destination:"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormClone.Designer.cs",
+      "line": 177,
+      "control": "ToBrowse",
+      "label": "Browse"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormClone.Designer.cs",
+      "line": 190,
+      "control": "subdirectoryLabel",
+      "label": "Subdirectory to create:"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormClone.Designer.cs",
+      "line": 211,
+      "control": "brachLabel",
+      "label": "Branch:"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormClone.Designer.cs",
+      "line": 234,
+      "control": "cbIntializeAllSubmodules",
+      "label": "Initialize all submodules"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormClone.Designer.cs",
+      "line": 247,
+      "control": "cbDownloadFullHistory",
+      "label": "Download full history"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormClone.Designer.cs",
+      "line": 276,
+      "control": "groupBox1",
+      "label": "Repository type"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormClone.Designer.cs",
+      "line": 285,
+      "control": "CentralRepository",
+      "label": "Public repository, no working directory  (--bare)"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormClone.Designer.cs",
+      "line": 297,
+      "control": "PersonalRepository",
+      "label": "Personal repository"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormClone.Designer.cs",
+      "line": 312,
+      "control": "LoadSSHKey",
+      "label": "Load SSH key"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 132,
+      "control": "StageInSuperproject",
+      "label": "Stage in Superproject"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 150,
+      "control": "Cancel",
+      "label": "Cancel"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 271,
+      "control": "toolStripLabel1",
+      "label": "Selection Filter"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 349,
+      "control": "toolStageItem",
+      "label": "Stage"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 372,
+      "control": "toolUnstageItem",
+      "label": "Unstage"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 382,
+      "control": "Ok",
+      "label": "Commit"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 421,
+      "control": "modifyCommitMessageButton",
+      "label": "Modify the commit message"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 435,
+      "control": "SolveMergeconflicts",
+      "label": "There are unresolved merge conflicts\\r\\n"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 527,
+      "control": "Commit",
+      "label": "Commit"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 551,
+      "control": "Amend",
+      "label": "Amend commit"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 563,
+      "control": "ResetAuthor",
+      "label": "Reset author"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 574,
+      "control": "ResetSoft",
+      "label": "Reset soft"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 589,
+      "control": "StashStaged",
+      "label": "Stash staged changes"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 602,
+      "control": "btnResetAllChanges",
+      "label": "Reset all changes"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 615,
+      "control": "btnResetUnstagedChanges",
+      "label": "Reset unstaged changes"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 650,
+      "control": "commitMessageToolStripMenuItem",
+      "label": "Commit message"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 661,
+      "control": "ShowOnlyMyMessagesToolStripMenuItem",
+      "label": "Show only my messages"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 673,
+      "control": "generateListOfChangesInSubmodulesChangesToolStripMenuItem",
+      "label": "Generate a list of changes in submodules"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 696,
+      "control": "tsmiOptions",
+      "label": "Options"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 703,
+      "control": "closeDialogAfterEachCommitToolStripMenuItem",
+      "label": "Close dialog after each commit"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 710,
+      "control": "closeDialogAfterAllFilesCommittedToolStripMenuItem",
+      "label": "Close dialog when all changes are committed"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 717,
+      "control": "refreshDialogOnFormFocusToolStripMenuItem",
+      "label": "Refresh dialog on form focus"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 724,
+      "control": "tsmiSelectStagedOnEnterMessage",
+      "label": "Select staged on entering message editor"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 736,
+      "control": "signOffToolStripMenuItem",
+      "label": "Sign-off commit"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 744,
+      "control": "toolAuthorLabelItem",
+      "label": "Author: (Format: \\\"name <mail>\\\")"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 760,
+      "control": "noVerifyToolStripMenuItem",
+      "label": "No verify"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 794,
+      "control": "commitTemplatesToolStripMenuItem",
+      "label": "Commit templates"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 802,
+      "control": "createBranchToolStripButton",
+      "label": "Create branch"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 855,
+      "control": "branchNameLabel",
+      "label": "(Branch name)"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 866,
+      "control": "remoteNameLabel",
+      "label": "(Remote name)"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 873,
+      "control": "commitStagedCountLabel",
+      "label": "Staged"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 880,
+      "control": "commitStagedCount",
+      "label": "0"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 887,
+      "control": "commitCursorLineLabel",
+      "label": "Ln"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 894,
+      "control": "commitCursorLine",
+      "label": "0"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 901,
+      "control": "commitCursorColumnLabel",
+      "label": "Col"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCommit.Designer.cs",
+      "line": 908,
+      "control": "commitCursorColumn",
+      "label": "0"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCreateTag.Designer.cs",
+      "line": 57,
+      "control": "label1",
+      "label": "Tag name"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCreateTag.Designer.cs",
+      "line": 68,
+      "control": "Ok",
+      "label": "Create tag"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCreateTag.Designer.cs",
+      "line": 100,
+      "control": "keyIdLbl",
+      "label": "Specific Key Id"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCreateTag.Designer.cs",
+      "line": 120,
+      "control": "pushTag",
+      "label": "Push tag to \\'{0}\\'"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCreateTag.Designer.cs",
+      "line": 142,
+      "control": "label2",
+      "label": "Message"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCreateTag.Designer.cs",
+      "line": 151,
+      "control": "ForceTag",
+      "label": "Force"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormCreateTag.Designer.cs",
+      "line": 163,
+      "control": "label3",
+      "label": "Create tag at this revision"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormMergeBranch.Designer.cs",
+      "line": 72,
+      "control": "Ok",
+      "label": "Merge"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormMergeBranch.Designer.cs",
+      "line": 106,
+      "control": "groupBox1",
+      "label": "Merge"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormMergeBranch.Designer.cs",
+      "line": 187,
+      "control": "allowUnrelatedHistories",
+      "label": "Allow unrelated histories"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormMergeBranch.Designer.cs",
+      "line": 199,
+      "control": "squash",
+      "label": "Squash commits"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormMergeBranch.Designer.cs",
+      "line": 210,
+      "control": "NonDefaultMergeStrategy",
+      "label": "Use non-default merge strategy"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormMergeBranch.Designer.cs",
+      "line": 252,
+      "control": "strategyHelp",
+      "label": "Help"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormMergeBranch.Designer.cs",
+      "line": 279,
+      "control": "addLogMessages",
+      "label": "Add log messages"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormMergeBranch.Designer.cs",
+      "line": 290,
+      "control": "addMergeMessage",
+      "label": "Specify merge message"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormMergeBranch.Designer.cs",
+      "line": 303,
+      "control": "advanced",
+      "label": "Show advanced options"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormMergeBranch.Designer.cs",
+      "line": 315,
+      "control": "noCommit",
+      "label": "Do not commit"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormMergeBranch.Designer.cs",
+      "line": 326,
+      "control": "noFastForward",
+      "label": "Always create a new merge commit"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormMergeBranch.Designer.cs",
+      "line": 340,
+      "control": "fastForward",
+      "label": "Keep a single branch line if possible (fast forward)"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormMergeBranch.Designer.cs",
+      "line": 353,
+      "control": "currentBranchLabel",
+      "label": "?"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormMergeBranch.Designer.cs",
+      "line": 364,
+      "control": "Currentbranch",
+      "label": "Into current branch"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormMergeBranch.Designer.cs",
+      "line": 384,
+      "control": "label2",
+      "label": "Merge branch"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPull.Designer.cs",
+      "line": 103,
+      "control": "PullFromUrl",
+      "label": "URL"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPull.Designer.cs",
+      "line": 117,
+      "control": "PullFromRemote",
+      "label": "Remote"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPull.Designer.cs",
+      "line": 129,
+      "control": "lblLocalBranch",
+      "label": "Local branch"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPull.Designer.cs",
+      "line": 139,
+      "control": "lblRemoteBranch",
+      "label": "Remote branch"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPull.Designer.cs",
+      "line": 150,
+      "control": "Prune",
+      "label": "Prune remote branches"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPull.Designer.cs",
+      "line": 164,
+      "control": "PruneTags",
+      "label": "Prune remote branches and tags"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPull.Designer.cs",
+      "line": 177,
+      "control": "Unshallow",
+      "label": "Download full history"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPull.Designer.cs",
+      "line": 191,
+      "control": "Pull",
+      "label": "Pull"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPull.Designer.cs",
+      "line": 280,
+      "control": "GroupPullFrom",
+      "label": "Pull from"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPull.Designer.cs",
+      "line": 304,
+      "control": "AddRemote",
+      "label": "Manage remotes"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPull.Designer.cs",
+      "line": 342,
+      "control": "GroupMergeOptions",
+      "label": "Merge options"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPull.Designer.cs",
+      "line": 369,
+      "control": "Merge",
+      "label": "Merge remote branch into current branch"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPull.Designer.cs",
+      "line": 397,
+      "control": "Fetch",
+      "label": "Do not merge, only fetch remote changes"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPull.Designer.cs",
+      "line": 415,
+      "control": "GroupBranch",
+      "label": "Branch"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPull.Designer.cs",
+      "line": 447,
+      "control": "GroupTagOptions",
+      "label": "Tag options"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPull.Designer.cs",
+      "line": 473,
+      "control": "ReachableTags",
+      "label": "Follow tagopt, if not specified, fetch tags reachable from remote HEAD"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPull.Designer.cs",
+      "line": 484,
+      "control": "NoTags",
+      "label": "Fetch no tag"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPull.Designer.cs",
+      "line": 495,
+      "control": "AllTags",
+      "label": "Fetch all tags"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPull.Designer.cs",
+      "line": 505,
+      "control": "Mergetool",
+      "label": "Solve conflicts"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPull.Designer.cs",
+      "line": 516,
+      "control": "Stash",
+      "label": "Stash changes"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPull.Designer.cs",
+      "line": 528,
+      "control": "AutoStash",
+      "label": "Auto stash"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPush.Designer.cs",
+      "line": 96,
+      "control": "ckForceWithLease",
+      "label": "Force with lease"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPush.Designer.cs",
+      "line": 107,
+      "control": "ForcePushBranches",
+      "label": "Force push"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPush.Designer.cs",
+      "line": 118,
+      "control": "PushToUrl",
+      "label": "Url"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPush.Designer.cs",
+      "line": 132,
+      "control": "PushToRemote",
+      "label": "Remote"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPush.Designer.cs",
+      "line": 174,
+      "control": "BranchTab",
+      "label": "Push branches"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPush.Designer.cs",
+      "line": 220,
+      "control": "labelTo",
+      "label": "to"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPush.Designer.cs",
+      "line": 243,
+      "control": "ShowOptions",
+      "label": "Show options"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPush.Designer.cs",
+      "line": 269,
+      "control": "label2",
+      "label": "Recursive submodules"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPush.Designer.cs",
+      "line": 292,
+      "control": "ReplaceTrackingReference",
+      "label": "Replace tracking reference"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPush.Designer.cs",
+      "line": 302,
+      "control": "_createPullRequestCB",
+      "label": "Create pull request after push"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPush.Designer.cs",
+      "line": 312,
+      "control": "labelFrom",
+      "label": "Branch to push"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPush.Designer.cs",
+      "line": 324,
+      "control": "TagTab",
+      "label": "Push tags"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPush.Designer.cs",
+      "line": 335,
+      "control": "ForcePushTags",
+      "label": "Force push"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPush.Designer.cs",
+      "line": 345,
+      "control": "label1",
+      "label": "Tag to push"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPush.Designer.cs",
+      "line": 366,
+      "control": "MultipleBranchTab",
+      "label": "Push multiple branches"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPush.Designer.cs",
+      "line": 443,
+      "control": "LoadSSHKey",
+      "label": "Load SSH key"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPush.Designer.cs",
+      "line": 461,
+      "control": "groupBox2",
+      "label": "Push to"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPush.Designer.cs",
+      "line": 487,
+      "control": "AddRemote",
+      "label": "Manage remotes"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPush.Designer.cs",
+      "line": 514,
+      "control": "folderBrowserButton1",
+      "label": "Browse..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPush.Designer.cs",
+      "line": 523,
+      "control": "Pull",
+      "label": "Pull"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPush.Designer.cs",
+      "line": 553,
+      "control": "unselectAllToolStripMenuItem",
+      "label": "Unselect all"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPush.Designer.cs",
+      "line": 560,
+      "control": "selectTrackedToolStripMenuItem",
+      "label": "Select tracked"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormPush.Designer.cs",
+      "line": 567,
+      "control": "selectAllToolStripMenuItem",
+      "label": "Select all"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormRebase.Designer.cs",
+      "line": 130,
+      "control": "btnAddFiles",
+      "label": "Add files"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormRebase.Designer.cs",
+      "line": 145,
+      "control": "btnCommit",
+      "label": "Commit..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormRebase.Designer.cs",
+      "line": 160,
+      "control": "btnEditTodo",
+      "label": "Edit todo..."
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormRebase.Designer.cs",
+      "line": 187,
+      "control": "btnSkip",
+      "label": "Skip currently applying commit"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormRebase.Designer.cs",
+      "line": 213,
+      "control": "lblCurrent",
+      "label": "Current branch:"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormRebase.Designer.cs",
+      "line": 232,
+      "control": "lblRebase",
+      "label": "Rebase current branch on top of another branch"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormRebase.Designer.cs",
+      "line": 253,
+      "control": "label2",
+      "label": "Rebase on"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormRebase.Designer.cs",
+      "line": 264,
+      "control": "btnContinueRebase",
+      "label": "Continue rebase"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormRebase.Designer.cs",
+      "line": 277,
+      "control": "btnAbort",
+      "label": "Abort"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormRebase.Designer.cs",
+      "line": 291,
+      "control": "btnSolveConflicts",
+      "label": "Solve conflicts"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormRebase.Designer.cs",
+      "line": 319,
+      "control": "chkInteractive",
+      "label": "Interactive Rebase"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormRebase.Designer.cs",
+      "line": 331,
+      "control": "chkPreserveMerges",
+      "label": "Preserve Merges"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormRebase.Designer.cs",
+      "line": 343,
+      "control": "chkAutosquash",
+      "label": "Autosquash"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormRebase.Designer.cs",
+      "line": 355,
+      "control": "chkStash",
+      "label": "Auto stash"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormRebase.Designer.cs",
+      "line": 366,
+      "control": "chkIgnoreDate",
+      "label": "Ignore date"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormRebase.Designer.cs",
+      "line": 379,
+      "control": "chkCommitterDateIsAuthorDate",
+      "label": "Committer date is author date"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormRebase.Designer.cs",
+      "line": 391,
+      "control": "checkBoxUpdateRefs",
+      "label": "Update dependent refs"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormRebase.Designer.cs",
+      "line": 418,
+      "control": "chkSpecificRange",
+      "label": "Specific range"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormRebase.Designer.cs",
+      "line": 430,
+      "control": "lblRangeFrom",
+      "label": "From (exc.)"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormRebase.Designer.cs",
+      "line": 463,
+      "control": "lblRangeTo",
+      "label": "To"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormRebase.Designer.cs",
+      "line": 486,
+      "control": "llblShowOptions",
+      "label": "Show options"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormRebase.Designer.cs",
+      "line": 509,
+      "control": "lblCommitsToReapply",
+      "label": "Commits to re-apply:"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormRebase.Designer.cs",
+      "line": 523,
+      "control": "btnSolveMergeconflicts",
+      "label": "There are unresolved merge conflicts\\r\\n"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormRebase.Designer.cs",
+      "line": 641,
+      "control": "btnRebase",
+      "label": "Rebase"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormStash.Designer.cs",
+      "line": 137,
+      "control": "StashSelectedFiles",
+      "label": "Stash selected changes"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormStash.Designer.cs",
+      "line": 151,
+      "control": "Stash",
+      "label": "Stash all changes"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormStash.Designer.cs",
+      "line": 165,
+      "control": "chkIncludeUntrackedFiles",
+      "label": "Include untracked files"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormStash.Designer.cs",
+      "line": 178,
+      "control": "StashKeepIndex",
+      "label": "Keep index"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormStash.Designer.cs",
+      "line": 191,
+      "control": "Apply",
+      "label": "Apply Selected Stash"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormStash.Designer.cs",
+      "line": 205,
+      "control": "Clear",
+      "label": "Drop Selected Stash"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormStash.Designer.cs",
+      "line": 214,
+      "control": "messageLabel",
+      "label": "Message:"
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormStash.Designer.cs",
+      "line": 227,
+      "control": "StashMessage",
+      "label": ""
+    },
+    {
+      "source": "src/app/GitUI/CommandsDialogs/FormStash.Designer.cs",
+      "line": 287,
+      "control": "showToolStripLabel",
+      "label": "Show:"
+    }
+  ]
+}

@@ -24,14 +24,17 @@ import type {
   Request,
   Snapshot,
   View,
+  GitOperation,
 } from '../types';
 import { Sidebar, navigation } from './Sidebar';
 import { Divider } from './Divider';
 import { DiffView } from './DiffView';
 import { History } from './History';
 import { Modal } from './Modal';
+import { ActionMenu } from './ActionMenu';
 
 const empty: Snapshot = {
+  operation: null,
   branch: '',
   files: [],
   branches: [],
@@ -41,11 +44,15 @@ const empty: Snapshot = {
 type Action = {
   title: string;
   description: string;
-  kind:
+  kind?:
     'createBranch' | 'checkout' | 'stashSave' | 'stashApply' | 'pull' | 'push';
   name?: string;
   index?: number;
   input?: boolean;
+  inputLabel?: string;
+  expected?: string;
+  command?: Request;
+  build?: (value: string) => Request;
 };
 export function Workspace({
   repo,
@@ -64,6 +71,7 @@ export function Workspace({
     branch: string,
     hasChanges: boolean,
     hasRemotes: boolean,
+    operation: GitOperation | null,
   ) => void;
 }) {
   const [view, setView] = useState<View>('history');
@@ -87,6 +95,10 @@ export function Workspace({
     readSaved('historyHeight', 48),
   );
   const [action, setAction] = useState<Action>();
+  const [commitMenuPosition, setCommitMenuPosition] = useState<{
+    left: number;
+    top: number;
+  }>();
   const [actionValue, setActionValue] = useState('');
   const [message, setMessage] = useState('');
   const [compareBase, setCompareBase] = useState('main');
@@ -95,6 +107,87 @@ export function Workspace({
   const [refresh, setRefresh] = useState(0);
   const historyGeneration = useRef(0);
   const pending = useRef(false);
+  const historyBlocked =
+    busy || !!snapshot.operation || !!snapshot.files.length;
+  function confirm(
+    title: string,
+    description: string,
+    command: Request | ((value: string) => Request),
+    inputLabel?: string,
+    initial = '',
+  ) {
+    setError('');
+    setActionValue(initial);
+    setAction({
+      title,
+      description,
+      command: typeof command === 'function' ? undefined : command,
+      build: typeof command === 'function' ? command : undefined,
+      input: !!inputLabel,
+      inputLabel,
+    });
+  }
+  function historyAction(
+    kind: 'merge' | 'rebase' | 'cherryPick' | 'revert',
+    target: string,
+  ) {
+    const titles = {
+      merge: 'Merge into current branch',
+      rebase: 'Rebase current branch',
+      cherryPick: 'Cherry-pick commit',
+      revert: 'Revert commit',
+    };
+    confirm(
+      titles[kind],
+      `${titles[kind]} ${snapshot.branch || repo.branch} using ${target}. ${kind === 'rebase' ? 'This rewrites local commits; avoid rebasing shared history.' : 'Your index and working tree must be clean.'} If conflicts occur, resolve and stage them, then use Continue or Abort.`,
+      { kind, revision: target },
+    );
+  }
+  function commitMenu(commit: Commit) {
+    return [
+      {
+        label: 'Cherry-pick commit',
+        disabled: historyBlocked || commit.parents.length > 1,
+        run: () => historyAction('cherryPick', commit.id),
+      },
+      {
+        label: 'Revert commit',
+        disabled: historyBlocked || commit.parents.length > 1,
+        run: () => historyAction('revert', commit.id),
+      },
+      {
+        label: 'Create branch at commit',
+        disabled: busy || !!snapshot.operation,
+        run: () =>
+          confirm(
+            'Create branch at commit',
+            `Create a local branch at ${commit.id.slice(0, 12)}.`,
+            (name) => ({ kind: 'createBranchAt', name, revision: commit.id }),
+            'Branch name',
+          ),
+      },
+      {
+        label: 'Create tag',
+        disabled: busy || !!snapshot.operation,
+        run: () =>
+          confirm(
+            'Create tag',
+            `Create a local lightweight tag at ${commit.id.slice(0, 12)}. Tags are not pushed automatically.`,
+            (name) => ({ kind: 'createTag', name, revision: commit.id }),
+            'Tag name',
+          ),
+      },
+      {
+        label: 'Copy commit hash',
+        run: () => {
+          void navigator.clipboard
+            .writeText(commit.id)
+            .then(() => setNotice('Commit hash copied'))
+            .catch(report);
+        },
+      },
+    ];
+  }
   const newBranch = () => {
     setActionValue('');
     setAction({
@@ -137,6 +230,7 @@ export function Workspace({
         snapshot.branch || repo.branch,
         !!snapshot.files.length,
         !!snapshot.remotes.length,
+        snapshot.operation,
       );
   }, [
     active,
@@ -145,6 +239,7 @@ export function Workspace({
     snapshot.branch,
     snapshot.files.length,
     snapshot.remotes.length,
+    snapshot.operation,
     repo.branch,
     onStatus,
   ]);
@@ -171,6 +266,37 @@ export function Workspace({
       if (navigation.some((n) => n.id === command)) setView(command as View);
       else if (command === 'refresh') setRefresh((n) => n + 1);
       else if (command === 'branch') newBranch();
+      else if (['merge', 'rebase', 'cherryPick', 'revert'].includes(command)) {
+        const kind = command as 'merge' | 'rebase' | 'cherryPick' | 'revert';
+        const titles = {
+          merge: 'Merge into current branch',
+          rebase: 'Rebase current branch',
+          cherryPick: 'Cherry-pick commit',
+          revert: 'Revert commit',
+        };
+        const descriptions = {
+          merge:
+            'Merge the target into the current branch, preserving existing history.',
+          rebase:
+            'Replay the current branch onto the target. This rewrites local commits.',
+          cherryPick:
+            'Apply one non-merge commit to the current branch as a new commit.',
+          revert: 'Create a new commit that reverses one non-merge commit.',
+        };
+        confirm(
+          titles[kind],
+          `${descriptions[kind]} Commit or stash changes first.`,
+          (revision) => ({ kind, revision }),
+          'Target revision',
+        );
+      } else if (command === 'publish')
+        confirm(
+          'Publish current branch',
+          `Publish ${snapshot.branch} and set upstream without force pushing.`,
+          (remote) => ({ kind: 'publish', remote }),
+          'Remote name',
+          snapshot.remotes[0]?.name,
+        );
       else if (command === 'stash' && snapshot.files.length) newStash();
       else if (command === 'fetch') setView('remotes');
       else if (
@@ -181,7 +307,7 @@ export function Workspace({
     };
     window.addEventListener('workspace-command', commands);
     return () => window.removeEventListener('workspace-command', commands);
-  }, [active, busy, action, snapshot.files.length, snapshot.remotes.length]);
+  }, [active, busy, action, snapshot]);
   useEffect(() => {
     if (!active) return;
     let cancelled = false;
@@ -287,12 +413,32 @@ export function Workspace({
     try {
       await request(repo.path, command);
       setNotice(success);
-      window.dispatchEvent(new Event('repository-changed'));
       setAction(undefined);
       if (command.kind === 'commit') setMessage('');
     } catch (e) {
       report(e);
+      // A failed merge/pick/rebase can still change repository state. Refresh it
+      // and reveal recovery controls rather than leaving the pre-operation UI.
+      const next = await request<Snapshot>(repo.path, {
+        kind: 'snapshot',
+      }).catch(() => undefined);
+      if (next) {
+        setSnapshot(next);
+        if (
+          next.operation ||
+          next.files.some(
+            (f) =>
+              f.index === 'U' ||
+              f.worktree === 'U' ||
+              ['AA', 'DD'].includes(f.index + f.worktree),
+          )
+        ) {
+          setAction(undefined);
+          setView('changes');
+        }
+      }
     } finally {
+      window.dispatchEvent(new Event('repository-changed'));
       pending.current = false;
       setBusy(false);
     }
@@ -324,7 +470,18 @@ export function Workspace({
   }
   const title = navigation.find((item) => item.id === view)?.label;
   const stagedFiles = snapshot.files.filter(
-    (f) => f.index !== ' ' && f.index !== '?',
+    (f) =>
+      f.index !== ' ' &&
+      f.index !== '?' &&
+      f.index !== 'U' &&
+      f.worktree !== 'U' &&
+      !['AA', 'DD'].includes(f.index + f.worktree),
+  );
+  const conflicts = snapshot.files.filter(
+    (f) =>
+      f.index === 'U' ||
+      f.worktree === 'U' ||
+      ['AA', 'DD'].includes(f.index + f.worktree),
   );
   const unstagedFiles = snapshot.files.filter((f) => f.worktree !== ' ');
   function fileList(items: FileChange[], isStaged = false) {
@@ -469,12 +626,144 @@ export function Workspace({
               <Archive size={16} />
               Stash
             </button>
-            <button className="primary" disabled={busy} onClick={newBranch}>
+            <button
+              className="primary"
+              disabled={busy || !!snapshot.operation}
+              onClick={newBranch}
+            >
               <Plus size={16} />
               New branch
             </button>
+            <ActionMenu
+              label="Repository actions"
+              disabled={busy}
+              items={[
+                {
+                  label: 'Merge into current branch',
+                  disabled: historyBlocked,
+                  run: () =>
+                    confirm(
+                      'Merge into current branch',
+                      `Merge a branch or commit into ${snapshot.branch}.`,
+                      (revision) => ({ kind: 'merge', revision }),
+                      'Target revision',
+                    ),
+                },
+                {
+                  label: 'Rebase current branch',
+                  disabled: historyBlocked,
+                  run: () =>
+                    confirm(
+                      'Rebase current branch',
+                      `Replay ${snapshot.branch} on another branch or commit. This rewrites history; avoid rebasing shared branches.`,
+                      (revision) => ({ kind: 'rebase', revision }),
+                      'Target revision',
+                    ),
+                },
+                {
+                  label: 'Publish current branch',
+                  disabled: !!snapshot.operation || !snapshot.remotes.length,
+                  run: () =>
+                    confirm(
+                      'Publish current branch',
+                      `Push ${snapshot.branch} and set its upstream on the chosen remote. Existing remote history will not be overwritten.`,
+                      (remote) => ({ kind: 'publish', remote }),
+                      'Remote name',
+                      snapshot.remotes[0]?.name,
+                    ),
+                },
+                {
+                  label: 'Stage all changes',
+                  disabled: !snapshot.files.length,
+                  run: () =>
+                    void perform({ kind: 'stageAll' }, 'All changes staged'),
+                },
+                {
+                  label: 'Unstage all changes',
+                  disabled: !stagedFiles.length,
+                  run: () =>
+                    void perform(
+                      { kind: 'unstageAll' },
+                      'All changes unstaged',
+                    ),
+                },
+              ]}
+            />
           </div>
         </header>
+        {(snapshot.operation || conflicts.length > 0) && (
+          <section
+            className="operation-banner"
+            aria-label="Repository operation"
+          >
+            <div>
+              <strong>
+                {snapshot.operation
+                  ? `${snapshot.operation} in progress`
+                  : 'Conflicts need resolution'}
+              </strong>
+              <p>
+                {conflicts.length
+                  ? `${conflicts.length} conflicted file(s). Resolve them in your editor, then stage the resolved files.`
+                  : 'Changes are staged. Continue to finish, or abort to restore the pre-operation state.'}
+              </p>
+            </div>
+            <button onClick={() => setView('changes')}>Review conflicts</button>
+            {snapshot.operation && (
+              <>
+                <button
+                  disabled={busy || conflicts.length > 0}
+                  onClick={() =>
+                    void perform(
+                      {
+                        kind: 'operation',
+                        operation: snapshot.operation!,
+                        action: 'continue',
+                      },
+                      'Operation continued',
+                    )
+                  }
+                >
+                  Continue {snapshot.operation}
+                </button>
+                {snapshot.operation !== 'merge' && (
+                  <button
+                    disabled={busy}
+                    onClick={() =>
+                      confirm(
+                        `Skip ${snapshot.operation} commit`,
+                        'Drop the current patch from this operation and continue with the remaining commits.',
+                        {
+                          kind: 'operation',
+                          operation: snapshot.operation!,
+                          action: 'skip',
+                        },
+                      )
+                    }
+                  >
+                    Skip commit
+                  </button>
+                )}
+                <button
+                  disabled={busy}
+                  onClick={() =>
+                    confirm(
+                      `Abort ${snapshot.operation}`,
+                      'Cancel the operation and restore its starting state. Conflict-resolution edits made during the operation will be discarded.',
+                      {
+                        kind: 'operation',
+                        operation: snapshot.operation!,
+                        action: 'abort',
+                      },
+                    )
+                  }
+                >
+                  Abort {snapshot.operation}
+                </button>
+              </>
+            )}
+          </section>
+        )}
         {error && (
           <div className="error-banner" role="alert">
             <span>{error}</span>
@@ -492,6 +781,10 @@ export function Workspace({
               }}
             >
               <History
+                onContextMenu={(commit, position) => {
+                  setSelected(commit);
+                  setCommitMenuPosition(position);
+                }}
                 commits={commits}
                 branches={snapshot.branches}
                 selected={selected?.id ?? ''}
@@ -519,6 +812,15 @@ export function Workspace({
                   <div className="details-title">
                     <GitCommitHorizontal size={14} />
                     <span>COMMIT DETAILS</span>
+                    {selected && (
+                      <ActionMenu
+                        label="Commit actions"
+                        openAt={commitMenuPosition}
+                        onDismiss={() => setCommitMenuPosition(undefined)}
+                        items={commitMenu(selected)}
+                        disabled={busy}
+                      />
+                    )}
                     <button
                       className="icon-button"
                       aria-label="Copy commit hash"
@@ -587,6 +889,15 @@ export function Workspace({
               <aside className="changes-list">
                 <div className="file-list-heading">
                   UNSTAGED <span className="count">{unstagedFiles.length}</span>
+                  <button
+                    className="text-button"
+                    disabled={busy || !unstagedFiles.length}
+                    onClick={() =>
+                      void perform({ kind: 'stageAll' }, 'All changes staged')
+                    }
+                  >
+                    Stage all
+                  </button>
                 </div>
                 <div className="changes-files">
                   {fileList(unstagedFiles)}
@@ -598,6 +909,18 @@ export function Workspace({
                 </div>
                 <div className="file-list-heading">
                   STAGED <span className="count">{stagedFiles.length}</span>
+                  <button
+                    className="text-button"
+                    disabled={busy || !stagedFiles.length}
+                    onClick={() =>
+                      void perform(
+                        { kind: 'unstageAll' },
+                        'All changes unstaged',
+                      )
+                    }
+                  >
+                    Unstage all
+                  </button>
                 </div>
                 <div className="changes-files">
                   {fileList(stagedFiles, true)}
@@ -626,7 +949,13 @@ export function Workspace({
                   />
                   <button
                     className="primary"
-                    disabled={busy || !message.trim() || !stagedFiles.length}
+                    disabled={
+                      busy ||
+                      !!snapshot.operation ||
+                      !!conflicts.length ||
+                      !message.trim() ||
+                      !stagedFiles.length
+                    }
                   >
                     <Check size={16} />
                     Commit {stagedFiles.length} file
@@ -643,43 +972,111 @@ export function Workspace({
             <div className="collection">
               <div className="collection-header">
                 <GitBranch size={18} />
-                <h2>Local branches</h2>
-                <span className="count">
-                  {snapshot.branches.filter((b) => !b.remote).length}
-                </span>
+                <h2>Local and remote branches</h2>
+                <span className="count">{snapshot.branches.length}</span>
               </div>
-              {snapshot.branches
-                .filter((b) => !b.remote)
-                .map((b) => (
-                  <div className="collection-row" key={b.name}>
-                    <GitBranch size={19} />
-                    <div>
-                      <strong>{b.name}</strong>
-                      <small>{b.upstream || 'No upstream configured'}</small>
-                    </div>
-                    <span className="spacer" />
-                    {b.current ? (
-                      <span className="badge">
-                        <Check size={13} />
-                        Current branch
-                      </span>
-                    ) : (
-                      <button
-                        disabled={busy}
-                        onClick={() =>
-                          setAction({
-                            kind: 'checkout',
-                            name: b.name,
-                            title: 'Switch branch',
-                            description: `Check out ${b.name}. Git will refuse if this would overwrite local changes.`,
-                          })
-                        }
-                      >
-                        Switch branch
-                      </button>
-                    )}
+              {snapshot.branches.map((b) => (
+                <div
+                  className="collection-row"
+                  key={b.name}
+                  data-branch={b.name}
+                >
+                  <GitBranch size={19} />
+                  <div>
+                    <strong>{b.name}</strong>
+                    <small>
+                      {b.remote
+                        ? 'Remote branch'
+                        : b.upstream || 'No upstream configured'}
+                    </small>
                   </div>
-                ))}
+                  <span className="spacer" />
+                  {b.current ? (
+                    <span className="badge">
+                      <Check size={13} />
+                      Current branch
+                    </span>
+                  ) : b.remote ? (
+                    <button
+                      disabled={historyBlocked || b.name.endsWith('/HEAD')}
+                      onClick={() =>
+                        confirm(
+                          'Track remote branch',
+                          `Create and switch to a local branch tracking ${b.name}.`,
+                          (name) => ({
+                            kind: 'trackBranch',
+                            name,
+                            reference: b.name,
+                          }),
+                          'Branch name',
+                          b.name.slice(b.name.indexOf('/') + 1),
+                        )
+                      }
+                    >
+                      Track branch
+                    </button>
+                  ) : (
+                    <button
+                      disabled={busy || !!snapshot.operation}
+                      onClick={() =>
+                        setAction({
+                          kind: 'checkout',
+                          name: b.name,
+                          title: 'Switch branch',
+                          description: `Check out ${b.name}. Git will refuse if this would overwrite local changes.`,
+                        })
+                      }
+                    >
+                      Switch branch
+                    </button>
+                  )}
+                  <ActionMenu
+                    label={`Branch actions for ${b.name}`}
+                    disabled={busy || !!snapshot.operation}
+                    items={[
+                      {
+                        label: 'Merge into current branch',
+                        disabled: historyBlocked || b.current,
+                        run: () => historyAction('merge', b.name),
+                      },
+                      {
+                        label: 'Rebase current branch onto this',
+                        disabled: historyBlocked || b.current,
+                        run: () => historyAction('rebase', b.name),
+                      },
+                      ...(!b.remote
+                        ? [
+                            {
+                              label: 'Rename branch',
+                              run: () =>
+                                confirm(
+                                  'Rename branch',
+                                  `Rename ${b.name}. Existing branches will not be overwritten.`,
+                                  (newName) => ({
+                                    kind: 'renameBranch',
+                                    name: b.name,
+                                    newName,
+                                  }),
+                                  'New branch name',
+                                  b.name,
+                                ),
+                            },
+                            {
+                              label: 'Delete merged branch',
+                              disabled: b.current,
+                              run: () =>
+                                confirm(
+                                  'Delete merged branch',
+                                  `Delete local branch ${b.name}. Git refuses if it is checked out or not fully merged.`,
+                                  { kind: 'deleteBranch', name: b.name },
+                                ),
+                            },
+                          ]
+                        : []),
+                    ]}
+                  />
+                </div>
+              ))}
               {!snapshot.branches.length && (
                 <div className="subtle-empty">
                   Make your first commit to create a branch.
@@ -694,7 +1091,11 @@ export function Workspace({
                 <span className="count">{snapshot.stashes.length}</span>
               </div>
               {snapshot.stashes.map((stash) => (
-                <div className="collection-row" key={stash.index}>
+                <div
+                  className="collection-row"
+                  key={stash.id}
+                  data-stash={stash.id}
+                >
                   <Archive size={20} />
                   <div>
                     <strong>{stash.message}</strong>
@@ -706,11 +1107,12 @@ export function Workspace({
                   </div>
                   <span className="spacer" />
                   <button
-                    disabled={busy}
+                    disabled={historyBlocked}
                     onClick={() =>
                       setAction({
                         kind: 'stashApply',
                         index: stash.index,
+                        expected: stash.id,
                         title: 'Apply stash',
                         description:
                           'Restore these changes into the working directory. The stash will be kept; conflicts may need resolving in your editor.',
@@ -719,6 +1121,39 @@ export function Workspace({
                   >
                     Apply stash
                   </button>
+                  <ActionMenu
+                    label={`Stash actions for ${stash.message}`}
+                    disabled={busy || !!snapshot.operation}
+                    items={[
+                      {
+                        label: 'Pop stash',
+                        disabled: historyBlocked,
+                        run: () =>
+                          confirm(
+                            'Pop stash',
+                            'Apply this stash and remove it only if application succeeds. Conflicting stashes are kept.',
+                            {
+                              kind: 'stashPop',
+                              index: stash.index,
+                              expected: stash.id,
+                            },
+                          ),
+                      },
+                      {
+                        label: 'Drop stash',
+                        run: () =>
+                          confirm(
+                            'Drop stash',
+                            `Permanently remove this saved stash: ${stash.message}. This does not change working files.`,
+                            {
+                              kind: 'stashDrop',
+                              index: stash.index,
+                              expected: stash.id,
+                            },
+                          ),
+                      },
+                    ]}
+                  />
                 </div>
               ))}
               {!snapshot.stashes.length && (
@@ -764,6 +1199,22 @@ export function Workspace({
                 </p>
               )}
               <div className="remote-actions">
+                <button
+                  disabled={
+                    busy || !!snapshot.operation || !snapshot.remotes.length
+                  }
+                  onClick={() =>
+                    confirm(
+                      'Publish current branch',
+                      `Publish ${snapshot.branch} and configure its upstream.`,
+                      (remote) => ({ kind: 'publish', remote }),
+                      'Remote name',
+                      snapshot.remotes[0]?.name,
+                    )
+                  }
+                >
+                  Publish branch
+                </button>
                 <button
                   disabled={busy || !snapshot.remotes.length}
                   onClick={() => syncBranch('pull')}
@@ -851,23 +1302,32 @@ export function Workspace({
             onSubmit={(event) => {
               event.preventDefault();
               let command: Request;
-              if (action.kind === 'createBranch')
+              if (action.build) command = action.build(actionValue.trim());
+              else if (action.command) command = action.command;
+              else if (action.kind === 'createBranch')
                 command = { kind: 'createBranch', name: actionValue };
               else if (action.kind === 'stashSave')
                 command = { kind: 'stashSave', message: actionValue };
               else if (action.kind === 'checkout')
                 command = { kind: 'checkout', name: action.name! };
               else if (action.kind === 'stashApply')
-                command = { kind: 'stashApply', index: action.index! };
-              else command = { kind: action.kind };
+                command = {
+                  kind: 'stashApply',
+                  index: action.index!,
+                  expected: action.expected!,
+                };
+              else if (action.kind === 'pull' || action.kind === 'push')
+                command = { kind: action.kind };
+              else return;
               void perform(command, `${action.title} complete`);
             }}
           >
             {action.input && (
               <label className="form-label">
-                {action.kind === 'createBranch'
-                  ? 'Branch name'
-                  : 'Stash message'}
+                {action.inputLabel ||
+                  (action.kind === 'createBranch'
+                    ? 'Branch name'
+                    : 'Stash message')}
                 <input
                   data-autofocus
                   value={actionValue}

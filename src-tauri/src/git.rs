@@ -27,7 +27,7 @@ fn branch(path: &Path) -> Result<String, String> {
         .trim()
         .to_owned())
 }
-fn revision(path: &Path, reference: &str) -> Result<String, String> {
+pub(crate) fn revision(path: &Path, reference: &str) -> Result<String, String> {
     if reference.is_empty() || reference.len() > 1024 || reference.contains('\0') {
         return Err("Invalid revision".into());
     }
@@ -54,7 +54,7 @@ fn validate_file(file: &str) -> Result<(), String> {
     }
     Ok(())
 }
-fn validate_branch(path: &Path, name: &str) -> Result<(), String> {
+pub(crate) fn validate_branch(path: &Path, name: &str) -> Result<(), String> {
     if name.starts_with('-') || name.contains('@') || name.len() > 1024 {
         return Err("Invalid branch name.".into());
     }
@@ -137,6 +137,7 @@ impl GitService {
         let _guard = lock
             .lock()
             .map_err(|_| "Repository operation unavailable")?;
+        crate::workflow::check_allowed(&path, &request)?;
         match request {
             Request::Snapshot => {
                 let files = parse_status(&git(
@@ -178,12 +179,15 @@ impl GitService {
                         url,
                     });
                 }
-                let stashes = git(&path, &["stash", "list", "--format=%gs"])?
+                let stashes = git(&path, &["stash", "list", "--format=%H%x00%gs"])?
                     .lines()
                     .enumerate()
-                    .map(|(index, message)| Stash {
-                        index,
-                        message: message.into(),
+                    .filter_map(|(index, line)| {
+                        line.split_once('\0').map(|(id, message)| Stash {
+                            index,
+                            id: id.into(),
+                            message: message.into(),
+                        })
                     })
                     .collect();
                 Ok(json!(Snapshot {
@@ -191,7 +195,8 @@ impl GitService {
                     files,
                     branches,
                     remotes,
-                    stashes
+                    stashes,
+                    operation: crate::workflow::operation(&path)?,
                 }))
             }
             Request::History { skip, reference } => {
@@ -404,10 +409,6 @@ impl GitService {
                 )?;
                 Ok(json!(null))
             }
-            Request::StashApply { index } => {
-                git(&path, &["stash", "apply", &format!("stash@{{{index}}}")])?;
-                Ok(json!(null))
-            }
             Request::Fetch { remote } => {
                 if !git(&path, &["remote"])?.lines().any(|r| r == remote) || remote.starts_with('-')
                 {
@@ -452,6 +453,7 @@ impl GitService {
                 )?;
                 Ok(json!(null))
             }
+            other => crate::workflow::execute(&path, other),
         }
     }
 }
@@ -657,7 +659,13 @@ mod tests {
             .unwrap();
         assert!(!dir.path().join("o.txt").exists());
         service
-            .execute(&path, Request::StashApply { index: 0 })
+            .execute(
+                &path,
+                Request::StashApply {
+                    index: 0,
+                    expected: revision(dir.path(), "stash@{0}").unwrap(),
+                },
+            )
             .unwrap();
         assert!(dir.path().join("o.txt").exists());
     }

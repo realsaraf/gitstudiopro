@@ -20,6 +20,7 @@ export function History({
   reference,
   setReference,
   loading,
+  onContextMenu,
 }: {
   commits: Commit[];
   branches: Branch[];
@@ -30,6 +31,10 @@ export function History({
   reference: string;
   setReference: (value: string) => void;
   loading: boolean;
+  onContextMenu: (
+    commit: Commit,
+    position: { left: number; top: number },
+  ) => void;
 }) {
   const [search, setSearch] = useState('');
   const [scroll, setScroll] = useState(0);
@@ -136,6 +141,20 @@ export function History({
         }
         onScroll={(event) => setScroll(event.currentTarget.scrollTop)}
         onKeyDown={(event) => {
+          if (
+            event.key === 'ContextMenu' ||
+            (event.shiftKey && event.key === 'F10')
+          ) {
+            event.preventDefault();
+            const commit = filtered.find((item) => item.id === selected);
+            if (commit) {
+              const rect = ref.current!.getBoundingClientRect();
+              onContextMenu(commit, {
+                left: rect.left + 100,
+                top: rect.top + 40,
+              });
+            }
+          }
           if (['ArrowDown', 'j', 'ArrowUp', 'k'].includes(event.key)) {
             event.preventDefault();
             navigate(event.key === 'ArrowDown' || event.key === 'j' ? 1 : -1);
@@ -156,6 +175,13 @@ export function History({
                 className={`commit-row ${selected === commit.id ? 'selected' : ''}`}
                 key={commit.id}
                 onClick={() => onSelect(commit)}
+                onContextMenu={(event) => {
+                  event.preventDefault();
+                  onContextMenu(commit, {
+                    left: event.clientX,
+                    top: event.clientY,
+                  });
+                }}
                 style={{
                   top: n * rowHeight,
                   height: rowHeight,

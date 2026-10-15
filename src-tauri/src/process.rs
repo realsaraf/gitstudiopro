@@ -49,6 +49,8 @@ pub fn git(path: &Path, args: &[&str]) -> Result<String, String> {
         .stderr(Stdio::piped())
         .env("GIT_TERMINAL_PROMPT", "0")
         .env("GCM_INTERACTIVE", "never")
+        .env("GIT_EDITOR", "true")
+        .env("GIT_SEQUENCE_EDITOR", "true")
         .env("LC_ALL", "C");
     #[cfg(windows)]
     {

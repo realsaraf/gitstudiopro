@@ -145,7 +145,7 @@ test('unavailable actions explain why; repository commands open existing dialogs
   await page.goto('/');
   await page.getByRole('button', { name: 'Preferences', exact: true }).focus();
   await search(page, 'new branch');
-  await expect(page.getByRole('option')).toContainText(
+  await expect(page.getByRole('option', { name: /^New branch/ })).toContainText(
     'Open a repository first',
   );
   await page.keyboard.press('Enter');

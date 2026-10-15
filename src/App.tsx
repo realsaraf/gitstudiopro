@@ -22,7 +22,7 @@ import {
 } from 'lucide-react';
 import { native, openRepository, readSaved, save } from './api';
 import { demoRepo } from './demo';
-import type { Repository } from './types';
+import type { Repository, GitOperation } from './types';
 import { applySettings, useSettings, updateSettings } from './settings';
 import { settingsCommands } from './settings-commands';
 import { CommandPalette } from './components/CommandPalette';
@@ -77,6 +77,7 @@ export function App() {
     branch: '',
     hasChanges: false,
     hasRemotes: false,
+    operation: null as GitOperation | null,
   });
   const current = tabs.find((tab) => tab.id === active);
   useEffect(() => {
@@ -89,7 +90,8 @@ export function App() {
       branch: string,
       hasChanges: boolean,
       hasRemotes: boolean,
-    ) => setStatus({ text, busy, branch, hasChanges, hasRemotes }),
+      operation: GitOperation | null,
+    ) => setStatus({ text, busy, branch, hasChanges, hasRemotes, operation }),
     [],
   );
   function showPreferences(tab: PreferencesTab = 'Appearance', section = '') {
@@ -162,7 +164,9 @@ export function App() {
     ? 'Open a repository first'
     : status.busy
       ? 'Wait for the current operation to finish'
-      : undefined;
+      : status.operation
+        ? `Finish or abort the active ${status.operation} first`
+        : undefined;
   const commands: PaletteCommand[] = [
     {
       id: 'new-tab',
@@ -277,6 +281,27 @@ export function App() {
       setModal(null),
     ),
     ...[
+      ...(['merge', 'rebase', 'cherryPick', 'revert'] as const).map((id) => ({
+        id,
+        name: {
+          merge: 'Merge into current branch',
+          rebase: 'Rebase current branch',
+          cherryPick: 'Cherry-pick commit',
+          revert: 'Revert commit',
+        }[id],
+        detail: 'Choose a target revision and review before applying',
+        icon: GitBranch,
+        disabled: status.hasChanges
+          ? 'Commit or stash working changes first'
+          : undefined,
+      })),
+      {
+        id: 'publish',
+        name: 'Publish current branch',
+        detail: 'Push a new branch and set its upstream',
+        icon: ArrowUp,
+        disabled: !status.hasRemotes ? 'No remotes configured' : undefined,
+      },
       {
         id: 'branch',
         name: 'New branch',
