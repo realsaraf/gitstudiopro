@@ -371,8 +371,10 @@ fn advanced_commit_search_and_explicit_custom_program() {
     fs::write(p.join("author.txt"), "authored\n").unwrap();
     git(p, &["add", "author.txt"]).unwrap();
     call(p, "commitOptions", json!({"target":"Another Author <another@example.invalid>","secondary":"2025-01-02T03:04:05Z","message":"Searchable literal [change]","flag":true})).unwrap();
-    let details = git(p, &["show", "--no-patch", "--format=%an%n%aI%n%B", "HEAD"]).unwrap();
-    assert!(details.contains("Another Author\n2025-01-02T03:04:05+00:00"));
+    // Verify the stored instant, independent of Git's ISO display spelling
+    // (older Git emits +00:00; newer Git emits Z for UTC).
+    let details = git(p, &["show", "--no-patch", "--format=%an%n%at%n%B", "HEAD"]).unwrap();
+    assert!(details.contains("Another Author\n1735787045"), "{details}");
     assert!(details.contains("Signed-off-by: Fixture <fixture@example.invalid>"));
     assert!(read(
         p,

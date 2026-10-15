@@ -40,6 +40,12 @@ That result applies to the prior code, not this follow-up. Physical macOS UI,
 installer execution, signing/notarization, live provider credentials and exhaustive
 upstream option combinations still require their own verification.
 
+The first CI run for this follow-up caught a test portability issue: Git 2.56
+[formats zero-offset ISO dates with `Z`](https://github.com/git/git/blob/v2.56.0/date.c#L328-L340),
+where local Git 2.41 used `+00:00`. The author/date test now asserts the exact
+stored Unix timestamp and author instead of that display spelling. Production
+behavior and the release executable are unchanged by this test correction.
+
 ## Git workflow and source-parity follow-up
 
 The [source-based parity audit](parity/README.md) records the inspected upstream
