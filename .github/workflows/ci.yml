@@ -44,6 +44,25 @@ jobs:
       - run: cargo test --locked --manifest-path src-tauri/Cargo.toml
       - run: cargo clippy --locked --manifest-path src-tauri/Cargo.toml --all-targets -- -D warnings
       - run: npx tauri build --bundles ${{ matrix.bundles }}
+      - name: Ensure WebView2 runtime for native UI tests
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $runtimeRoots = @("${env:ProgramFiles(x86)}\Microsoft\EdgeWebView\Application", "$env:LOCALAPPDATA\Microsoft\EdgeWebView\Application")
+          $runtime = Get-ChildItem -Path $runtimeRoots -Filter msedgewebview2.exe -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
+          if (-not $runtime) {
+            $bootstrapper = Join-Path $env:RUNNER_TEMP 'MicrosoftEdgeWebview2Setup.exe'
+            Invoke-WebRequest 'https://go.microsoft.com/fwlink/p/?LinkId=2124703' -OutFile $bootstrapper
+            $signature = Get-AuthenticodeSignature -LiteralPath $bootstrapper
+            if ($signature.Status -ne 'Valid' -or $signature.SignerCertificate.Subject -notmatch 'O=Microsoft Corporation') {
+              throw 'WebView2 bootstrapper signature validation failed'
+            }
+            $installer = Start-Process -FilePath $bootstrapper -ArgumentList '/silent', '/install' -WindowStyle Hidden -Wait -PassThru
+            if ($installer.ExitCode -ne 0) { throw "WebView2 installation failed: $($installer.ExitCode)" }
+            $runtime = Get-ChildItem -Path $runtimeRoots -Filter msedgewebview2.exe -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
+          }
+          if (-not $runtime) { throw 'WebView2 runtime executable was not found' }
+          Write-Host "WebView2 $($runtime.VersionInfo.FileVersion): $($runtime.FullName)"
       - name: Exercise Windows native UI against disposable repositories
         if: runner.os == 'Windows'
         env:

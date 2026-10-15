@@ -1,7 +1,8 @@
+import { launchNative } from './native-launch.mjs';
 // Real desktop UI coverage for extended operations. CLI is fixture setup/assertion only.
-import { chromium, expect as baseExpect } from '@playwright/test';
+import { expect as baseExpect } from '@playwright/test';
 const expect = baseExpect.configure({ timeout: 20000 });
-import { execFileSync, spawn } from 'node:child_process';
+import { execFileSync } from 'node:child_process';
 import { mkdtemp, mkdir, writeFile, readFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 import { tmpdir } from 'node:os';
@@ -62,17 +63,17 @@ await new Promise((r) => listener.close(r));
 const executable = resolve(
   process.env.GITSTUDIO_BINARY ?? 'src-tauri/target/debug/gitstudiopro.exe',
 );
-const app = spawn(executable, [], {
-  windowsHide: true,
-  stdio: 'ignore',
-  env: {
+const app = launchNative(
+  executable,
+  {
     ...process.env,
     // Local submodule fixtures only; never enable file transport in app defaults.
     GIT_ALLOW_PROTOCOL: 'file',
     WEBVIEW2_USER_DATA_FOLDER: join(root, 'profile'),
     WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS: `--remote-debugging-port=${port}`,
   },
-});
+  evidence,
+);
 let browser, page, context;
 const results = [];
 async function step(name, run) {
@@ -142,15 +143,7 @@ async function run(name, values = {}, write = false) {
   return region;
 }
 try {
-  for (let i = 0; i < 100; i++) {
-    try {
-      browser = await chromium.connectOverCDP(`http://127.0.0.1:${port}`);
-      break;
-    } catch {
-      await delay(200);
-    }
-  }
-  if (!browser) throw new Error('App did not start');
+  browser = await app.connect(port);
   context = browser.contexts()[0];
   await context.tracing.start({ screenshots: true, snapshots: true });
   for (let i = 0; i < 100; i++) {

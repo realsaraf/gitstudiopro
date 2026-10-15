@@ -1,8 +1,9 @@
+import { launchNative } from './native-launch.mjs';
 // End-to-end tests against the real Windows app. All tested Git actions go
 // through UI controls. CLI commands only prepare fixtures/peer activity and
 // independently verify results; no invoke mocks or backend calls are used.
-import { chromium, expect } from '@playwright/test';
-import { execFileSync, spawn } from 'node:child_process';
+import { expect } from '@playwright/test';
+import { execFileSync } from 'node:child_process';
 import { mkdtemp, mkdir, writeFile, readFile, rm } from 'node:fs/promises';
 import { createServer } from 'node:net';
 import { tmpdir } from 'node:os';
@@ -90,15 +91,15 @@ await new Promise((resolve, reject) => {
 });
 const port = listener.address().port;
 await new Promise((resolve) => listener.close(resolve));
-const app = spawn(executable, [], {
-  windowsHide: true,
-  stdio: 'ignore',
-  env: {
+const app = launchNative(
+  executable,
+  {
     ...process.env,
     WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS: `--remote-debugging-port=${port}`,
     WEBVIEW2_USER_DATA_FOLDER: join(root, 'profile'),
   },
-});
+  output,
+);
 const results = [];
 let browser;
 let page;
@@ -205,14 +206,7 @@ async function startConflict(fixture) {
 }
 
 try {
-  for (let i = 0; i < 80 && !browser; i++) {
-    try {
-      browser = await chromium.connectOverCDP(`http://127.0.0.1:${port}`);
-    } catch {
-      await delay(250);
-    }
-  }
-  if (!browser) throw new Error('Native app did not start');
+  browser = await app.connect(port);
   context = browser.contexts()[0];
   await context.tracing.start({
     screenshots: true,
