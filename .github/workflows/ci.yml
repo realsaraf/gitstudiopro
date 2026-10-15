@@ -34,6 +34,7 @@ jobs:
       - uses: Swatinem/rust-cache@v2
         with:
           workspaces: src-tauri -> target
+          cache-on-failure: true
       - run: npm ci
       - run: npm run format:check
       - run: npm run build
@@ -63,14 +64,26 @@ jobs:
           }
           if (-not $runtime) { throw 'WebView2 runtime executable was not found' }
           Write-Host "WebView2 $($runtime.VersionInfo.FileVersion): $($runtime.FullName)"
+      - name: Prepare normal-integrity native UI process
+        if: runner.os == 'Windows'
+        shell: pwsh
+        # WebView2 150+ ignores debugging environment variables in elevated hosts.
+        # Run tests as a normal user, as Tauri's own Windows e2e workflow does.
+        # https://github.com/MicrosoftEdge/WebView2Feedback/issues/5645
+        run: |
+          choco install gsudo --no-progress --yes
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $runnerUser = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name
+          icacls "$env:GITHUB_WORKSPACE" /grant "${runnerUser}:(OI)(CI)F"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Exercise Windows native UI against disposable repositories
         if: runner.os == 'Windows'
         env:
           GITSTUDIO_BINARY: src-tauri/target/release/gitstudiopro.exe
         run: |
-          npm run test:native:workflows
+          & "$env:ChocolateyInstall\bin\gsudo.exe" --integrity Medium node scripts/native-workflows.mjs
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          npm run test:native:tools
+          & "$env:ChocolateyInstall\bin\gsudo.exe" --integrity Medium node scripts/native-tools.mjs
           exit $LASTEXITCODE
       - uses: actions/upload-artifact@v4
         if: always() && runner.os == 'Windows'
