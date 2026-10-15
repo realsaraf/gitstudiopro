@@ -62,6 +62,18 @@ try {
   await page.getByRole('button', { name: 'Preferences', exact: true }).focus();
   await page.keyboard.press('Control+k');
   await expect(page.getByLabel('Search commands')).toBeFocused();
+  await page.keyboard.type('theme dracula');
+  await page.keyboard.press('Enter');
+  await expect(page.getByRole('dialog')).toHaveCount(0);
+  await page.getByRole('button', { name: 'Preferences', exact: true }).click();
+  await expect(page.locator('.theme-card.selected')).toContainText('Dracula');
+  await page.keyboard.press('Escape');
+  await page.keyboard.press('Control+k');
+  await page.keyboard.type('text size 16');
+  await page.keyboard.press('Enter');
+  await expect(page.locator('html')).toHaveCSS('font-size', '16px');
+  await page.keyboard.press('Control+k');
+  await expect(page.getByLabel('Search commands')).toBeFocused();
   await page.keyboard.type('preferences');
   await expect(page.getByLabel('Search commands')).toHaveValue('preferences');
   await page.keyboard.press('Escape');

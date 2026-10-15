@@ -28,6 +28,8 @@ try {
   await page.keyboard.press('Escape');
   await page.keyboard.press('Control+k');
   await capture('command-palette');
+  await page.getByLabel('Search commands').fill('theme');
+  await capture('command-themes');
   await page.keyboard.press('Escape');
   await page
     .getByRole('button', { name: 'Working changes', exact: false })

@@ -37,6 +37,22 @@ parity, direct pull-request integrations, and AI assistance are not. See the
 
 ![Preferences with open-source themes](docs/screenshots/themes.png)
 
+## Everything within reach
+
+Press **Ctrl+K** on Windows or **Cmd+K** on macOS and start typing. Select any
+of the 15 themes directly, set text size, toggle reduced motion, reset panel
+layout, or change the persistent diff layout. Current settings are marked in the
+results. Search accepts words in any order, aliases such as `font` and `zoom`,
+and accent-free theme names such as `frappe`.
+
+The palette also switches open tabs, opens recent repositories, shows shortcuts,
+and opens the existing branch/stash/pull/push dialogs. Unavailable actions explain
+why. AI and direct host integrations remain explicitly labeled as planned.
+
+![Select themes directly from the command palette](docs/screenshots/command-themes.png)
+
+See the [command palette guide](docs/command-palette.md) for shortcuts and examples.
+
 ## Run locally
 
 Install [Node.js 22](https://nodejs.org/), [stable Rust](https://rustup.rs/), and

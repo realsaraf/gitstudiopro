@@ -11,6 +11,9 @@ import {
   FolderOpen,
   GitBranch,
   Keyboard,
+  Archive,
+  ArrowDown,
+  ArrowUp,
   Plus,
   Search,
   Settings2,
@@ -20,7 +23,11 @@ import {
 import { native, openRepository, readSaved, save } from './api';
 import { demoRepo } from './demo';
 import type { Repository } from './types';
-import { applyTheme } from './themes';
+import { applySettings, useSettings, updateSettings } from './settings';
+import { settingsCommands } from './settings-commands';
+import { CommandPalette } from './components/CommandPalette';
+import type { PaletteCommand } from './lib/commands';
+import type { PreferencesTab } from './components/Preferences';
 import { Sidebar, navigation } from './components/Sidebar';
 import { Workspace } from './components/Workspace';
 import { Preferences } from './components/Preferences';
@@ -36,6 +43,10 @@ const dispatch = (command: string) =>
     new CustomEvent('workspace-command', { detail: command }),
   );
 export function App() {
+  const settings = useSettings();
+  const [preferencesTab, setPreferencesTab] =
+    useState<PreferencesTab>('Appearance');
+  const [preferencesSection, setPreferencesSection] = useState('');
   const [tabs, setTabs] = useState<Tab[]>(
     !native && new URLSearchParams(location.search).get('demo') === 'true'
       ? [{ id: 'demo', repo: demoRepo }]
@@ -64,22 +75,32 @@ export function App() {
     text: 'Ready',
     busy: false,
     branch: '',
+    hasChanges: false,
+    hasRemotes: false,
   });
-  const [commandIndex, setCommandIndex] = useState(0);
   const current = tabs.find((tab) => tab.id === active);
   useEffect(() => {
-    applyTheme(readSaved('theme', 0));
-    const size = readSaved('fontSize', 15);
-    document.documentElement.style.fontSize = `${Math.max(12, Math.min(18, Number(size) || 15))}px`;
-    document.documentElement.dataset.reduceMotion = String(
-      readSaved('reduceMotion', false),
-    );
-  }, []);
+    applySettings(settings);
+  }, [settings]);
   const onStatus = useCallback(
-    (text: string, busy: boolean, branch: string) =>
-      setStatus({ text, busy, branch }),
+    (
+      text: string,
+      busy: boolean,
+      branch: string,
+      hasChanges: boolean,
+      hasRemotes: boolean,
+    ) => setStatus({ text, busy, branch, hasChanges, hasRemotes }),
     [],
   );
+  function showPreferences(tab: PreferencesTab = 'Appearance', section = '') {
+    setPreferencesTab(tab);
+    setPreferencesSection(section);
+    setModal('preferences');
+  }
+  function changeSetting(change: Parameters<typeof updateSettings>[0]) {
+    updateSettings(change);
+    setModal(null);
+  }
   function showNew() {
     setQuery('');
     setPath('');
@@ -137,8 +158,15 @@ export function App() {
     if (id === active)
       setActive(next[Math.min(index, next.length - 1)]?.id ?? '');
   }
-  const commands = [
+  const unavailable = !current
+    ? 'Open a repository first'
+    : status.busy
+      ? 'Wait for the current operation to finish'
+      : undefined;
+  const commands: PaletteCommand[] = [
     {
+      id: 'new-tab',
+      group: 'Workspace',
       name: 'New tab',
       detail: 'Open a saved repository in an independent tab',
       icon: Plus,
@@ -146,13 +174,21 @@ export function App() {
       run: showNew,
     },
     {
+      id: 'open-repository',
+      group: 'Workspace',
       name: 'Open repository',
       detail: 'Add a local Git repository to your workspace',
       icon: FolderOpen,
       keys: `${platformKey} O`,
-      run: () => void browse(),
+      run: () => {
+        setModal(null);
+        void browse();
+      },
     },
     ...navigation.map(({ id, label, icon }, index) => ({
+      id: `view-${id}`,
+      group: 'Navigation',
+      disabled: !current ? 'Open a repository first' : undefined,
       name: `Go to ${label.toLowerCase()}`,
       detail:
         id === 'changes'
@@ -168,13 +204,20 @@ export function App() {
       },
     })),
     {
+      id: 'preferences',
+      group: 'Settings',
+      keywords:
+        'settings configuration options theme color font zoom motion layout',
       name: 'Preferences',
-      detail: 'Appearance, text size, and integration status',
+      detail: 'Appearance, themes, text size, and integration status',
       icon: Settings2,
       keys: `${platformKey} ,`,
-      run: () => setModal('preferences'),
+      run: () => showPreferences(),
     },
     {
+      id: 'refresh',
+      group: 'Repository',
+      disabled: unavailable,
       name: 'Refresh repository',
       detail: 'Reload status and history from disk',
       icon: GitBranch,
@@ -184,12 +227,107 @@ export function App() {
         dispatch('refresh');
       },
     },
+    {
+      id: 'shortcuts',
+      group: 'Help',
+      name: 'Keyboard shortcuts',
+      detail: 'Show all workspace shortcuts',
+      keywords: 'help hotkeys',
+      icon: Keyboard,
+      keys: '?',
+      run: () => setModal('shortcuts'),
+    },
+    {
+      id: 'close-tab',
+      group: 'Workspace',
+      name: 'Close current tab',
+      detail: current?.repo.name ?? 'No repository tab open',
+      icon: X,
+      keys: `${platformKey} W`,
+      disabled: unavailable,
+      run: () => {
+        if (current) closeTab(current.id);
+        setModal(null);
+      },
+    },
+    ...tabs.map((tab, index) => ({
+      id: `tab-${tab.id}`,
+      group: 'Open tabs',
+      name: `Switch to ${tab.repo.name}`,
+      detail: `Tab ${index + 1} · ${tab.repo.path}`,
+      selected: tab.id === active,
+      icon: FolderGit2,
+      run: () => {
+        setActive(tab.id);
+        setModal(null);
+      },
+    })),
+    ...recent.map((repo, index) => ({
+      id: `recent-${index}`,
+      group: 'Recent repositories',
+      name: `Open ${repo.name}`,
+      detail: repo.path,
+      icon: FolderOpen,
+      run: () => {
+        showNew();
+        void addRepository(repo.path);
+      },
+    })),
+    ...settingsCommands(settings, changeSetting, showPreferences, () =>
+      setModal(null),
+    ),
+    ...[
+      {
+        id: 'branch',
+        name: 'New branch',
+        detail: 'Choose a name before creating a branch',
+        icon: GitBranch,
+      },
+      {
+        id: 'stash',
+        name: 'Stash working changes',
+        detail: 'Review and name a stash, including untracked files',
+        icon: Archive,
+        disabled: !status.hasChanges
+          ? 'No working changes to stash'
+          : undefined,
+      },
+      {
+        id: 'fetch',
+        name: 'Fetch remotes',
+        detail: 'Choose a remote to fetch in the Remotes view',
+        icon: ArrowDown,
+        disabled: !status.hasRemotes ? 'No remotes configured' : undefined,
+      },
+      {
+        id: 'pull',
+        name: 'Pull current branch',
+        detail: 'Review a fast-forward-only pull from upstream',
+        icon: ArrowDown,
+        disabled: !status.hasRemotes ? 'No remotes configured' : undefined,
+      },
+      {
+        id: 'push',
+        name: 'Push current branch',
+        detail: 'Review publishing committed changes to upstream',
+        icon: ArrowUp,
+        disabled: !status.hasRemotes ? 'No remotes configured' : undefined,
+      },
+    ].map((action) => ({
+      ...action,
+      group: 'Repository',
+      disabled: unavailable || action.disabled,
+      run: () => {
+        setModal(null);
+        dispatch(action.id);
+      },
+    })),
   ];
-  const filtered = commands.filter((c) =>
-    `${c.name} ${c.detail}`.toLowerCase().includes(query.toLowerCase()),
-  );
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
+      // Workspace action dialogs own keyboard input until they are closed.
+      if (!modal && document.querySelector('dialog[open]')) return;
+      if (event.isComposing) return;
       const modifier = event.ctrlKey || event.metaKey;
       if (
         modifier &&
@@ -203,7 +341,6 @@ export function App() {
           case 'k':
             setModal((old) => (old === 'commands' ? null : 'commands'));
             setQuery('');
-            setCommandIndex(0);
             break;
           case 'o':
             void browse();
@@ -212,7 +349,7 @@ export function App() {
             showNew();
             break;
           case ',':
-            setModal('preferences');
+            showPreferences();
             break;
           case '1':
             dispatch('history');
@@ -325,7 +462,6 @@ export function App() {
             onClick={() => {
               setModal('commands');
               setQuery('');
-              setCommandIndex(0);
             }}
           >
             <Search size={16} />
@@ -335,7 +471,7 @@ export function App() {
           <button
             className="icon-button"
             aria-label="Preferences"
-            onClick={() => setModal('preferences')}
+            onClick={() => showPreferences()}
           >
             <Settings2 size={20} />
           </button>
@@ -449,7 +585,6 @@ export function App() {
           onClick={() => {
             setModal('commands');
             setQuery('');
-            setCommandIndex(0);
           }}
         >
           <Command size={12} />
@@ -457,7 +592,11 @@ export function App() {
         </button>
       </footer>
       {modal === 'preferences' && (
-        <Preferences onClose={() => setModal(null)} />
+        <Preferences
+          initialTab={preferencesTab}
+          initialSection={preferencesSection}
+          onClose={() => setModal(null)}
+        />
       )}
       {modal === 'new' && (
         <Modal
@@ -572,67 +711,7 @@ export function App() {
         </Modal>
       )}
       {modal === 'commands' && (
-        <Modal title="Command palette" onClose={() => setModal(null)}>
-          <div className="palette-search">
-            <Search size={23} />
-            <input
-              data-autofocus
-              aria-label="Search commands"
-              placeholder="Search commands…"
-              value={query}
-              onChange={(event) => {
-                setQuery(event.target.value);
-                setCommandIndex(0);
-              }}
-              onKeyDown={(event) => {
-                if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
-                  event.preventDefault();
-                  setCommandIndex(
-                    (old) =>
-                      (old +
-                        (event.key === 'ArrowDown' ? 1 : -1) +
-                        filtered.length) %
-                      Math.max(1, filtered.length),
-                  );
-                }
-                if (event.key === 'Enter') {
-                  event.preventDefault();
-                  filtered[commandIndex]?.run();
-                }
-              }}
-            />
-            <kbd>esc</kbd>
-          </div>
-          <div className="section-label">COMMANDS</div>
-          <div className="command-list">
-            {filtered.map((command, i) => (
-              <button
-                key={command.name}
-                className={`command-item ${i === commandIndex ? 'active' : ''}`}
-                onMouseEnter={() => setCommandIndex(i)}
-                onClick={command.run}
-              >
-                <span className="command-icon">
-                  <command.icon size={23} />
-                </span>
-                <span>
-                  <strong>{command.name}</strong>
-                  <small>{command.detail}</small>
-                </span>
-                {command.keys && <kbd>{command.keys}</kbd>}
-              </button>
-            ))}
-            {!filtered.length && (
-              <p className="subtle-empty">No matching commands.</p>
-            )}
-          </div>
-          <div className="palette-footer">
-            <kbd>↑</kbd>
-            <kbd>↓</kbd> to navigate <kbd>↵</kbd> to open
-            <span className="spacer" />
-            Esc to close
-          </div>
-        </Modal>
+        <CommandPalette commands={commands} onClose={() => setModal(null)} />
       )}
       {modal === 'shortcuts' && (
         <Modal

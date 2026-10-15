@@ -3,6 +3,27 @@
 Recorded on October 14, 2026, during the initial Windows development run.
 This describes observed checks, not a stable-release certification.
 
+## Command palette follow-up
+
+The palette/settings follow-up adds direct theme and setting selection, shared
+settings persistence, contextual repository actions, and accessible keyboard
+navigation. `npm run build`, formatting checks, 9 frontend unit tests, and all
+14 browser tests passed on Windows. The browser checks include palette focus,
+search aliases and accents, settings persistence, disabled commands, action
+dialog routing, tab switching, scrolling at 1000 × 680, and automated accessibility
+checks for the workspace, Preferences, palette, and theme results.
+
+Screenshots were regenerated from the read-only fixture. The Windows release
+executable and NSIS installer rebuilt successfully. The release native smoke test
+passed direct Dracula selection, text-size changes, palette focus/reopening, and
+the existing real Git stage/commit/branch workflow in a disposable repository and
+profile. The installer SHA-256 for this follow-up is
+`8D298A03D50BD8DB42614E78EB2661C2C687590EF74F0A6226521C9DD45AD631`.
+The installer itself was not executed. The macOS evidence below applies to the
+initial revision; this follow-up still requires its own macOS CI/build result.
+
+## Initial alpha checks
+
 | Check                                 | Evidence                                                                                                                                             |
 | ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
 | TypeScript and production frontend    | `npm run build` passed                                                                                                                               |

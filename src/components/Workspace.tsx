@@ -58,7 +58,13 @@ export function Workspace({
   active: boolean;
   onRepositories: () => void;
   onShortcuts: () => void;
-  onStatus: (text: string, busy: boolean, branch: string) => void;
+  onStatus: (
+    text: string,
+    busy: boolean,
+    branch: string,
+    hasChanges: boolean,
+    hasRemotes: boolean,
+  ) => void;
 }) {
   const [view, setView] = useState<View>('history');
   const [snapshot, setSnapshot] = useState<Snapshot>(empty);
@@ -99,13 +105,49 @@ export function Workspace({
       input: true,
     });
   };
+  const newStash = () => {
+    setActionValue('Work in progress');
+    setAction({
+      kind: 'stashSave',
+      title: 'Stash working changes',
+      description:
+        'Save tracked and untracked changes, then return to a clean working directory.',
+      input: true,
+    });
+  };
+  const syncBranch = (kind: 'pull' | 'push') => {
+    setAction({
+      kind,
+      title: kind === 'pull' ? 'Pull current branch' : 'Push current branch',
+      description:
+        kind === 'pull'
+          ? 'Fetch and fast-forward from the current branch’s configured upstream. Divergent histories are refused.'
+          : 'Publish committed changes using your Git push configuration and credentials. This operation does not force push.',
+    });
+  };
   const report = useCallback((e: unknown) => {
     setError(String(e instanceof Error ? e.message : e));
     setNotice('Operation failed');
   }, []);
   useEffect(() => {
-    if (active) onStatus(notice, busy, snapshot.branch || repo.branch);
-  }, [active, notice, busy, snapshot.branch, repo.branch, onStatus]);
+    if (active)
+      onStatus(
+        notice,
+        busy,
+        snapshot.branch || repo.branch,
+        !!snapshot.files.length,
+        !!snapshot.remotes.length,
+      );
+  }, [
+    active,
+    notice,
+    busy,
+    snapshot.branch,
+    snapshot.files.length,
+    snapshot.remotes.length,
+    repo.branch,
+    onStatus,
+  ]);
   useEffect(() => {
     const reset = () => {
       setSidebarWidth(258);
@@ -125,13 +167,21 @@ export function Workspace({
     if (!active) return;
     const commands = (e: Event) => {
       const command = (e as CustomEvent<string>).detail;
+      if (busy || action) return;
       if (navigation.some((n) => n.id === command)) setView(command as View);
       else if (command === 'refresh') setRefresh((n) => n + 1);
       else if (command === 'branch') newBranch();
+      else if (command === 'stash' && snapshot.files.length) newStash();
+      else if (command === 'fetch') setView('remotes');
+      else if (
+        (command === 'pull' || command === 'push') &&
+        snapshot.remotes.length
+      )
+        syncBranch(command);
     };
     window.addEventListener('workspace-command', commands);
     return () => window.removeEventListener('workspace-command', commands);
-  }, [active]);
+  }, [active, busy, action, snapshot.files.length, snapshot.remotes.length]);
   useEffect(() => {
     if (!active) return;
     let cancelled = false;
@@ -414,16 +464,7 @@ export function Workspace({
             </button>
             <button
               disabled={busy || !snapshot.files.length}
-              onClick={() => {
-                setActionValue('Work in progress');
-                setAction({
-                  kind: 'stashSave',
-                  title: 'Stash working changes',
-                  description:
-                    'Save tracked and untracked changes, then return to a clean working directory.',
-                  input: true,
-                });
-              }}
+              onClick={newStash}
             >
               <Archive size={16} />
               Stash
@@ -725,14 +766,7 @@ export function Workspace({
               <div className="remote-actions">
                 <button
                   disabled={busy || !snapshot.remotes.length}
-                  onClick={() =>
-                    setAction({
-                      kind: 'pull',
-                      title: 'Pull current branch',
-                      description:
-                        'Fetch and fast-forward from the current branch’s configured upstream. Divergent histories are refused.',
-                    })
-                  }
+                  onClick={() => syncBranch('pull')}
                 >
                   <ArrowDown size={16} />
                   Pull · fast-forward only
@@ -740,14 +774,7 @@ export function Workspace({
                 <button
                   className="primary"
                   disabled={busy || !snapshot.remotes.length}
-                  onClick={() =>
-                    setAction({
-                      kind: 'push',
-                      title: 'Push current branch',
-                      description:
-                        'Publish committed changes using your Git push configuration and credentials. This operation does not force push.',
-                    })
-                  }
+                  onClick={() => syncBranch('push')}
                 >
                   <ArrowUp size={16} />
                   Push

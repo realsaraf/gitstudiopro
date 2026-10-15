@@ -9,15 +9,27 @@ import {
   Type,
 } from 'lucide-react';
 import { Modal } from './Modal';
-import { applyTheme, themes } from '../themes';
-import { readSaved, save } from '../api';
+import { themes } from '../themes';
+import { useSettings, updateSettings, resetLayout } from '../settings';
 import { credits } from '../theme-credits';
-export function Preferences({ onClose }: { onClose: () => void }) {
-  const [tab, setTab] = useState('Appearance');
-  const [theme, setTheme] = useState(readSaved('theme', 0));
-  const [size, setSize] = useState(readSaved('fontSize', 15));
+export type PreferencesTab = 'Appearance' | 'Intelligence' | 'Repository hosts';
+export function Preferences({
+  onClose,
+  initialTab = 'Appearance',
+  initialSection = '',
+}: {
+  onClose: () => void;
+  initialTab?: PreferencesTab;
+  initialSection?: string;
+}) {
+  const [tab, setTab] = useState<PreferencesTab>(initialTab);
+  const {
+    theme,
+    fontSize: size,
+    reduceMotion: motion,
+    splitDiff,
+  } = useSettings();
   const [filter, setFilter] = useState('All');
-  const [motion, setMotion] = useState(readSaved('reduceMotion', false));
   return (
     <Modal
       title="Preferences"
@@ -26,20 +38,46 @@ export function Preferences({ onClose }: { onClose: () => void }) {
       wide
     >
       <div className="settings-tabs" role="tablist">
-        {['Appearance', 'Intelligence', 'Repository hosts'].map((name) => (
-          <button
-            key={name}
-            role="tab"
-            aria-selected={tab === name}
-            className={tab === name ? 'active' : ''}
-            onClick={() => setTab(name)}
-          >
-            {name}
-          </button>
-        ))}
+        {(['Appearance', 'Intelligence', 'Repository hosts'] as const).map(
+          (name, index, tabs) => (
+            <button
+              key={name}
+              role="tab"
+              aria-selected={tab === name}
+              id={`settings-tab-${index}`}
+              aria-controls="settings-panel"
+              tabIndex={tab === name ? 0 : -1}
+              data-autofocus={
+                tab === name && !initialSection ? true : undefined
+              }
+              className={tab === name ? 'active' : ''}
+              onClick={() => setTab(name)}
+              onKeyDown={(event) => {
+                let next = index;
+                if (event.key === 'ArrowRight')
+                  next = (index + 1) % tabs.length;
+                else if (event.key === 'ArrowLeft')
+                  next = (index + tabs.length - 1) % tabs.length;
+                else if (event.key === 'Home') next = 0;
+                else if (event.key === 'End') next = tabs.length - 1;
+                else return;
+                event.preventDefault();
+                setTab(tabs[next]);
+                document.getElementById(`settings-tab-${next}`)?.focus();
+              }}
+            >
+              {name}
+            </button>
+          ),
+        )}
       </div>
       {tab === 'Appearance' ? (
-        <div role="tabpanel" className="settings-content">
+        <div
+          role="tabpanel"
+          id="settings-panel"
+          aria-labelledby="settings-tab-0"
+          className="settings-content"
+        >
           <section className="setting-card">
             <h3>
               <Type size={18} /> Text size
@@ -55,9 +93,7 @@ export function Preferences({ onClose }: { onClose: () => void }) {
                 value={size}
                 onChange={(event) => {
                   const value = Number(event.target.value);
-                  setSize(value);
-                  save('fontSize', value);
-                  document.documentElement.style.fontSize = `${value}px`;
+                  updateSettings({ fontSize: value });
                 }}
               />
               <span className="mono">{size} px</span>
@@ -72,15 +108,23 @@ export function Preferences({ onClose }: { onClose: () => void }) {
               <h3>Panel layout</h3>
               <p>Drag a divider to resize. Arrow keys work too.</p>
             </div>
-            <button
-              onClick={() => {
-                save('sidebarWidth', 258);
-                save('historyHeight', 48);
-                window.dispatchEvent(new Event('reset-layout'));
-              }}
+            <button onClick={resetLayout}>Reset layout</button>
+          </section>
+          <section className="setting-card inline-setting">
+            <div>
+              <h3>Diff layout</h3>
+              <p>Remember your preferred layout across tabs and restarts.</p>
+            </div>
+            <select
+              aria-label="Default diff layout"
+              value={splitDiff ? 'split' : 'unified'}
+              onChange={(event) =>
+                updateSettings({ splitDiff: event.target.value === 'split' })
+              }
             >
-              Reset layout
-            </button>
+              <option value="split">Side by side</option>
+              <option value="unified">Unified</option>
+            </select>
           </section>
           <div className="theme-heading">
             <div>
@@ -116,9 +160,7 @@ export function Preferences({ onClose }: { onClose: () => void }) {
                     className={`theme-card ${theme === i ? 'selected' : ''}`}
                     aria-pressed={theme === i}
                     onClick={() => {
-                      setTheme(i);
-                      applyTheme(i);
-                      save('theme', i);
+                      updateSettings({ theme: i });
                     }}
                   >
                     <div
@@ -182,16 +224,19 @@ export function Preferences({ onClose }: { onClose: () => void }) {
               aria-label="Reduce motion"
               checked={motion}
               onChange={(e) => {
-                setMotion(e.target.checked);
-                save('reduceMotion', e.target.checked);
-                document.documentElement.dataset.reduceMotion = String(
-                  e.target.checked,
-                );
+                updateSettings({ reduceMotion: e.target.checked });
               }}
             />
           </section>
-          <details className="license-credits">
-            <summary>Open-source credits &amp; licenses</summary>
+          <details
+            className="license-credits"
+            open={initialSection === 'licenses' || undefined}
+          >
+            <summary
+              data-autofocus={initialSection === 'licenses' || undefined}
+            >
+              Open-source credits &amp; licenses
+            </summary>
             <p>
               Community palettes belong to their respective authors. These
               adaptations adjust surface, text, and accent roles for GitStudio
@@ -214,7 +259,12 @@ export function Preferences({ onClose }: { onClose: () => void }) {
           </p>
         </div>
       ) : (
-        <div role="tabpanel" className="integration-state">
+        <div
+          role="tabpanel"
+          id="settings-panel"
+          aria-labelledby={`settings-tab-${tab === 'Intelligence' ? 1 : 2}`}
+          className="integration-state"
+        >
           <div className="integration-icon">
             {tab === 'Intelligence' ? (
               <Code2 size={30} />

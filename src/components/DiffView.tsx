@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Columns2, FileCode2, AlignLeft, Copy, Check } from 'lucide-react';
 import { parseDiff, splitDiff } from '../lib/diff';
+import { useSettings, updateSettings } from '../settings';
 export function DiffView({
   patch,
   file,
@@ -10,7 +11,7 @@ export function DiffView({
   file: string;
   loading: boolean;
 }) {
-  const [split, setSplit] = useState(true);
+  const { splitDiff: split } = useSettings();
   const [copied, setCopied] = useState(false);
   const parsed = useMemo(() => parseDiff(patch), [patch]);
   const lines = parsed
@@ -42,7 +43,7 @@ export function DiffView({
             aria-label="Unified diff"
             aria-pressed={!split}
             className={!split ? 'active' : ''}
-            onClick={() => setSplit(false)}
+            onClick={() => updateSettings({ splitDiff: false })}
           >
             <AlignLeft size={15} />
           </button>
@@ -50,7 +51,7 @@ export function DiffView({
             aria-label="Side by side diff"
             aria-pressed={split}
             className={split ? 'active' : ''}
-            onClick={() => setSplit(true)}
+            onClick={() => updateSettings({ splitDiff: true })}
           >
             <Columns2 size={15} />
           </button>
