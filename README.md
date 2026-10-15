@@ -16,8 +16,8 @@ GitStudio Pro is an open-source desktop Git client built from scratch with
 Git Extensions, it puts repository history, working changes, and file diffs in
 one focused workspace.
 
-**0.1 is an early alpha.** Core local workflows are implemented; full Git Extensions
-parity, direct pull-request integrations, and AI assistance are not. See the
+**0.1 is an early alpha.** Local workflows and direct GitHub/Enterprise controls
+are implemented; full Git Extensions parity and AI assistance are not. See the
 [roadmap and known limits](docs/roadmap.md) and [validation evidence](docs/validation.md).
 The [source-based Git Extensions parity matrix](docs/parity/README.md) records
 what is implemented, native-tested, partial, and missing against a pinned upstream revision.
@@ -32,11 +32,17 @@ what is implemented, native-tested, partial, and missing against a pinned upstre
   create/switch/rename branches, track remote branches, and save/apply/pop/drop stashes.
 - **Work with history.** Commit context menus expose cherry-pick, revert,
   branch-at-commit, and tags. Branch menus expose merge/rebase. Conflicted
-  operations show Continue/Abort/Skip controls after external-editor resolution.
+  operations show Continue/Abort/Skip controls, with a built-in text conflict
+  editor and an optional configured external merge tool.
 - **Keep repositories close.** Independent tabs, recent folders, native directory
   selection, and a searchable command palette.
-- **Sync deliberately.** Fetch configured remotes, fast-forward pull, and push
-  HEAD to the current branch's configured upstream. No force-push control.
+- **Go beyond the basics.** Repository tools include clone/init, partial staging,
+  interactive rebase, reset/discard/clean, blame, reflog, worktrees, submodules,
+  sparse checkout, bisect, patches, notes, archives and custom executable presets.
+- **Sync deliberately.** Manage remotes and tags; choose fetch, pull and push
+  options, including explicit force-with-lease. Writes require review.
+- **Review on GitHub.** Browse pull requests and patches, create drafts, submit
+  comments/reviews, merge or fork. API tokens stay in the OS credential store.
 - **Make it comfortable.** Resizable panels, 12–18px text, reduced motion, and
   15 offline palettes with upstream credits and license notices.
 
@@ -52,7 +58,8 @@ and accent-free theme names such as `frappe`.
 
 The palette also switches open tabs, opens recent repositories, shows shortcuts,
 and opens the existing branch/stash/pull/push dialogs. Unavailable actions explain
-why. AI and direct host integrations remain explicitly labeled as planned.
+why. Every repository tool is searchable. Repository hosts opens the direct
+GitHub/Enterprise controls; AI assistance remains labeled as planned.
 
 ![Select themes directly from the command palette](docs/screenshots/command-themes.png)
 
@@ -63,12 +70,17 @@ Repository, branch, and stash menus expose the corresponding operations.
 See the [native workflow test guide](docs/native-workflows.md) for reproducible
 UI-driven tests and the limits of that evidence.
 
+![Searchable repository tools in the read-only preview](docs/screenshots/repository-tools.png)
+
+See the [repository tools guide](docs/repository-tools.md) for partial staging,
+interactive rebase, conflict recovery, host connections and custom tools.
+
 ![Commit context menu in the read-only preview](docs/screenshots/commit-menu.png)
 
 ## Run locally
 
 Install [Node.js 22](https://nodejs.org/), [stable Rust](https://rustup.rs/), and
-[Git 2.30+](https://git-scm.com/downloads). Complete the
+[Git 2.38+](https://git-scm.com/downloads). Complete the
 [Tauri platform prerequisites](https://v2.tauri.app/start/prerequisites/):
 
 | Platform      | Native prerequisites                                          |
@@ -107,6 +119,7 @@ npm test
 npx playwright install chromium
 npm run test:e2e
 npm run test:native:workflows # Windows; requires a built native app
+npm run test:native:tools # Advanced Git and loopback-host UI scenarios
 cargo test --locked --manifest-path src-tauri/Cargo.toml
 cargo clippy --locked --manifest-path src-tauri/Cargo.toml --all-targets -- -D warnings
 npm run tauri -- build

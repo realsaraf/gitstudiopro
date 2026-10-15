@@ -32,6 +32,8 @@ import { Sidebar, navigation } from './components/Sidebar';
 import { Workspace } from './components/Workspace';
 import { Preferences } from './components/Preferences';
 import { Modal } from './components/Modal';
+import { gitTools } from './git-tools';
+import { CreateRepositoryDialog } from './components/CreateRepositoryDialog';
 
 interface Tab {
   id: string;
@@ -65,7 +67,7 @@ export function App() {
       : [];
   });
   const [modal, setModal] = useState<
-    'new' | 'preferences' | 'commands' | 'shortcuts' | null
+    'new' | 'preferences' | 'commands' | 'shortcuts' | 'create' | null
   >(null);
   const [query, setQuery] = useState('');
   const [path, setPath] = useState('');
@@ -177,6 +179,30 @@ export function App() {
       keys: `${platformKey} T`,
       run: showNew,
     },
+    {
+      id: 'clone-init',
+      group: 'Workspace',
+      name: 'Clone or initialize repository',
+      detail: 'Create a new local repository or clone a remote',
+      icon: FolderGit2,
+      run: () => setModal('create'),
+    },
+    ...gitTools.map((tool) => ({
+      id: `tool-${tool.id}`,
+      group: tool.group,
+      name: tool.name,
+      detail: tool.description,
+      icon: GitBranch,
+      disabled: !current
+        ? 'Open a repository first'
+        : status.busy
+          ? 'Wait for the current operation'
+          : undefined,
+      run: () => {
+        setModal(null);
+        dispatch(`tool:${tool.id}`);
+      },
+    })),
     {
       id: 'open-repository',
       group: 'Workspace',
@@ -570,6 +596,12 @@ export function App() {
                 <button className="text-button" onClick={showNew}>
                   Enter a repository path <ArrowRight size={15} />
                 </button>
+                <button
+                  className="text-button"
+                  onClick={() => setModal('create')}
+                >
+                  Clone or initialize repository
+                </button>
                 {!native && (
                   <button
                     className="preview-link text-button"
@@ -616,6 +648,12 @@ export function App() {
           Command palette<kbd>{platformKey} K</kbd>
         </button>
       </footer>
+      {modal === 'create' && (
+        <CreateRepositoryDialog
+          onClose={() => setModal(null)}
+          onOpen={(path) => void addRepository(path)}
+        />
+      )}
       {modal === 'preferences' && (
         <Preferences
           initialTab={preferencesTab}
@@ -642,6 +680,13 @@ export function App() {
             />
           </label>
           <div className="saved-repositories">
+            <button
+              className="text-button"
+              disabled={opening}
+              onClick={() => setModal('create')}
+            >
+              Clone or initialize repository
+            </button>
             {recent
               .filter((r) =>
                 `${r.name} ${r.path}`

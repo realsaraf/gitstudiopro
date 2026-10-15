@@ -44,6 +44,23 @@ jobs:
       - run: cargo test --locked --manifest-path src-tauri/Cargo.toml
       - run: cargo clippy --locked --manifest-path src-tauri/Cargo.toml --all-targets -- -D warnings
       - run: npx tauri build --bundles ${{ matrix.bundles }}
+      - name: Exercise Windows native UI against disposable repositories
+        if: runner.os == 'Windows'
+        env:
+          GITSTUDIO_BINARY: src-tauri/target/release/gitstudiopro.exe
+        run: |
+          npm run test:native:workflows
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          npm run test:native:tools
+          exit $LASTEXITCODE
+      - uses: actions/upload-artifact@v4
+        if: always() && runner.os == 'Windows'
+        with:
+          name: native-ui-evidence-Windows
+          path: |
+            artifacts/native-workflows/
+            artifacts/native-tools/
+          if-no-files-found: ignore
       - uses: actions/upload-artifact@v4
         with:
           name: gitstudiopro-${{ runner.os }}-${{ runner.arch }}-unsigned

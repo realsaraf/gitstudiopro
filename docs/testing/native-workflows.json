@@ -1,124 +1,125 @@
 {
   "recorded": "2026-10-15",
   "platform": "Windows x64, WebView2",
+  "git": "2.41.0.windows.3",
   "build": "release",
-  "executableSha256": "BC185324AC757AD2EA04733E284FABFCEDE78ED8F0D896012E25E71BB45521C2",
+  "executableSha256": "263E811421ABA5FD436555563C2C9B698CF857A627D55F8D8ED219252F7F9101",
   "passed": true,
   "results": [
     {
       "name": "Open real repository",
       "passed": true,
-      "milliseconds": 1736
+      "milliseconds": 1580
     },
     {
       "name": "Create and switch branch using UI",
       "passed": true,
-      "milliseconds": 2915
+      "milliseconds": 2874
     },
     {
       "name": "Stage, unstage, and commit multiple Unicode paths",
       "passed": true,
-      "milliseconds": 7598
+      "milliseconds": 5170
     },
     {
       "name": "Publish branch and set upstream",
       "passed": true,
-      "milliseconds": 2436
+      "milliseconds": 1692
     },
     {
       "name": "Push a subsequent commit",
       "passed": true,
-      "milliseconds": 5508
+      "milliseconds": 4266
     },
     {
       "name": "Cherry-pick selected commit through its menu",
       "passed": true,
-      "milliseconds": 4300
+      "milliseconds": 2168
     },
     {
       "name": "Revert selected commit",
       "passed": true,
-      "milliseconds": 4761
+      "milliseconds": 2584
     },
     {
       "name": "Merge branch through its menu",
       "passed": true,
-      "milliseconds": 2770
+      "milliseconds": 1562
     },
     {
       "name": "Rebase feature branch onto main",
       "passed": true,
-      "milliseconds": 3740
+      "milliseconds": 1910
     },
     {
       "name": "Divergent push is refused without overwriting remote",
       "passed": true,
-      "milliseconds": 1941
+      "milliseconds": 1153
     },
     {
       "name": "Create branch at commit, rename, delete merged branch, and tag",
       "passed": true,
-      "milliseconds": 6535
+      "milliseconds": 6307
     },
     {
       "name": "Fetch and track remote branch",
       "passed": true,
-      "milliseconds": 2633
+      "milliseconds": 2889
     },
     {
       "name": "Pull fast-forward from a local peer",
       "passed": true,
-      "milliseconds": 1597
+      "milliseconds": 1732
     },
     {
       "name": "Save and apply stash, retain then explicitly drop it",
       "passed": true,
-      "milliseconds": 7625
+      "milliseconds": 8953
     },
     {
       "name": "Pop stash applies and removes saved work",
       "passed": true,
-      "milliseconds": 5292
+      "milliseconds": 6787
     },
     {
       "name": "rebase: conflict detection and abort restores original HEAD",
       "passed": true,
-      "milliseconds": 3859
+      "milliseconds": 4531
     },
     {
       "name": "rebase: resolve, stage, continue",
       "passed": true,
-      "milliseconds": 6050
+      "milliseconds": 6536
     },
     {
       "name": "cherry-pick: conflict detection and abort restores original HEAD",
       "passed": true,
-      "milliseconds": 5054
+      "milliseconds": 4887
     },
     {
       "name": "cherry-pick: skip conflicted commit",
       "passed": true,
-      "milliseconds": 3398
+      "milliseconds": 3185
     },
     {
       "name": "merge: conflict detection and abort restores original HEAD",
       "passed": true,
-      "milliseconds": 3945
+      "milliseconds": 3523
     },
     {
       "name": "merge: resolve, stage, continue",
       "passed": true,
-      "milliseconds": 4987
+      "milliseconds": 4418
     },
     {
       "name": "revert: conflict detection and abort restores original HEAD",
       "passed": true,
-      "milliseconds": 4457
+      "milliseconds": 3920
     },
     {
       "name": "revert: resolve, stage, continue",
       "passed": true,
-      "milliseconds": 5503
+      "milliseconds": 5034
     }
   ]
 }

@@ -3,6 +3,43 @@
 Initial evidence recorded October 14, 2026; workflow follow-up October 15, 2026.
 This describes observed checks, not a stable-release certification.
 
+## Extended Git tools and host controls — October 15, 2026
+
+This follow-up implements the extended repository-tool catalog, clone/init,
+selected-line staging, interactive rebase, built-in conflict editing, host controls
+with OS credentials, and saved custom executable presets. The updated
+[parity matrix](parity/README.md) separates these additions from remaining upstream
+options; this is **not** a declaration of complete Git Extensions parity.
+
+- Production frontend build passed; **12 unit tests** and **19 browser tests** passed.
+  Browser checks include palette focus/themes, tools, confirmation guards, host
+  navigation, modal behavior and automated accessibility checks.
+- **24 Rust tests passed** against real Git fixtures. Clippy passed with warnings
+  denied. Coverage includes stale edits/patches, path validation, scoped remote
+  operations, author/sign-off, reset, worktrees, sparse checkout, bisect, patches,
+  conflict gating, custom executable validation, and host endpoint/write validation.
+- **41 Windows native UI scenarios passed on the final release executable**:
+  [23 core workflows](testing/native-workflows.json) and
+  [18 extended workflows](testing/native-tools.json). These include real Git
+  operations and a loopback host fixture; remote publishing was not tested against
+  a live provider. The synthetic host credential was removed after testing.
+- The Windows executable and NSIS installer built successfully. The installer was
+  not executed. Executable SHA-256:
+  `263E811421ABA5FD436555563C2C9B698CF857A627D55F8D8ED219252F7F9101`.
+  Installer SHA-256:
+  `4D6F4C45133BD25CE69AFC307C41F14185D323C324B6D2B696978AC03FB02686`.
+
+The local build initially exhausted free space on C:. Lossless NTFS compression of
+this project's generated debug cache recovered space; source files were not deleted.
+The desktop-only Cargo target now generates an `rlib`, omitting unused mobile/FFI
+library artifacts. A separate slow alternate-drive build was stopped.
+
+The prior workflow revision `0b8fcc98b6f5046f62a84f21bd909e94db42a10e` passed
+[Windows and macOS CI](https://github.com/realsaraf/gitstudiopro/actions/runs/38681673001).
+That result applies to the prior code, not this follow-up. Physical macOS UI,
+installer execution, signing/notarization, live provider credentials and exhaustive
+upstream option combinations still require their own verification.
+
 ## Git workflow and source-parity follow-up
 
 The [source-based parity audit](parity/README.md) records the inspected upstream

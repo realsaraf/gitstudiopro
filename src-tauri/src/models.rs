@@ -57,6 +57,7 @@ pub struct Snapshot {
 #[derive(Serialize, Deserialize, Debug, PartialEq, Eq, Clone, Copy)]
 #[serde(rename_all = "kebab-case")]
 pub enum Operation {
+    Am,
     Merge,
     Rebase,
     CherryPick,
@@ -65,6 +66,7 @@ pub enum Operation {
 impl Operation {
     pub fn command(self) -> &'static str {
         match self {
+            Self::Am => "am",
             Self::Merge => "merge",
             Self::Rebase => "rebase",
             Self::CherryPick => "cherry-pick",
@@ -87,6 +89,9 @@ pub enum OperationAction {
     rename_all_fields = "camelCase"
 )]
 pub enum Request {
+    Tool {
+        command: crate::tools::ToolRequest,
+    },
     Snapshot,
     History {
         skip: usize,

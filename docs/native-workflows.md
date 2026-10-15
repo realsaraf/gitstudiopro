@@ -27,7 +27,8 @@ The 23 scenarios cover:
 Every operation under test is triggered by UI controls. Git CLI commands create
 the fixtures, simulate a separate collaborator, and independently check results.
 Conflict text is edited as the external-editor step; staging and continuation
-are performed through the UI. This is not a claim of a built-in merge editor.
+are performed through the UI. The separate advanced suite exercises the built-in
+conflict editor directly.
 
 Evidence is saved to ignored `artifacts/native-workflows/`: JSON results,
 conflict screenshots, failure screenshot (if any), and a Playwright trace.
@@ -35,6 +36,25 @@ The [recorded release-run summary](testing/native-workflows.json) includes the
 executable checksum and each scenario result without local fixture paths.
 Fixtures remain in the OS temporary directory for diagnosis. No production
 remote, personal repository, or user credential is required.
+
+## Extended tools and host controls
+
+Run `npm run test:native:tools` with the same executable override. The suite covers
+full commit inspection, tree/blame/reflog, remote and tag management, push/fetch/pull
+options, file editors/notes/config, selected-line staging/unstaging, discard/clean,
+amend/reset, worktrees, patches/archives, interactive rebase fixup and edit stops,
+sparse checkout, bisect, submodules, author/sign-off controls, custom executable
+presets, the built-in conflict editor, and clone/init.
+
+Its host scenario uses a temporary loopback HTTP server. It saves a synthetic
+credential through the UI, verifies anonymous/authenticated requests, all supported
+publish actions, merge head-SHA protection, endpoint credential isolation, and
+redirect rejection, then removes that credential through the UI. **No real host
+publishing occurs.** Evidence goes to `artifacts/native-tools/`.
+
+Only the harness process enables Git file transport for local submodule fixtures;
+the application does not weaken users' transport defaults. Custom-tool tests run
+a temporary Node script with literal metacharacters to verify argument separation.
 
 ## Boundaries
 

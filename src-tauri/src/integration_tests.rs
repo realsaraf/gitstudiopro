@@ -23,6 +23,7 @@ fn commit(path: &Path, name: &str, contents: &str) {
 
 fn history_request(operation: Operation, target: &str) -> Request {
     match operation {
+        Operation::Am => unreachable!("Mail patches use their own fixture"),
         Operation::Merge => Request::Merge {
             revision: target.into(),
         },

@@ -20,7 +20,7 @@ Installed Git → local repository / configured remotes
 ## Boundaries
 
 - `src/types.ts` defines the client data and request contracts.
-- `src/api.ts` is the only frontend access point for native repository commands.
+- `src/api.ts` is the frontend access point for registered repository commands.
   A browser-only fixture adapter supports visual development. Its writes always
   fail; it cannot silently substitute for a failed native request.
 - `src-tauri/src/models.rs` defines the serialized Rust contracts.
@@ -29,6 +29,12 @@ Installed Git → local repository / configured remotes
   detection, recovery, branch management, publishing, and stash identity checks.
 - `src-tauri/src/process.rs` runs Git directly without a shell, drains both pipes,
   enforces payload/time limits, and returns errors to the UI.
+- `tools.rs` defines the extended typed operation allowlist; `git-tools.ts` defines
+  its searchable forms. `GitTools.tsx` owns review/confirmation and editor state.
+- `bootstrap.rs` creates/clones repositories at new paths. `hosts.rs` handles
+  explicit HTTP API calls and endpoint-scoped OS credentials, independently of Git.
+- `partial-patch.ts` builds line selections into checked index patches. The backend
+  compares the original diff again before applying to prevent stale selection writes.
 - `src/components/Workspace.tsx` orchestrates repository views and stale-request
   suppression. Separate components own history, diffs, navigation, and dialogs.
 - `src/lib/graph.ts` tracks pending parent lanes from the actual commit DAG.
@@ -63,7 +69,9 @@ older selection cannot replace the currently requested diff or history.
 
 Recent repository paths (up to 30), theme, font size, motion preference, and panel
 sizes persist in local WebView storage. Open tabs are not restored across launches.
-No credentials or source files are stored in those preferences.
+No credentials or source files are stored in those preferences. Custom tool
+executable paths/arguments are local preferences; users must not save secrets in
+arguments. GitHub tokens are held by the OS credential store, never WebView storage.
 
 ## Git behavior
 
@@ -75,11 +83,11 @@ No credentials or source files are stored in those preferences.
 - Unstage resets only the index path and preserves the working file. Unborn HEAD
   uses `git rm --cached` instead.
 - Stash includes untracked files and apply keeps the saved stash.
-- Pull requires an upstream and refuses divergent history. Push explicitly sends
+- Default pull requires an upstream and refuses divergent history. Push explicitly sends
   HEAD to the current branch's upstream ref, overriding mirror/follow-tags settings.
 - Merge, rebase, cherry-pick, and revert require a clean working tree and resolve
   the selected target to a commit before execution. Pick/revert refuse merge
-  commits until a mainline selection UI exists.
+  commits in the simple action. Advanced pick/revert offer explicit mainline selection.
 - Snapshots expose Git's active operation markers, including those in linked
   worktrees. Failed operations also refresh the snapshot so conflicts and recovery
   controls appear immediately. Continue requires no unresolved index entries.
@@ -87,6 +95,19 @@ No credentials or source files are stored in those preferences.
   Abort/skip are explicit UI actions; normal commits cannot bypass recovery.
 - Stash apply/pop/drop include the selected object ID as well as its index and
   refuse a stale selection. Apply/pop require clean files; pop retains Git's
-  normal conflict behavior. Branch deletion uses Git's merged-only check.
+  normal conflict behavior. Normal branch deletion uses Git's merged-only check;
+  force deletion is a separately confirmed tool.
+
+Advanced pull supports merge/rebase. Push supports an explicit remote/destination,
+force-with-lease using a captured tracking ID, and a separately chosen force mode.
+Interactive rebase uses a one-purpose sequence-editor entry point in the executable;
+the visual plan accepts only known actions and the original commit IDs. Linear
+plans are supported; merge topology is rejected. At an edit stop, Amend is allowed
+only when the index has no unresolved conflicts.
+
+Host calls use the OS TLS implementation, disable redirects, and enforce 30-second
+and 8-MiB limits. Credential lookup is serialized separately from network requests.
+Reading settings does not send network requests. Publish controls display their
+destination and require confirmation; PR merge includes the inspected head SHA.
 
 See [SECURITY.md](../SECURITY.md) for the local trust model and execution limits.

@@ -4,6 +4,7 @@ import {
   ChevronDown,
   FolderGit2,
   GitBranch,
+  GitPullRequest,
   Globe2,
   History,
   Keyboard,
@@ -19,6 +20,7 @@ export const navigation: { id: View; label: string; icon: LucideIcon }[] = [
   { id: 'stashes', label: 'Stashes', icon: Archive },
   { id: 'remotes', label: 'Remotes', icon: Globe2 },
   { id: 'compare', label: 'Compare branches', icon: ArrowLeftRight },
+  { id: 'pulls', label: 'Pull requests', icon: GitPullRequest },
 ];
 export function Sidebar({
   repo,

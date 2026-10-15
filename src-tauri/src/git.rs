@@ -43,7 +43,7 @@ pub(crate) fn revision(path: &Path, reference: &str) -> Result<String, String> {
     .trim()
     .into())
 }
-fn validate_file(file: &str) -> Result<(), String> {
+pub(crate) fn validate_file(file: &str) -> Result<(), String> {
     if file.is_empty()
         || file.contains('\0')
         || Path::new(file)
@@ -139,6 +139,7 @@ impl GitService {
             .map_err(|_| "Repository operation unavailable")?;
         crate::workflow::check_allowed(&path, &request)?;
         match request {
+            Request::Tool { command } => crate::tools::execute(&path, command),
             Request::Snapshot => {
                 let files = parse_status(&git(
                     &path,

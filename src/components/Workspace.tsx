@@ -32,6 +32,10 @@ import { DiffView } from './DiffView';
 import { History } from './History';
 import { Modal } from './Modal';
 import { ActionMenu } from './ActionMenu';
+import { GitTools } from './GitTools';
+import { HostPanel } from './HostPanel';
+import { gitTools } from '../git-tools';
+import type { ToolAction } from '../git-tools';
 
 const empty: Snapshot = {
   operation: null,
@@ -75,6 +79,7 @@ export function Workspace({
   ) => void;
 }) {
   const [view, setView] = useState<View>('history');
+  const [tool, setTool] = useState<ToolAction>();
   const [snapshot, setSnapshot] = useState<Snapshot>(empty);
   const [commits, setCommits] = useState<Commit[]>([]);
   const [selected, setSelected] = useState<Commit>();
@@ -186,6 +191,14 @@ export function Workspace({
             .catch(report);
         },
       },
+      { label: 'Full commit details', run: () => setTool('commitDetails') },
+      { label: 'Browse revision tree', run: () => setTool('tree') },
+      {
+        label: 'Reset to this commit',
+        disabled: busy || !!snapshot.operation,
+        run: () => setTool('reset'),
+      },
+      { label: 'Read commit note', run: () => setTool('notesShow') },
     ];
   }
   const newBranch = () => {
@@ -262,7 +275,12 @@ export function Workspace({
     if (!active) return;
     const commands = (e: Event) => {
       const command = (e as CustomEvent<string>).detail;
-      if (busy || action) return;
+      if (busy || action || tool) return;
+      if (command.startsWith('tool:')) {
+        const id = command.slice(5) as ToolAction;
+        if (gitTools.some((t) => t.id === id)) setTool(id);
+        return;
+      }
       if (navigation.some((n) => n.id === command)) setView(command as View);
       else if (command === 'refresh') setRefresh((n) => n + 1);
       else if (command === 'branch') newBranch();
@@ -307,7 +325,7 @@ export function Workspace({
     };
     window.addEventListener('workspace-command', commands);
     return () => window.removeEventListener('workspace-command', commands);
-  }, [active, busy, action, snapshot]);
+  }, [active, busy, action, tool, snapshot]);
   useEffect(() => {
     if (!active) return;
     let cancelled = false;
@@ -535,6 +553,51 @@ export function Workspace({
             {isStaged ? <Minus size={14} /> : <Plus size={14} />}
           </button>
         )}
+        <ActionMenu
+          label={`Actions for ${item.path}`}
+          disabled={busy}
+          items={[
+            {
+              label: 'File history',
+              run: () => {
+                setFile(item.path);
+                setTool('fileHistory');
+              },
+            },
+            {
+              label: 'Blame file',
+              run: () => {
+                setFile(item.path);
+                setTool('blame');
+              },
+            },
+            ...(view === 'changes'
+              ? [
+                  {
+                    label: 'Stage selected lines',
+                    run: () => {
+                      setFile(item.path);
+                      setTool('hunkDiff');
+                    },
+                  },
+                  {
+                    label: 'Resolve file conflict',
+                    run: () => {
+                      setFile(item.path);
+                      setTool('conflictRead');
+                    },
+                  },
+                  {
+                    label: 'Discard file changes',
+                    run: () => {
+                      setFile(item.path);
+                      setTool('discard');
+                    },
+                  },
+                ]
+              : []),
+          ]}
+        />
       </div>
     ));
   }
@@ -599,6 +662,9 @@ export function Workspace({
             </p>
           </div>
           <div className="toolbar">
+            <button disabled={busy} onClick={() => setTool('commitDetails')}>
+              Repository tools
+            </button>
             <button
               className="icon-button"
               aria-label="Refresh repository"
@@ -1236,6 +1302,10 @@ export function Workspace({
                 configuration.
               </p>
             </div>
+          ) : view === 'pulls' ? (
+            <div className="collection">
+              <HostPanel />
+            </div>
           ) : (
             <div className="collection">
               <div className="collection-header">
@@ -1282,6 +1352,9 @@ export function Workspace({
                 File statistics between two commit trees. Your index and working
                 files stay untouched.
               </p>
+              <button onClick={() => setTool('compareDiff')}>
+                Inspect full comparison diff
+              </button>
               <pre className="comparison-result">
                 {comparison ||
                   'Choose two revisions to see their change summary.'}
@@ -1290,6 +1363,19 @@ export function Workspace({
           )}
         </div>
       </main>
+      {tool && (
+        <GitTools
+          path={repo.path}
+          initial={tool}
+          context={{
+            revision: selected?.id ?? 'HEAD',
+            file,
+            branch: snapshot.branch,
+            remote: snapshot.remotes[0]?.name ?? 'origin',
+          }}
+          onClose={() => setTool(undefined)}
+        />
+      )}
       {action && (
         <Modal
           title={action.title}

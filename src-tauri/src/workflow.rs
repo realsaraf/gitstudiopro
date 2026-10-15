@@ -10,6 +10,12 @@ use std::path::Path;
 
 pub fn operation(path: &Path) -> Result<Option<Operation>, String> {
     let admin = git(path, &["rev-parse", "--absolute-git-dir"])?;
+    if Path::new(admin.trim())
+        .join("rebase-apply/applying")
+        .exists()
+    {
+        return Ok(Some(Operation::Am));
+    }
     for (marker, state) in [
         ("rebase-merge", Operation::Rebase),
         ("rebase-apply", Operation::Rebase),
@@ -26,6 +32,19 @@ pub fn operation(path: &Path) -> Result<Option<Operation>, String> {
 }
 
 pub fn check_allowed(path: &Path, request: &Request) -> Result<(), String> {
+    if let Request::Tool { command } = request {
+        if command.allowed_during_operation() {
+            return Ok(());
+        }
+        if command.action == crate::tools::ToolAction::Amend
+            && operation(path)? == Some(Operation::Rebase)
+            && git(path, &["diff", "--name-only", "--diff-filter=U"])?
+                .trim()
+                .is_empty()
+        {
+            return Ok(());
+        }
+    }
     if matches!(
         request,
         Request::Snapshot
@@ -48,7 +67,7 @@ pub fn check_allowed(path: &Path, request: &Request) -> Result<(), String> {
     Ok(())
 }
 
-fn clean(path: &Path) -> Result<(), String> {
+pub(crate) fn clean(path: &Path) -> Result<(), String> {
     if !git(path, &["status", "--porcelain", "--untracked-files=all"])?.is_empty() {
         return Err("Commit or stash all working changes before this operation.".into());
     }
@@ -211,6 +230,7 @@ pub fn history_operation(path: &Path, operation: Operation, target: &str) -> Res
         );
     }
     match operation {
+        Operation::Am => return Err("Use Apply mail patches for this operation".into()),
         Operation::Merge => {
             git(
                 path,

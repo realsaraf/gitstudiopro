@@ -31,10 +31,17 @@ export interface Snapshot {
   remotes: { name: string; url: string }[];
   stashes: { index: number; id: string; message: string }[];
 }
-export type GitOperation = 'merge' | 'rebase' | 'cherry-pick' | 'revert';
+export type GitOperation = 'merge' | 'rebase' | 'cherry-pick' | 'revert' | 'am';
 export type View =
-  'history' | 'changes' | 'branches' | 'stashes' | 'remotes' | 'compare';
+  | 'history'
+  | 'changes'
+  | 'branches'
+  | 'stashes'
+  | 'remotes'
+  | 'compare'
+  | 'pulls';
 export type Request =
+  | { kind: 'tool'; command: import('./git-tools').ToolRequest }
   | { kind: 'snapshot' }
   | { kind: 'history'; skip: number; reference: string | null }
   | { kind: 'commitFiles'; revision: string }

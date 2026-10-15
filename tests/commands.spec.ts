@@ -130,7 +130,7 @@ test('settings destinations, licenses, and preference tabs are keyboard accessib
     page.getByRole('tab', { name: 'Repository hosts' }),
   ).toBeFocused();
   await expect(page.getByRole('tabpanel')).toContainText(
-    'existing Git authentication',
+    'Git fetch/push authentication is separate',
   );
   await page.keyboard.press('Escape');
   await search(page, 'credits licenses');

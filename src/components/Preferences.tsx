@@ -12,6 +12,7 @@ import { Modal } from './Modal';
 import { themes } from '../themes';
 import { useSettings, updateSettings, resetLayout } from '../settings';
 import { credits } from '../theme-credits';
+import { HostPanel } from './HostPanel';
 export type PreferencesTab = 'Appearance' | 'Intelligence' | 'Repository hosts';
 export function Preferences({
   onClose,
@@ -257,6 +258,15 @@ export function Preferences({
             <ShieldCheck size={20} /> Local repositories. No telemetry. No
             account required.
           </p>
+        </div>
+      ) : tab === 'Repository hosts' ? (
+        <div
+          role="tabpanel"
+          id="settings-panel"
+          aria-labelledby="settings-tab-2"
+          className="settings-content"
+        >
+          <HostPanel />
         </div>
       ) : (
         <div

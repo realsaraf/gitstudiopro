@@ -1,0 +1,82 @@
+{
+  "recorded": "2026-10-15",
+  "platform": "Windows x64, WebView2",
+  "git": "2.41.0.windows.3",
+  "build": "release",
+  "executableSha256": "263E811421ABA5FD436555563C2C9B698CF857A627D55F8D8ED219252F7F9101",
+  "passed": true,
+  "results": [
+    {
+      "name": "Inspect full message, tree, blame, file history and reflog",
+      "passed": true
+    },
+    {
+      "name": "Add, edit, rename and remove remote using tools",
+      "passed": true
+    },
+    {
+      "name": "Publish with options, fetch all, configure upstream and fast-forward pull",
+      "passed": true
+    },
+    {
+      "name": "Annotated tags publish and delete locally and remotely",
+      "passed": true
+    },
+    {
+      "name": "Edit ignore file and manage commit notes and local configuration",
+      "passed": true
+    },
+    {
+      "name": "Stage and unstage selected lines while preserving other edits",
+      "passed": true
+    },
+    {
+      "name": "Discard tracked edits and preview then clean only selected untracked file",
+      "passed": true
+    },
+    {
+      "name": "Amend and reset from reviewed controls",
+      "passed": true
+    },
+    {
+      "name": "Worktree add/list/remove",
+      "passed": true
+    },
+    {
+      "name": "Export patches and archive a revision",
+      "passed": true
+    },
+    {
+      "name": "Interactive rebase squashes commits through visual plan",
+      "passed": true
+    },
+    {
+      "name": "Interactive edit pauses, amends and continues through the UI",
+      "passed": true
+    },
+    {
+      "name": "Sparse checkout and bisect controls preserve repository state",
+      "passed": true
+    },
+    {
+      "name": "Submodule add, commit, sync, deinitialize and initialize",
+      "passed": true
+    },
+    {
+      "name": "Custom executable presets pass arguments literally and persist",
+      "passed": true
+    },
+    {
+      "name": "Built-in conflict editor saves, stages and continues a real merge",
+      "passed": true
+    },
+    {
+      "name": "Clone and initialize repositories through creation dialog",
+      "passed": true
+    },
+    {
+      "name": "Host UI reads, publishes to a loopback fixture, isolates credentials and blocks redirects",
+      "passed": true
+    }
+  ]
+}

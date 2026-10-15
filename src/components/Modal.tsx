@@ -33,7 +33,12 @@ export function Modal({
     <dialog
       ref={ref}
       className={`modal ${wide ? 'wide' : ''} ${className}`}
-      onCancel={onClose}
+      onCancel={(event) => {
+        // Keep React as the owner of dialog visibility. A caller may refuse
+        // closing while a repository write is still running.
+        event.preventDefault();
+        onClose();
+      }}
       onClick={(event) => {
         if (event.target === event.currentTarget) {
           const box = event.currentTarget.getBoundingClientRect();

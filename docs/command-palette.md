@@ -44,5 +44,10 @@ aliases, ignoring case, accents, and extra whitespace. Name matches rank first.
 This is word matching, not typo correction. Keyboard selection scrolls into view;
 the search field and footer remain visible at the minimum supported window size.
 
-AI and direct GitHub integration are roadmap items. Their commands open status
-information; they do not imply working provider connections or credential storage.
+Extended tools are indexed too: try `interactive rebase`, `stage selected lines`,
+`blame`, `bisect`, `worktree`, `submodule`, `remote`, `archive`, or `custom tool`.
+`Clone or initialize repository` is available even with no open tab. Mutating
+tools require review; keyboard submission cannot bypass confirmation.
+
+Repository hosts opens GitHub/Enterprise configuration and pull-request actions.
+API tokens use the OS credential store. AI assistance remains a roadmap item.

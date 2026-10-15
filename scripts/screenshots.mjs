@@ -26,6 +26,16 @@ try {
   await page.getByRole('menu').waitFor();
   await capture('commit-menu');
   await page.keyboard.press('Escape');
+  await page
+    .getByRole('button', { name: 'Repository tools', exact: true })
+    .click();
+  await page.getByLabel('Find Git tool').fill('rebase');
+  await page
+    .locator('.git-tools-nav')
+    .getByRole('button', { name: 'Interactive rebase', exact: true })
+    .click();
+  await capture('repository-tools');
+  await page.keyboard.press('Escape');
   await page.getByRole('button', { name: 'Preferences', exact: true }).click();
   await capture('themes');
   await page.getByRole('button', { name: /Dracula/ }).click();

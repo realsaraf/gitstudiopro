@@ -17,6 +17,9 @@ npm run test:e2e
 cargo fmt --manifest-path src-tauri/Cargo.toml
 cargo test --locked --manifest-path src-tauri/Cargo.toml
 cargo clippy --locked --manifest-path src-tauri/Cargo.toml --all-targets -- -D warnings
+# On Windows, after a native build:
+npm run test:native:workflows
+npm run test:native:tools
 ```
 
 Use disposable repositories for tests. Never run write-operation tests against
@@ -26,7 +29,8 @@ avoid network dependencies, and leave user Git configuration alone.
 ## Review standards
 
 - Keep Git arguments typed and shell-free. Validate revisions and file paths at
-  the Rust boundary; do not add arbitrary command execution to the frontend.
+  the Rust boundary. Custom tool execution is isolated behind explicit executable
+  selection and confirmation; do not introduce interpolated shell-command strings.
 - Cover deletion, empty repositories, spaces/Unicode in paths, and conflicts
   when changing Git behavior. Preserve worktree contents during unstage.
 - Keep slow work off the event loop. Bound payloads and render visible rows.
