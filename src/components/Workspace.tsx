@@ -842,7 +842,7 @@ export function Workspace({
                   ? 'Branch name'
                   : 'Stash message'}
                 <input
-                  autoFocus
+                  data-autofocus
                   value={actionValue}
                   onChange={(e) => setActionValue(e.target.value)}
                   placeholder={

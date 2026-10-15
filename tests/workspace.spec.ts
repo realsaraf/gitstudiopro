@@ -34,8 +34,19 @@ test('command palette and preferences work entirely offline', async ({
   page,
 }) => {
   await page.goto('/?demo=true');
+  const trigger = page.getByRole('button', {
+    name: 'Preferences',
+    exact: true,
+  });
+  await trigger.focus();
   await page.keyboard.press('Control+k');
-  await page.getByLabel('Search commands').fill('preferences');
+  await expect(page.getByLabel('Search commands')).toBeFocused();
+  await page.keyboard.press('Escape');
+  await expect(trigger).toBeFocused();
+  await page.keyboard.press('Control+k');
+  await expect(page.getByLabel('Search commands')).toBeFocused();
+  await page.keyboard.type('preferences');
+  await expect(page.getByLabel('Search commands')).toHaveValue('preferences');
   await page.keyboard.press('Enter');
   await expect(page.getByRole('dialog', { name: 'Preferences' })).toBeVisible();
   await expect(page.locator('.theme-card')).toHaveCount(15);

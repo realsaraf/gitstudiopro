@@ -470,7 +470,7 @@ export function App() {
           <label className="search-field">
             <Search size={18} />
             <input
-              autoFocus
+              data-autofocus
               placeholder="Find a saved repository…"
               aria-label="Find a saved repository"
               value={query}
@@ -576,7 +576,7 @@ export function App() {
           <div className="palette-search">
             <Search size={23} />
             <input
-              autoFocus
+              data-autofocus
               aria-label="Search commands"
               placeholder="Search commands…"
               value={query}

@@ -59,6 +59,14 @@ try {
     await setTimeout(250);
   }
   if (!page) throw new Error('Native application page not found.');
+  await page.keyboard.press('Control+k');
+  await expect(page.getByLabel('Search commands')).toBeFocused();
+  await page.keyboard.type('preferences');
+  await expect(page.getByLabel('Search commands')).toHaveValue('preferences');
+  await page.keyboard.press('Escape');
+  await page.keyboard.press('Control+k');
+  await expect(page.getByLabel('Search commands')).toBeFocused();
+  await page.keyboard.press('Escape');
   await page.getByRole('button', { name: 'Enter a repository path' }).click();
   await page.getByLabel('Repository path').fill(fixture);
   await page

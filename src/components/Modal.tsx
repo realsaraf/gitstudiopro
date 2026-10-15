@@ -19,6 +19,9 @@ export function Modal({
     const previous = document.activeElement as HTMLElement | null;
     const dialog = ref.current!;
     dialog.showModal();
+    // React autoFocus runs while the dialog is still closed. Focus the intended
+    // field only after showModal makes its contents focusable.
+    dialog.querySelector<HTMLElement>('[data-autofocus]')?.focus();
     return () => {
       dialog.close();
       previous?.focus();
