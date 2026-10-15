@@ -1,0 +1,15 @@
+node_modules/
+dist/
+target/
+test-results/
+playwright-report/
+*.log
+.DS_Store
+.env*
+!.env.example
+src-tauri/gen/
+artifacts/
+.playwright-mcp/
+*.tsbuildinfo
+src-tauri/icons/android/
+src-tauri/icons/ios/

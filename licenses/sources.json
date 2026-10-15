@@ -1,0 +1,58 @@
+[
+  {
+    "name": "catppuccin",
+    "repository": "https://github.com/catppuccin/catppuccin",
+    "commit": "d09787dd98ca6fba08af5ef2ae94a7e09f17daca",
+    "source": "https://raw.githubusercontent.com/catppuccin/catppuccin/d09787dd98ca6fba08af5ef2ae94a7e09f17daca/LICENSE",
+    "file": "licenses/catppuccin.txt"
+  },
+  {
+    "name": "nord",
+    "repository": "https://github.com/nordtheme/nord",
+    "commit": "1cef71605416a222e57225b544540ce0fcec18d4",
+    "source": "https://raw.githubusercontent.com/nordtheme/nord/1cef71605416a222e57225b544540ce0fcec18d4/license",
+    "file": "licenses/nord.txt"
+  },
+  {
+    "name": "dracula",
+    "repository": "https://github.com/dracula/dracula-theme",
+    "commit": "e22ebcc048b8aff586f9bc94db30ff5347070b42",
+    "source": "https://raw.githubusercontent.com/dracula/dracula-theme/e22ebcc048b8aff586f9bc94db30ff5347070b42/LICENSE",
+    "file": "licenses/dracula.txt"
+  },
+  {
+    "name": "solarized",
+    "repository": "https://github.com/altercation/solarized",
+    "commit": "62f656a02f93c5190a8753159e34b385588d5ff3",
+    "source": "https://raw.githubusercontent.com/altercation/solarized/62f656a02f93c5190a8753159e34b385588d5ff3/LICENSE",
+    "file": "licenses/solarized.txt"
+  },
+  {
+    "name": "gruvbox",
+    "repository": "https://github.com/gruvbox-community/gruvbox",
+    "commit": "180ad85971343df68be3422a5630fa84e45a9ab2",
+    "source": "https://raw.githubusercontent.com/gruvbox-community/gruvbox/180ad85971343df68be3422a5630fa84e45a9ab2/LICENSE.md",
+    "file": "licenses/gruvbox.txt"
+  },
+  {
+    "name": "tokyo-night",
+    "repository": "https://github.com/folke/tokyonight.nvim",
+    "commit": "cdc07ac78467a233fd62c493de29a17e0cf2b2b6",
+    "source": "https://raw.githubusercontent.com/folke/tokyonight.nvim/cdc07ac78467a233fd62c493de29a17e0cf2b2b6/LICENSE",
+    "file": "licenses/tokyo-night.txt"
+  },
+  {
+    "name": "rose-pine",
+    "repository": "https://github.com/rose-pine/rose-pine-theme",
+    "commit": "781bb844aae0bcec2763b23a4c7d3cc6aede780c",
+    "source": "https://raw.githubusercontent.com/rose-pine/rose-pine-theme/781bb844aae0bcec2763b23a4c7d3cc6aede780c/LICENSE",
+    "file": "licenses/rose-pine.txt"
+  },
+  {
+    "name": "one-dark",
+    "repository": "https://github.com/atom/one-dark-syntax",
+    "commit": "9c96f4454362267ac45322063e193ccf9d2debb1",
+    "source": "https://raw.githubusercontent.com/atom/one-dark-syntax/9c96f4454362267ac45322063e193ccf9d2debb1/LICENSE.md",
+    "file": "licenses/one-dark.txt"
+  }
+]

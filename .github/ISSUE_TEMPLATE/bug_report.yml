@@ -1,0 +1,19 @@
+name: Bug report
+description: Report a reproducible problem
+body:
+  - type: textarea
+    attributes:
+      label: What happened?
+      description: Include the expected behavior and minimal reproduction steps. Remove private repository names and credentials.
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Environment
+      placeholder: Windows 11 / macOS version, CPU architecture, Git version, app commit
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Evidence
+      description: Redacted logs, screenshots, or a disposable reproduction repository.

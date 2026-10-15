@@ -1,0 +1,9 @@
+package-lock.json
+src-tauri/
+dist/
+node_modules/
+test-results/
+playwright-report/
+artifacts/
+.playwright-mcp/
+*.tsbuildinfo

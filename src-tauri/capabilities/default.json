@@ -1,0 +1,1 @@
+{"identifier":"default","description":"Local application window with directory picker only","windows":["main"],"permissions":["core:default","dialog:allow-open"]}
