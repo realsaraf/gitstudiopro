@@ -59,6 +59,7 @@ try {
     await setTimeout(250);
   }
   if (!page) throw new Error('Native application page not found.');
+  await page.getByRole('button', { name: 'Preferences', exact: true }).focus();
   await page.keyboard.press('Control+k');
   await expect(page.getByLabel('Search commands')).toBeFocused();
   await page.keyboard.type('preferences');
