@@ -56,6 +56,17 @@ This configuration is limited to the disposable hosted runner. The harness also
 records bounded startup logs and process-exit errors. All 41 local native UI
 scenarios passed again after the harness update.
 
+**Final CI passed on Windows and macOS** for application/workflow revision
+`b43b6fdaaafc7cdb29b10b5fe49d9cb2abcfc606`:
+[Build and test run 38692295791](https://github.com/realsaraf/gitstudiopro/actions/runs/38692295791).
+Both jobs passed the frontend build, 12 unit tests, 19 browser tests, 24 Rust tests,
+formatting and Clippy. Windows additionally passed all **23 core + 18 extended
+native UI scenarios**. Unsigned Windows x64 NSIS and macOS ARM64 DMG packages and
+the Windows native traces/screenshots are attached to that run. The macOS result
+validates compilation, tests and packaging; it does not establish native macOS UI
+or installer acceptance. Later documentation-only commits do not change this
+tested application/workflow revision.
+
 ## Git workflow and source-parity follow-up
 
 The [source-based parity audit](parity/README.md) records the inspected upstream
